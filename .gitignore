@@ -1,1 +1,4 @@
-data/*
+data/
+pghome/
+sqls/
+target-debug/
