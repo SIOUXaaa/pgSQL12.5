@@ -2,3 +2,7 @@ data/
 pghome/
 sqls/
 target-debug/
+data/pg_stat_tmp/db_0.stat
+data/pg_stat_tmp/db_12675.stat
+data/pg_stat_tmp/db_16384.stat
+data/pg_stat_tmp/global.stat
