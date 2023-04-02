@@ -13,8 +13,8 @@
 #
 #-------------------------------------------------------------------------
 
-MODULES = complex funcs
-DATA_built = advanced.sql basics.sql complex.sql funcs.sql syscat.sql
+MODULES = complex funcs vector
+DATA_built = advanced.sql basics.sql complex.sql funcs.sql syscat.sql vector.sql
 
 ifdef NO_PGXS
 subdir = src/tutorial

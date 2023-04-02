@@ -1,0 +1,14 @@
+
+
+CREATE FUNCTION vector_in(cstring)
+    RETURNS vector
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION vector_out(vector)
+    RETURNS cstring
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+
+
