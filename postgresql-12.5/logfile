@@ -3,3 +3,92 @@
 2023-03-03 19:36:48.258 CST [26490] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-03-03 19:36:48.292 CST [26491] LOG:  database system was shut down at 2023-03-03 19:36:13 CST
 2023-03-03 19:36:48.295 CST [26490] LOG:  database system is ready to accept connections
+2023-04-04 00:02:24.786 CST [15270] FATAL:  lock file "postmaster.pid" already exists
+2023-04-04 00:02:24.786 CST [15270] HINT:  Is another postmaster (PID 13268) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-04 00:07:18.215 CST [17021] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 00:07:18.216 CST [17021] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 00:07:18.222 CST [17021] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 00:07:18.235 CST [17022] LOG:  database system was shut down at 2023-04-04 00:05:51 CST
+2023-04-04 00:07:18.239 CST [17021] LOG:  database system is ready to accept connections
+2023-04-04 00:07:35.454 CST [17092] ERROR:  type "vector" does not exist at character 22
+2023-04-04 00:07:35.454 CST [17092] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:08:34.159 CST [17021] LOG:  received fast shutdown request
+2023-04-04 00:08:34.163 CST [17021] LOG:  aborting any active transactions
+2023-04-04 00:08:34.164 CST [17021] LOG:  background worker "logical replication launcher" (PID 17028) exited with exit code 1
+2023-04-04 00:08:34.164 CST [17023] LOG:  shutting down
+2023-04-04 00:08:34.187 CST [17021] LOG:  database system is shut down
+2023-04-04 00:09:01.077 CST [19529] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 00:09:01.077 CST [19529] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 00:09:01.084 CST [19529] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 00:09:01.102 CST [19530] LOG:  database system was shut down at 2023-04-04 00:08:34 CST
+2023-04-04 00:09:01.106 CST [19529] LOG:  database system is ready to accept connections
+2023-04-04 00:09:07.916 CST [19588] ERROR:  type "vector" does not exist at character 22
+2023-04-04 00:09:07.916 CST [19588] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:10:59.622 CST [19529] LOG:  received fast shutdown request
+2023-04-04 00:10:59.625 CST [19529] LOG:  aborting any active transactions
+2023-04-04 00:10:59.625 CST [19529] LOG:  background worker "logical replication launcher" (PID 19536) exited with exit code 1
+2023-04-04 00:10:59.625 CST [19531] LOG:  shutting down
+2023-04-04 00:10:59.644 CST [19529] LOG:  database system is shut down
+2023-04-04 00:11:12.930 CST [21001] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 00:11:12.930 CST [21001] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 00:11:12.936 CST [21001] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 00:11:12.949 CST [21002] LOG:  database system was shut down at 2023-04-04 00:10:59 CST
+2023-04-04 00:11:12.957 CST [21001] LOG:  database system is ready to accept connections
+2023-04-04 00:11:18.517 CST [21057] ERROR:  type "vector" does not exist at character 22
+2023-04-04 00:11:18.517 CST [21057] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:15:50.236 CST [21057] ERROR:  syntax error at or near ")" at character 95
+2023-04-04 00:15:50.236 CST [21057] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out,
+	);
+2023-04-04 00:16:07.570 CST [21057] ERROR:  syntax error at or near ")" at character 95
+2023-04-04 00:16:07.570 CST [21057] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out,
+	);
+2023-04-04 00:16:59.564 CST [21949] ERROR:  type "vector" does not exist at character 22
+2023-04-04 00:16:59.564 CST [21949] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:17:01.376 CST [21949] ERROR:  function vector_in(cstring) does not exist
+2023-04-04 00:17:01.376 CST [21949] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-04 00:21:12.811 CST [21001] LOG:  received fast shutdown request
+2023-04-04 00:21:12.815 CST [21001] LOG:  aborting any active transactions
+2023-04-04 00:21:12.815 CST [21057] FATAL:  terminating connection due to administrator command
+2023-04-04 00:21:12.816 CST [21001] LOG:  background worker "logical replication launcher" (PID 21008) exited with exit code 1
+2023-04-04 00:21:12.816 CST [21003] LOG:  shutting down
+2023-04-04 00:21:12.837 CST [21001] LOG:  database system is shut down
+2023-04-04 00:21:24.802 CST [24577] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 00:21:24.802 CST [24577] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 00:21:24.808 CST [24577] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 00:21:24.824 CST [24578] LOG:  database system was shut down at 2023-04-04 00:21:12 CST
+2023-04-04 00:21:24.829 CST [24577] LOG:  database system is ready to accept connections
+2023-04-04 00:21:33.501 CST [24605] ERROR:  function vector_in(cstring) does not exist
+2023-04-04 00:21:33.501 CST [24605] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-04 00:24:47.963 CST [24577] LOG:  received SIGHUP, reloading configuration files
+2023-04-04 00:32:20.257 CST [24577] LOG:  received fast shutdown request
+2023-04-04 00:32:20.260 CST [24577] LOG:  aborting any active transactions
+2023-04-04 00:32:20.260 CST [24577] LOG:  background worker "logical replication launcher" (PID 24584) exited with exit code 1
+2023-04-04 00:32:20.260 CST [24579] LOG:  shutting down
+2023-04-04 00:32:20.274 CST [24577] LOG:  database system is shut down
+2023-04-04 00:32:44.747 CST [27620] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 00:32:44.748 CST [27620] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 00:32:44.753 CST [27620] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 00:32:44.766 CST [27621] LOG:  database system was shut down at 2023-04-04 00:32:20 CST
+2023-04-04 00:32:44.770 CST [27620] LOG:  database system is ready to accept connections
+2023-04-04 00:35:10.272 CST [28103] ERROR:  syntax error at or near "(" at character 14
+2023-04-04 00:35:10.272 CST [28103] STATEMENT:  create table (v vector);
+2023-04-04 00:35:21.817 CST [28103] ERROR:  type "vector" does not exist at character 21
+2023-04-04 00:35:21.817 CST [28103] STATEMENT:  create table test(v vector);

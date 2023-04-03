@@ -23,3 +23,36 @@
 2023-04-02 23:10:25.752 CST [4891] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-04-02 23:10:25.768 CST [4892] LOG:  database system was shut down at 2023-04-02 23:09:48 CST
 2023-04-02 23:10:25.772 CST [4891] LOG:  database system is ready to accept connections
+2023-04-03 01:47:23.700 CST [4919] ERROR:  syntax error at or near "q" at character 1
+2023-04-03 01:47:23.700 CST [4919] STATEMENT:  q
+	exit()
+	;
+2023-04-03 23:55:31.902 CST [13268] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-03 23:55:31.902 CST [13268] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-03 23:55:31.910 CST [13268] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-03 23:55:31.932 CST [13269] LOG:  database system was interrupted; last known up at 2023-04-02 23:15:37 CST
+2023-04-03 23:55:32.118 CST [13269] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-03 23:55:32.121 CST [13269] LOG:  redo starts at 0/15CD900
+2023-04-03 23:55:32.122 CST [13269] LOG:  invalid record length at 0/15CD9E8: wanted 24, got 0
+2023-04-03 23:55:32.122 CST [13269] LOG:  redo done at 0/15CD9B0
+2023-04-03 23:55:32.137 CST [13268] LOG:  database system is ready to accept connections
+2023-04-03 23:56:20.186 CST [13360] FATAL:  database "sercoi" does not exist
+2023-04-03 23:58:33.732 CST [13481] ERROR:  database "test" already exists
+2023-04-03 23:58:33.732 CST [13481] STATEMENT:  CREATE DATABASE test;
+2023-04-03 23:59:53.876 CST [13511] ERROR:  type "vector" does not exist at character 22
+2023-04-03 23:59:53.876 CST [13511] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:02:50.842 CST [15395] FATAL:  lock file "postmaster.pid" already exists
+2023-04-04 00:02:50.842 CST [15395] HINT:  Is another postmaster (PID 13268) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-04 00:03:02.793 CST [15453] ERROR:  database "test" already exists
+2023-04-04 00:03:02.793 CST [15453] STATEMENT:  CREATE DATABASE test;
+2023-04-04 00:03:20.443 CST [15535] FATAL:  lock file "postmaster.pid" already exists
+2023-04-04 00:03:20.443 CST [15535] HINT:  Is another postmaster (PID 13268) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-04 00:04:07.218 CST [15660] ERROR:  type "vector" does not exist at character 22
+2023-04-04 00:04:07.218 CST [15660] STATEMENT:  create table test(
+	v Vector primary key, dis float(6), size int);
+2023-04-04 00:05:51.390 CST [13268] LOG:  received fast shutdown request
+2023-04-04 00:05:51.393 CST [13268] LOG:  aborting any active transactions
+2023-04-04 00:05:51.394 CST [13268] LOG:  background worker "logical replication launcher" (PID 13275) exited with exit code 1
+2023-04-04 00:05:51.394 CST [13270] LOG:  shutting down
+2023-04-04 00:05:51.416 CST [13268] LOG:  database system is shut down

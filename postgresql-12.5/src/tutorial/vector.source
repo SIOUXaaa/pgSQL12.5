@@ -10,5 +10,56 @@ CREATE FUNCTION vector_out(vector)
     AS '_OBJWD_/vector'
     LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION vector_size(vector)
+    RETURNS INT
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION vector_distance(vector, vector)
+    RETURNS FLOAT4
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION vector_add(vector, vector)
+    RETURNS vector
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION vector_sub(vector, vector)
+    RETURNS vector
+    AS '_OBJWD_/vector'
+    LANGUAGE C IMMUTABLE STRICT;
+
+CREATE TYPE vector (
+    internallength = 16,
+    input = vector_in,
+    output = vector_out
+);
+
+CREATE OPERATOR <#> (
+    rightarg = vector,
+    procedure = vector_size,
+    procedure = vector_size
+);
+
+CREATE OPERATOR <-> (
+    leftarg = vector,
+    rightarg = vector,
+    procedure = vector_distance
+);
+
+CREATE OPERATOR + (
+    leftarg = vector,
+    rightarg = vector,
+    procedure = vector_add,
+    commutator = +
+);
+
+CREATE OPERATOR - (
+    leftarg = vector,
+    rightarg = vector,
+    procedure = vector_sub,
+    commutator = -
+);
 
 
