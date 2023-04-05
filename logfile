@@ -56,3 +56,23 @@
 2023-04-04 00:05:51.394 CST [13268] LOG:  background worker "logical replication launcher" (PID 13275) exited with exit code 1
 2023-04-04 00:05:51.394 CST [13270] LOG:  shutting down
 2023-04-04 00:05:51.416 CST [13268] LOG:  database system is shut down
+2023-04-04 23:45:50.956 CST [3449] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 23:45:50.956 CST [3449] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 23:45:50.963 CST [3449] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 23:45:50.977 CST [3450] LOG:  database system was interrupted; last known up at 2023-04-04 00:38:02 CST
+2023-04-04 23:45:51.209 CST [3450] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-04 23:45:51.212 CST [3450] LOG:  redo starts at 0/15DB1D0
+2023-04-04 23:45:51.212 CST [3450] LOG:  invalid record length at 0/15DB2B8: wanted 24, got 0
+2023-04-04 23:45:51.212 CST [3450] LOG:  redo done at 0/15DB280
+2023-04-04 23:45:51.227 CST [3449] LOG:  database system is ready to accept connections
+2023-04-04 23:45:57.555 CST [3511] FATAL:  database "sercoi" does not exist
+2023-04-04 23:48:20.460 CST [3521] ERROR:  syntax error at or near "/" at character 1
+2023-04-04 23:48:20.460 CST [3521] STATEMENT:  /i vector.sql
+	show table
+	create table test(v vector)
+	;
+2023-04-04 23:56:02.617 CST [3449] LOG:  received fast shutdown request
+2023-04-04 23:56:02.620 CST [3449] LOG:  aborting any active transactions
+2023-04-04 23:56:02.621 CST [3449] LOG:  background worker "logical replication launcher" (PID 3456) exited with exit code 1
+2023-04-04 23:56:02.621 CST [3451] LOG:  shutting down
+2023-04-04 23:56:02.642 CST [3449] LOG:  database system is shut down

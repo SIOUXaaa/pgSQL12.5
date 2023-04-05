@@ -92,3 +92,556 @@
 2023-04-04 00:35:10.272 CST [28103] STATEMENT:  create table (v vector);
 2023-04-04 00:35:21.817 CST [28103] ERROR:  type "vector" does not exist at character 21
 2023-04-04 00:35:21.817 CST [28103] STATEMENT:  create table test(v vector);
+2023-04-05 19:34:37.925 CST [30633] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 19:34:37.926 CST [30633] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 19:34:37.931 CST [30633] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 19:34:37.966 CST [30634] LOG:  database system was shut down at 2023-04-05 19:34:34 CST
+2023-04-05 19:34:37.970 CST [30633] LOG:  database system is ready to accept connections
+2023-04-05 19:34:42.427 CST [30688] FATAL:  database "sercoi" does not exist
+2023-04-05 19:36:05.273 CST [30773] ERROR:  relation "test" does not exist at character 13
+2023-04-05 19:36:05.273 CST [30773] STATEMENT:  insert into test values(1,'{1.1,2.2,3.3}');
+2023-04-05 19:36:20.262 CST [30773] ERROR:  relation "test_vector" already exists
+2023-04-05 19:36:20.262 CST [30773] STATEMENT:  create table test_vector (id integer primary key, vec vector);
+2023-04-05 19:49:26.799 CST [1917] FATAL:  database "sercoi" does not exist
+2023-04-05 19:49:41.992 CST [1924] ERROR:  table "test" does not exist
+2023-04-05 19:49:41.992 CST [1924] STATEMENT:  drop table test;
+2023-04-05 19:51:01.048 CST [2235] ERROR:  compressed data is corrupted at character 11
+2023-04-05 19:51:01.048 CST [2235] STATEMENT:  select <#>'{1,2}';
+2023-04-05 19:51:15.602 CST [2235] ERROR:  compressed data is corrupted at character 8
+2023-04-05 19:51:15.602 CST [2235] STATEMENT:  select '{1.1,2.2}'::vector+'{3.3,4.4}'::vector;
+2023-04-05 19:51:36.697 CST [2235] ERROR:  compressed data is corrupted at character 8
+2023-04-05 19:51:36.697 CST [2235] STATEMENT:  select '{1,2}'::vector<->'{3,4}'::vector;
+2023-04-05 19:52:24.200 CST [2235] ERROR:  compressed data is corrupted at character 35
+2023-04-05 19:52:24.200 CST [2235] STATEMENT:  insert into test_vector values (2,'{1,2}');
+2023-04-05 19:59:46.028 CST [30633] LOG:  server process (PID 2235) was terminated by signal 11: Segmentation fault
+2023-04-05 19:59:46.028 CST [30633] DETAIL:  Failed process was running: select '{1.1,2.2,3.3}'::vector;
+2023-04-05 19:59:46.028 CST [30633] LOG:  terminating any other active server processes
+2023-04-05 19:59:46.029 CST [30638] WARNING:  terminating connection because of crash of another server process
+2023-04-05 19:59:46.029 CST [30638] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 19:59:46.029 CST [30638] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 19:59:46.029 CST [3507] FATAL:  the database system is in recovery mode
+2023-04-05 19:59:46.029 CST [30633] LOG:  all server processes terminated; reinitializing
+2023-04-05 19:59:46.040 CST [3508] LOG:  database system was interrupted; last known up at 2023-04-05 19:55:05 CST
+2023-04-05 19:59:46.271 CST [3508] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 19:59:46.274 CST [3508] LOG:  redo starts at 0/174AC78
+2023-04-05 19:59:46.275 CST [3508] LOG:  invalid record length at 0/175A4C0: wanted 24, got 0
+2023-04-05 19:59:46.275 CST [3508] LOG:  redo done at 0/175A488
+2023-04-05 19:59:46.297 CST [30633] LOG:  database system is ready to accept connections
+2023-04-05 20:02:34.839 CST [30633] LOG:  server process (PID 3639) was terminated by signal 11: Segmentation fault
+2023-04-05 20:02:34.839 CST [30633] DETAIL:  Failed process was running: select vec from test_vector;
+2023-04-05 20:02:34.839 CST [30633] LOG:  terminating any other active server processes
+2023-04-05 20:02:34.839 CST [3512] WARNING:  terminating connection because of crash of another server process
+2023-04-05 20:02:34.839 CST [3512] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 20:02:34.839 CST [3512] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 20:02:34.839 CST [4009] FATAL:  the database system is in recovery mode
+2023-04-05 20:02:34.840 CST [30633] LOG:  all server processes terminated; reinitializing
+2023-04-05 20:02:34.849 CST [4010] LOG:  database system was interrupted; last known up at 2023-04-05 19:59:46 CST
+2023-04-05 20:02:35.086 CST [4010] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 20:02:35.089 CST [4010] LOG:  redo starts at 0/175A538
+2023-04-05 20:02:35.089 CST [4010] LOG:  invalid record length at 0/175A570: wanted 24, got 0
+2023-04-05 20:02:35.089 CST [4010] LOG:  redo done at 0/175A538
+2023-04-05 20:02:35.114 CST [30633] LOG:  database system is ready to accept connections
+2023-04-05 20:04:50.476 CST [4095] ERROR:  syntax error at or near "*" at character 26
+2023-04-05 20:04:50.476 CST [4095] STATEMENT:  create table test(ch char*);
+2023-04-05 20:06:18.026 CST [4095] ERROR:  compressed data is corrupted
+2023-04-05 20:06:18.026 CST [4095] STATEMENT:  select vector_in('{1,2}');
+2023-04-05 20:07:53.368 CST [30633] LOG:  server process (PID 4095) was terminated by signal 11: Segmentation fault
+2023-04-05 20:07:53.368 CST [30633] DETAIL:  Failed process was running: select vector_in('{1.1,2.2,3.3}');
+2023-04-05 20:07:53.368 CST [30633] LOG:  terminating any other active server processes
+2023-04-05 20:07:53.369 CST [4014] WARNING:  terminating connection because of crash of another server process
+2023-04-05 20:07:53.369 CST [4014] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 20:07:53.369 CST [4014] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 20:07:53.369 CST [4691] FATAL:  the database system is in recovery mode
+2023-04-05 20:07:53.369 CST [30633] LOG:  all server processes terminated; reinitializing
+2023-04-05 20:07:53.379 CST [4692] LOG:  database system was interrupted; last known up at 2023-04-05 20:07:35 CST
+2023-04-05 20:07:53.616 CST [4692] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 20:07:53.619 CST [4692] LOG:  redo starts at 0/175D7C0
+2023-04-05 20:07:53.619 CST [4692] LOG:  invalid record length at 0/175D8A8: wanted 24, got 0
+2023-04-05 20:07:53.619 CST [4692] LOG:  redo done at 0/175D870
+2023-04-05 20:07:53.638 CST [30633] LOG:  database system is ready to accept connections
+2023-04-05 20:11:23.858 CST [4731] ERROR:  syntax error at or near "gdb" at character 1
+2023-04-05 20:11:23.858 CST [4731] STATEMENT:  gdb -ex 'set /'{1,2}/'' -ex 'r' -ex 'b vector_in' /home/sercoi/PGDev/pghome/bin/postgres
+	；
+	;
+2023-04-05 20:19:37.442 CST [7936] FATAL:  lock file "postmaster.pid" already exists
+2023-04-05 20:19:37.442 CST [7936] HINT:  Is another postmaster (PID 30633) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-05 20:19:44.653 CST [30633] LOG:  received fast shutdown request
+2023-04-05 20:19:44.656 CST [30633] LOG:  aborting any active transactions
+2023-04-05 20:19:44.657 CST [30633] LOG:  background worker "logical replication launcher" (PID 4701) exited with exit code 1
+2023-04-05 20:19:44.657 CST [4696] LOG:  shutting down
+2023-04-05 20:19:44.676 CST [30633] LOG:  database system is shut down
+2023-04-05 20:19:47.452 CST [8016] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 20:19:47.452 CST [8016] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 20:19:47.457 CST [8016] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 20:19:47.471 CST [8017] LOG:  database system was shut down at 2023-04-05 20:19:44 CST
+2023-04-05 20:19:47.474 CST [8016] LOG:  database system is ready to accept connections
+2023-04-05 20:51:33.600 CST [10848] FATAL:  database "sercoi" does not exist
+2023-04-05 20:51:58.604 CST [10937] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 20:51:58.604 CST [10937] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.604 CST [10937] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 20:51:58.604 CST [10937] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.605 CST [10937] ERROR:  type "vector" already exists
+2023-04-05 20:51:58.605 CST [10937] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 20:51:58.605 CST [10937] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 20:51:58.605 CST [10937] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.605 CST [10937] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 20:51:58.605 CST [10937] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.605 CST [10937] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 20:51:58.605 CST [10937] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.605 CST [10937] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 20:51:58.605 CST [10937] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 20:51:58.606 CST [10937] ERROR:  operator <#> already exists
+2023-04-05 20:51:58.606 CST [10937] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 20:51:58.606 CST [10937] ERROR:  operator <-> already exists
+2023-04-05 20:51:58.606 CST [10937] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 20:51:58.606 CST [10937] ERROR:  operator + already exists
+2023-04-05 20:51:58.606 CST [10937] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 20:51:58.606 CST [10937] ERROR:  operator - already exists
+2023-04-05 20:51:58.606 CST [10937] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 20:52:36.359 CST [10937] ERROR:  syntax error at or near "create" at character 20
+2023-04-05 20:52:36.359 CST [10937] STATEMENT:  drop database test
+	create database test
+	select '{1,1,2}';
+2023-04-05 20:53:41.398 CST [11376] ERROR:  relation "test_vector" already exists
+2023-04-05 20:53:41.398 CST [11376] STATEMENT:  create table test_vector (id integer primary key, vec vector);
+2023-04-05 21:02:06.303 CST [8016] LOG:  server process (PID 12707) was terminated by signal 11: Segmentation fault
+2023-04-05 21:02:06.303 CST [8016] DETAIL:  Failed process was running: select <#>'{1}';
+2023-04-05 21:02:06.303 CST [8016] LOG:  terminating any other active server processes
+2023-04-05 21:02:06.303 CST [8021] WARNING:  terminating connection because of crash of another server process
+2023-04-05 21:02:06.303 CST [8021] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 21:02:06.303 CST [8021] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 21:02:06.304 CST [12732] FATAL:  the database system is in recovery mode
+2023-04-05 21:02:06.304 CST [8016] LOG:  all server processes terminated; reinitializing
+2023-04-05 21:02:06.328 CST [12733] LOG:  database system was interrupted; last known up at 2023-04-05 20:58:17 CST
+2023-04-05 21:02:06.579 CST [12733] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 21:02:06.583 CST [12733] LOG:  redo starts at 0/1788418
+2023-04-05 21:02:06.583 CST [12733] LOG:  invalid record length at 0/1788500: wanted 24, got 0
+2023-04-05 21:02:06.583 CST [12733] LOG:  redo done at 0/17884C8
+2023-04-05 21:02:06.600 CST [8016] LOG:  database system is ready to accept connections
+2023-04-05 21:18:46.949 CST [14167] FATAL:  database "sercoi" does not exist
+2023-04-05 21:19:05.067 CST [14174] ERROR:  syntax error at or near "&&" at character 20
+2023-04-05 21:19:05.067 CST [14174] STATEMENT:  drop database test && create database test;
+2023-04-05 21:19:48.387 CST [14260] ERROR:  operator does not exist: <#> unknown at character 8
+2023-04-05 21:19:48.387 CST [14260] HINT:  No operator matches the given name and argument type. You might need to add an explicit type cast.
+2023-04-05 21:19:48.387 CST [14260] STATEMENT:  select <#> '{1,2,3,4}';
+2023-04-05 21:24:22.296 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:22.296 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:22.296 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:22.296 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:23.300 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:23.300 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:23.300 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:23.300 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:23.300 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:23.300 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:24.303 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:24.303 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:24.303 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:24.303 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:24.303 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:24.303 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:25.307 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:25.307 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:25.307 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:25.307 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:25.307 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:25.307 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:26.311 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:26.311 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:26.311 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:26.311 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:26.311 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:26.311 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:27.315 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:27.315 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:27.315 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:27.315 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:27.315 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:27.315 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:28.320 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:28.320 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:28.321 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:28.321 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:28.321 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:28.321 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:29.325 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:29.325 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:29.325 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:29.325 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:29.325 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:29.325 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:30.328 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:30.328 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:30.328 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:30.328 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:30.328 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:30.328 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:31.335 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:31.335 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:31.335 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:31.335 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:31.335 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:31.335 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:32.339 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:32.339 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:32.339 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:32.339 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:32.339 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:32.339 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:33.343 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:33.343 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:33.343 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:33.343 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:33.343 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:33.343 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:34.347 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:34.347 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:34.347 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:34.347 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:34.347 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:34.347 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:35.351 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:35.351 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:35.351 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:35.351 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:35.351 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:35.351 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:36.355 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:36.355 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:36.355 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:36.355 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:36.355 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:36.355 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:37.362 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:37.362 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:37.362 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:37.362 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:37.362 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:37.362 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:38.366 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:38.366 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:38.366 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:38.366 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:38.366 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:38.366 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:39.370 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:39.370 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:39.370 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:39.370 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:39.370 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:39.370 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:40.374 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:40.374 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:40.374 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:40.374 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:40.374 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:40.374 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:41.378 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:41.378 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:41.378 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:41.378 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:41.378 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:41.378 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:42.382 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:42.382 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:42.382 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:42.382 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:42.382 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:42.382 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:43.386 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:43.386 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:43.386 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:43.386 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:43.386 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:43.386 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:44.392 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:44.392 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:44.392 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:44.392 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:44.392 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:44.392 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:45.396 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:45.396 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:45.396 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:45.396 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:45.396 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:45.396 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:46.400 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:46.400 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:46.400 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:46.400 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:46.400 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:46.400 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:47.403 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:47.403 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:47.403 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:47.403 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:47.403 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:47.403 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:48.407 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:48.407 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:48.407 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:48.407 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:48.408 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:48.408 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:49.411 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:49.411 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:49.411 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:49.411 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:49.411 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:49.411 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:50.417 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:50.417 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:50.417 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:50.417 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:50.417 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:50.417 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:51.421 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:51.421 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:51.421 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:51.421 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:51.421 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:51.421 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:52.425 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:52.425 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:52.425 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:52.425 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:52.425 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:52.425 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:53.432 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:53.432 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:53.432 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:53.432 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:53.432 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:53.432 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:54.436 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:54.436 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:54.436 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:54.436 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:54.436 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:54.436 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:55.442 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:55.442 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:55.442 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:55.442 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:55.442 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:55.442 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:56.446 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:56.446 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:56.446 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:56.446 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:56.446 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:56.446 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:57.451 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:57.451 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:57.451 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:57.451 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:57.451 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:57.451 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:58.455 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:58.455 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:58.455 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:58.455 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:58.455 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:58.455 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:24:59.459 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:24:59.459 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:59.459 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:24:59.459 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:24:59.459 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:24:59.459 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:00.464 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:00.464 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:00.464 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:00.464 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:00.464 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:00.464 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:01.468 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:01.468 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:01.468 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:01.468 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:01.468 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:01.468 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:02.472 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:02.472 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:02.472 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:02.472 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:02.472 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:02.472 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:03.477 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:03.477 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:03.477 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:03.477 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:03.477 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:03.477 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:04.481 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:04.481 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:04.481 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:04.481 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:04.481 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:04.481 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:05.484 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:05.484 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:05.484 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:05.484 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:05.484 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:05.484 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:06.488 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:06.488 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:06.488 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:06.488 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:06.488 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:06.488 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:07.492 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:07.492 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:07.492 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:07.492 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:07.492 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:07.492 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:08.496 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:08.496 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:08.496 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:08.496 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:08.496 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:08.496 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:09.500 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:09.500 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:09.501 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:09.501 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:09.501 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:09.501 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:10.504 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:10.504 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:10.505 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:10.505 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:10.505 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:10.505 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:11.509 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:11.509 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:11.509 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:11.509 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:11.509 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:11.509 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:12.261 CST [15331] ERROR:  syntax error at or near "selete" at character 1
+2023-04-05 21:25:12.261 CST [15331] STATEMENT:  selete * from test_vector 
+	;
+2023-04-05 21:25:12.513 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:12.513 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:12.513 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:12.513 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:12.513 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:12.513 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:13.517 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:13.517 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:13.517 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:13.517 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:13.517 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:13.517 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:14.521 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:14.521 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:14.521 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:14.521 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:14.521 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:14.521 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:15.525 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:15.525 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:15.525 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:15.525 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:15.525 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:15.525 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:16.529 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:16.529 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:16.529 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:16.529 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:16.529 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:16.529 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:17.533 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:17.533 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:17.533 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:17.533 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:17.533 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:17.533 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:18.537 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:18.537 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:18.537 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:18.537 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:18.537 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:18.537 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:19.540 CST [12734] LOG:  request to flush past end of generated WAL; request 38/17B34F8, currpos 0/17B3598
+2023-04-05 21:25:19.540 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:19.541 CST [12734] ERROR:  xlog flush request 38/17B34F8 is not satisfied --- flushed only to 0/17B3598
+2023-04-05 21:25:19.541 CST [12734] CONTEXT:  writing block 0 of relation base/65641/65657
+2023-04-05 21:25:19.541 CST [12734] WARNING:  could not write block 0 of base/65641/65657
+2023-04-05 21:25:19.541 CST [12734] DETAIL:  Multiple failures --- write error might be permanent.
+2023-04-05 21:25:20.398 CST [8016] LOG:  server process (PID 15331) was terminated by signal 11: Segmentation fault
+2023-04-05 21:25:20.398 CST [8016] DETAIL:  Failed process was running: select * from test_vector 
+	;
+2023-04-05 21:25:20.398 CST [8016] LOG:  terminating any other active server processes
+2023-04-05 21:25:20.398 CST [12737] WARNING:  terminating connection because of crash of another server process
+2023-04-05 21:25:20.398 CST [12737] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 21:25:20.398 CST [12737] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 21:25:20.398 CST [15488] FATAL:  the database system is in recovery mode
+2023-04-05 21:25:20.542 CST [8016] LOG:  all server processes terminated; reinitializing
+2023-04-05 21:25:20.553 CST [15489] LOG:  database system was interrupted; last known up at 2023-04-05 21:19:16 CST
+2023-04-05 21:25:20.798 CST [15489] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 21:25:20.803 CST [15489] LOG:  redo starts at 0/178A218
+2023-04-05 21:25:20.804 CST [15489] LOG:  invalid record length at 0/17B3598: wanted 24, got 0
+2023-04-05 21:25:20.804 CST [15489] LOG:  redo done at 0/17B3560
+2023-04-05 21:25:20.831 CST [8016] LOG:  database system is ready to accept connections
+2023-04-05 21:26:41.604 CST [15975] FATAL:  database "sercoi" does not exist
+2023-04-05 21:30:22.214 CST [16968] FATAL:  database "sercoi" does not exist
+2023-04-05 21:30:58.200 CST [17090] ERROR:  operator does not exist: <#> unknown at character 8
+2023-04-05 21:30:58.200 CST [17090] HINT:  No operator matches the given name and argument type. You might need to add an explicit type cast.
+2023-04-05 21:30:58.200 CST [17090] STATEMENT:  select <#> '{1,2}';
+2023-04-05 21:32:19.109 CST [17458] ERROR:  relation "test_vector" does not exist at character 13
+2023-04-05 21:32:19.109 CST [17458] STATEMENT:  insert into test_vector values (1, '{-1.2, 2.1345, 3}');
+64
+2023-04-05 21:55:24.789 CST [20552] ERROR:  duplicate key value violates unique constraint "test_vector_pkey"
+2023-04-05 21:55:24.789 CST [20552] DETAIL:  Key (id)=(1) already exists.
+2023-04-05 21:55:24.789 CST [20552] STATEMENT:  insert into test_vector values (1, '{-1.2, 2.1345, 3}');
+2023-04-05 22:01:11.038 CST [20552] ERROR:  duplicate key value violates unique constraint "test_vector_pkey"
+2023-04-05 22:01:11.038 CST [20552] DETAIL:  Key (id)=(2) already exists.
+2023-04-05 22:01:11.038 CST [20552] STATEMENT:  insert into test_vector values (2, '{-1.2, 2.1345, 3}');
+2023-04-05 22:02:22.641 CST [8016] LOG:  received fast shutdown request
+2023-04-05 22:02:22.644 CST [8016] LOG:  aborting any active transactions
+2023-04-05 22:02:22.644 CST [8016] LOG:  background worker "logical replication launcher" (PID 15495) exited with exit code 1
+2023-04-05 22:02:22.645 CST [15490] LOG:  shutting down
+2023-04-05 22:02:22.665 CST [8016] LOG:  database system is shut down

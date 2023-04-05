@@ -4,6 +4,6 @@ Url: http://www.postgresql.org/
 Version: 12.5
 Requires: 
 Requires.private: libpq libpgtypes
-Cflags: -I/home/sercoi/PGDev/pghome/include
-Libs: -L/home/sercoi/PGDev/pghome/lib -lecpg
+Cflags: -I/include
+Libs: -L/lib -lecpg
 Libs.private:  -lm

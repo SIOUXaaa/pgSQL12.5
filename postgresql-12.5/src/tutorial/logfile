@@ -1,0 +1,1442 @@
+2023-04-04 23:55:51.171 CST [4873] FATAL:  lock file "postmaster.pid" already exists
+2023-04-04 23:55:51.171 CST [4873] HINT:  Is another postmaster (PID 3449) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-04 23:56:04.360 CST [4952] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-04 23:56:04.360 CST [4952] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-04 23:56:04.365 CST [4952] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-04 23:56:04.378 CST [4953] LOG:  database system was shut down at 2023-04-04 23:56:02 CST
+2023-04-04 23:56:04.381 CST [4952] LOG:  database system is ready to accept connections
+2023-04-04 23:56:29.060 CST [5011] ERROR:  could not access file "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector": No such file or directory
+2023-04-04 23:56:29.060 CST [5011] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.060 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:56:29.060 CST [5011] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.061 CST [5011] ERROR:  function vector_in(cstring) does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:56:29.061 CST [5011] ERROR:  syntax error at or near ")" at character 75
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size,
+	);
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-04 23:56:29.061 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:56:29.061 CST [5011] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-04 23:56:29.062 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:56:29.062 CST [5011] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-04 23:57:57.888 CST [5011] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c: invalid ELF header
+2023-04-04 23:57:57.888 CST [5011] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  function vector_in(cstring) does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:57:57.889 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:57:57.889 CST [5011] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-04 23:57:57.890 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:57:57.890 CST [5011] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-04 23:57:57.890 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:57:57.890 CST [5011] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-04 23:57:57.890 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:57:57.890 CST [5011] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-04 23:59:33.415 CST [5011] ERROR:  function vector_in(cstring) does not exist
+2023-04-04 23:59:33.415 CST [5011] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-04 23:59:33.416 CST [5011] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c: invalid ELF header
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.416 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.416 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.416 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.416 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.416 CST [5011] ERROR:  type vector does not exist
+2023-04-04 23:59:33.416 CST [5011] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-04 23:59:33.417 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:59:33.417 CST [5011] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-04 23:59:33.417 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:59:33.417 CST [5011] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-04 23:59:33.417 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:59:33.417 CST [5011] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-04 23:59:33.417 CST [5011] ERROR:  type "vector" does not exist
+2023-04-04 23:59:33.417 CST [5011] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 00:00:37.579 CST [5011] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c: invalid ELF header
+2023-04-05 00:00:37.579 CST [5011] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.579 CST [5011] ERROR:  type vector does not exist
+2023-04-05 00:00:37.579 CST [5011] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.579 CST [5011] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 00:00:37.579 CST [5011] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 00:00:37.579 CST [5011] ERROR:  type vector does not exist
+2023-04-05 00:00:37.579 CST [5011] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type vector does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type vector does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type vector does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type "vector" does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type "vector" does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type "vector" does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 00:00:37.580 CST [5011] ERROR:  type "vector" does not exist
+2023-04-05 00:00:37.580 CST [5011] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 00:47:19.749 CST [12975] FATAL:  database "sercoi" does not exist
+2023-04-05 00:47:32.461 CST [12982] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c: invalid ELF header
+2023-04-05 00:47:32.461 CST [12982] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.461 CST [12982] ERROR:  type vector does not exist
+2023-04-05 00:47:32.461 CST [12982] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.462 CST [12982] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type vector does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type vector does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type vector does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type vector does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type "vector" does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type "vector" does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 00:47:32.462 CST [12982] ERROR:  type "vector" does not exist
+2023-04-05 00:47:32.462 CST [12982] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 00:47:32.463 CST [12982] ERROR:  type "vector" does not exist
+2023-04-05 00:47:32.463 CST [12982] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 00:49:20.027 CST [4952] LOG:  received fast shutdown request
+2023-04-05 00:49:20.030 CST [4952] LOG:  aborting any active transactions
+2023-04-05 00:49:20.031 CST [4952] LOG:  background worker "logical replication launcher" (PID 4959) exited with exit code 1
+2023-04-05 00:49:20.031 CST [4954] LOG:  shutting down
+2023-04-05 00:49:20.056 CST [4952] LOG:  database system is shut down
+2023-04-05 00:49:24.979 CST [13502] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 00:49:24.979 CST [13502] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 00:49:24.984 CST [13502] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 00:49:25.009 CST [13503] LOG:  database system was shut down at 2023-04-05 00:49:20 CST
+2023-04-05 00:49:25.013 CST [13502] LOG:  database system is ready to accept connections
+2023-04-05 00:49:28.835 CST [13552] FATAL:  database "sercoi" does not exist
+2023-04-05 00:49:38.655 CST [13568] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c: invalid ELF header
+2023-04-05 00:49:38.655 CST [13568] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.655 CST [13568] ERROR:  type vector does not exist
+2023-04-05 00:49:38.655 CST [13568] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.655 CST [13568] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 00:49:38.655 CST [13568] STATEMENT:  CREATE TYPE vector (
+	    internallength = 16,
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 00:49:38.655 CST [13568] ERROR:  type vector does not exist
+2023-04-05 00:49:38.655 CST [13568] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int32
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type vector does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type vector does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type vector does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.c'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type "vector" does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type "vector" does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type "vector" does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 00:49:38.656 CST [13568] ERROR:  type "vector" does not exist
+2023-04-05 00:49:38.656 CST [13568] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:07:28.654 CST [17573] FATAL:  lock file "postmaster.pid" already exists
+2023-04-05 01:07:28.654 CST [17573] HINT:  Is another postmaster (PID 13502) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-05 01:07:38.227 CST [17625] FATAL:  lock file "postmaster.pid" already exists
+2023-04-05 01:07:38.227 CST [17625] HINT:  Is another postmaster (PID 13502) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-05 01:07:40.099 CST [17662] FATAL:  lock file "postmaster.pid" already exists
+2023-04-05 01:07:40.099 CST [17662] HINT:  Is another postmaster (PID 13502) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-04-05 01:08:02.155 CST [13502] LOG:  received fast shutdown request
+2023-04-05 01:08:02.158 CST [13502] LOG:  aborting any active transactions
+2023-04-05 01:08:02.158 CST [13502] LOG:  background worker "logical replication launcher" (PID 13509) exited with exit code 1
+2023-04-05 01:08:02.158 CST [13504] LOG:  shutting down
+2023-04-05 01:08:02.172 CST [13502] LOG:  database system is shut down
+2023-04-05 01:08:05.938 CST [17789] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 01:08:05.939 CST [17789] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 01:08:05.943 CST [17789] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 01:08:05.957 CST [17790] LOG:  database system was shut down at 2023-04-05 01:08:02 CST
+2023-04-05 01:08:05.961 CST [17789] LOG:  database system is ready to accept connections
+2023-04-05 01:08:09.944 CST [17839] FATAL:  database "sercoi" does not exist
+2023-04-05 01:08:17.700 CST [17846] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:08:17.700 CST [17846] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.700 CST [17846] ERROR:  type vector does not exist
+2023-04-05 01:08:17.700 CST [17846] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.701 CST [17846] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type vector does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type vector does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type vector does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type vector does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type "vector" does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type "vector" does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type "vector" does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:08:17.701 CST [17846] ERROR:  type "vector" does not exist
+2023-04-05 01:08:17.701 CST [17846] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:11:16.547 CST [18368] FATAL:  database "sercoi" does not exist
+2023-04-05 01:11:23.362 CST [18384] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:11:23.362 CST [18384] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:11:23.363 CST [18384] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:11:23.363 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:11:23.363 CST [18384] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:11:23.364 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:11:23.364 CST [18384] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:11:23.364 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:11:23.364 CST [18384] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:16:17.462 CST [18384] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:16:17.462 CST [18384] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:16:17.462 CST [18384] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:16:17.462 CST [18384] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.462 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:16:17.462 CST [18384] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.462 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:16:17.462 CST [18384] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type vector does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:16:17.463 CST [18384] ERROR:  type "vector" does not exist
+2023-04-05 01:16:17.463 CST [18384] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:21:12.403 CST [20688] FATAL:  database "sercoi" does not exist
+2023-04-05 01:21:15.708 CST [20695] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:21:15.708 CST [20695] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector_temp
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE FUNCTION vector_out(vector_temp)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:21:15.709 CST [20695] ERROR:  type "vector_temp" is only a shell
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  ALTER TYPE vector_temp RENAME TO vector;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  type vector does not exist
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  type vector does not exist
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  type vector does not exist
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.709 CST [20695] ERROR:  type vector does not exist
+2023-04-05 01:21:15.709 CST [20695] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:21:15.710 CST [20695] ERROR:  type "vector" does not exist
+2023-04-05 01:21:15.710 CST [20695] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:21:15.710 CST [20695] ERROR:  type "vector" does not exist
+2023-04-05 01:21:15.710 CST [20695] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:21:15.710 CST [20695] ERROR:  type "vector" does not exist
+2023-04-05 01:21:15.710 CST [20695] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:21:15.710 CST [20695] ERROR:  type "vector" does not exist
+2023-04-05 01:21:15.710 CST [20695] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:28:39.007 CST [17789] LOG:  received fast shutdown request
+2023-04-05 01:28:39.010 CST [17789] LOG:  aborting any active transactions
+2023-04-05 01:28:39.010 CST [17789] LOG:  background worker "logical replication launcher" (PID 17796) exited with exit code 1
+2023-04-05 01:28:39.010 CST [17791] LOG:  shutting down
+2023-04-05 01:28:39.024 CST [17789] LOG:  database system is shut down
+2023-04-05 01:28:41.936 CST [23207] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 01:28:41.936 CST [23207] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 01:28:41.941 CST [23207] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 01:28:41.953 CST [23208] LOG:  database system was shut down at 2023-04-05 01:28:39 CST
+2023-04-05 01:28:41.957 CST [23207] LOG:  database system is ready to accept connections
+2023-04-05 01:28:45.338 CST [23235] FATAL:  database "sercoi" does not exist
+2023-04-05 01:28:52.679 CST [23242] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:28:52.679 CST [23242] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector_temp
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.679 CST [23242] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:28:52.679 CST [23242] STATEMENT:  CREATE FUNCTION vector_out(vector_temp)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type "vector_temp" is only a shell
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  ALTER TYPE vector_temp RENAME TO vector;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type vector does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type vector does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type vector does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type vector does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:28:52.680 CST [23242] ERROR:  type "vector" does not exist
+2023-04-05 01:28:52.680 CST [23242] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:28:52.681 CST [23242] ERROR:  type "vector" does not exist
+2023-04-05 01:28:52.681 CST [23242] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:28:52.681 CST [23242] ERROR:  type "vector" does not exist
+2023-04-05 01:28:52.681 CST [23242] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:28:52.681 CST [23242] ERROR:  type "vector" does not exist
+2023-04-05 01:28:52.681 CST [23242] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:31:17.558 CST [23708] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:31:17.558 CST [23708] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector_temp
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.559 CST [23708] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  CREATE FUNCTION vector_out(vector_temp)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.559 CST [23708] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:31:17.559 CST [23708] ERROR:  type "vector_temp" is only a shell
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  ALTER TYPE vector_temp RENAME TO vector;
+2023-04-05 01:31:17.559 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.559 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.559 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:17.559 CST [23708] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.560 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:17.560 CST [23708] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:17.560 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:17.560 CST [23708] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:31:17.560 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:17.560 CST [23708] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:31:17.560 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:17.560 CST [23708] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:31:17.560 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:17.560 CST [23708] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:31:33.222 CST [23708] ERROR:  could not load library "/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so": /home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector.so: undefined symbol: PG_RETURN_POINTER_P
+2023-04-05 01:31:33.222 CST [23708] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.222 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:33.222 CST [23708] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.222 CST [23708] ERROR:  function vector_in(cstring) does not exist
+2023-04-05 01:31:33.222 CST [23708] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:31:33.222 CST [23708] ERROR:  type "vector_temp" is only a shell
+2023-04-05 01:31:33.222 CST [23708] STATEMENT:  ALTER TYPE vector_temp RENAME TO vector;
+2023-04-05 01:31:33.222 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:33.222 CST [23708] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type vector does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:31:33.223 CST [23708] ERROR:  type "vector" does not exist
+2023-04-05 01:31:33.223 CST [23708] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:34:44.209 CST [24016] ERROR:  type "vector_temp" is only a shell
+2023-04-05 01:34:44.209 CST [24016] STATEMENT:  ALTER TYPE vector_temp RENAME TO vector;
+2023-04-05 01:35:04.607 CST [24016] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 01:35:04.607 CST [24016] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.607 CST [24016] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 01:35:04.607 CST [24016] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.607 CST [24016] ERROR:  type "vector" already exists
+2023-04-05 01:35:04.607 CST [24016] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 01:35:04.608 CST [24016] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.608 CST [24016] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.608 CST [24016] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.608 CST [24016] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 01:35:04.608 CST [24016] ERROR:  operator <#> already exists
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 01:35:04.608 CST [24016] ERROR:  operator <-> already exists
+2023-04-05 01:35:04.608 CST [24016] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 01:35:04.609 CST [24016] ERROR:  operator + already exists
+2023-04-05 01:35:04.609 CST [24016] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 01:35:04.609 CST [24016] ERROR:  operator - already exists
+2023-04-05 01:35:04.609 CST [24016] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 01:38:12.772 CST [24459] FATAL:  database "sercoi" does not exist
+2023-04-05 01:38:14.308 CST [24478] FATAL:  database "sercoi" does not exist
+2023-04-05 01:40:57.225 CST [24488] ERROR:  syntax error at or near "table" at character 25
+2023-04-05 01:40:57.225 CST [24488] STATEMENT:  select * from test
+	show table
+	show table test
+	insert into test ("{1.0,2.0,3.0}");
+2023-04-05 01:41:04.659 CST [24488] ERROR:  syntax error at or near ";" at character 35
+2023-04-05 01:41:04.659 CST [24488] STATEMENT:  insert into test ("{1.0,2.0,3.0}");
+2023-04-05 01:41:12.931 CST [24488] ERROR:  syntax error at or near ";" at character 36
+2023-04-05 01:41:12.931 CST [24488] STATEMENT:  insert into test ("{1.0,2.0,3.0}")
+	;
+2023-04-05 01:41:28.088 CST [24488] ERROR:  syntax error at or near "'{1.0,2.0,3.0}'" at character 19
+2023-04-05 01:41:28.088 CST [24488] STATEMENT:  insert into test ('{1.0,2.0,3.0}');
+2023-04-05 01:44:37.963 CST [25268] ERROR:  syntax error at or near "selete" at character 1
+2023-04-05 01:44:37.963 CST [25268] STATEMENT:  selete * from test;
+2023-04-05 01:44:54.691 CST [25268] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:44:54.691 CST [25268] STATEMENT:  select * from test;
+2023-04-05 01:45:00.826 CST [25268] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:45:00.826 CST [25268] STATEMENT:  select * from test;
+2023-04-05 01:45:47.219 CST [25268] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:45:47.219 CST [25268] STATEMENT:  select * from test;
+2023-04-05 01:46:31.678 CST [25268] ERROR:  syntax error at or near "if" at character 6
+2023-04-05 01:46:31.678 CST [25268] STATEMENT:  drop if exist vector
+	select * from test;
+2023-04-05 01:46:40.163 CST [25268] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:46:40.163 CST [25268] STATEMENT:  select * from test;
+2023-04-05 01:46:48.995 CST [26823] FATAL:  database "sercoi" does not exist
+2023-04-05 01:46:50.063 CST [26833] FATAL:  database "sercoi" does not exist
+2023-04-05 01:47:45.975 CST [26849] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:47:45.975 CST [26849] STATEMENT:  select * from test;
+2023-04-05 01:47:50.633 CST [26849] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 01:47:50.633 CST [26849] STATEMENT:  select * from test;
+2023-04-05 01:51:59.649 CST [23207] LOG:  received fast shutdown request
+2023-04-05 01:51:59.659 CST [23207] LOG:  aborting any active transactions
+2023-04-05 01:51:59.660 CST [23207] LOG:  background worker "logical replication launcher" (PID 23214) exited with exit code 1
+2023-04-05 01:51:59.660 CST [23209] LOG:  shutting down
+2023-04-05 01:51:59.673 CST [23207] LOG:  database system is shut down
+2023-04-05 18:18:46.978 CST [7026] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 18:18:46.979 CST [7026] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 18:18:46.984 CST [7026] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 18:18:46.999 CST [7027] LOG:  database system was shut down at 2023-04-05 01:51:59 CST
+2023-04-05 18:18:47.005 CST [7026] LOG:  database system is ready to accept connections
+2023-04-05 18:19:43.641 CST [7088] ERROR:  syntax error at or near "drop" at character 18
+2023-04-05 18:19:43.641 CST [7088] STATEMENT:  drop type vector
+	drop function vector_in
+	;
+2023-04-05 18:19:53.974 CST [7088] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 18:19:53.974 CST [7088] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.974 CST [7088] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 18:19:53.974 CST [7088] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.975 CST [7088] ERROR:  type "vector" already exists
+2023-04-05 18:19:53.975 CST [7088] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 18:19:53.975 CST [7088] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 18:19:53.975 CST [7088] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.975 CST [7088] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 18:19:53.975 CST [7088] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.975 CST [7088] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 18:19:53.975 CST [7088] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.975 CST [7088] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 18:19:53.975 CST [7088] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:19:53.976 CST [7088] ERROR:  operator <#> already exists
+2023-04-05 18:19:53.976 CST [7088] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 18:19:53.976 CST [7088] ERROR:  operator <-> already exists
+2023-04-05 18:19:53.976 CST [7088] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 18:19:53.976 CST [7088] ERROR:  operator + already exists
+2023-04-05 18:19:53.976 CST [7088] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 18:19:53.976 CST [7088] ERROR:  operator - already exists
+2023-04-05 18:19:53.976 CST [7088] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 18:23:06.543 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.543 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_in;
+2023-04-05 18:23:06.543 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.543 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_out;
+2023-04-05 18:23:06.543 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.543 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_size;
+2023-04-05 18:23:06.543 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.543 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_distance;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_add;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP FUNCTION IF EXIST vector_sub;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 14
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP TYPE IF EXIST vector;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP OPERATOR IF EXIST <#>;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP OPERATOR IF EXIST <->;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP OPERATOR IF EXIST +;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  syntax error at or near "EXIST" at character 18
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  DROP OPERATOR IF EXIST -;
+2023-04-05 18:23:06.544 CST [7088] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 18:23:06.544 CST [7088] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  type "vector" already exists
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 18:23:06.545 CST [7088] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:23:06.545 CST [7088] ERROR:  operator <#> already exists
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 18:23:06.545 CST [7088] ERROR:  operator <-> already exists
+2023-04-05 18:23:06.545 CST [7088] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 18:23:06.546 CST [7088] ERROR:  operator + already exists
+2023-04-05 18:23:06.546 CST [7088] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 18:23:06.546 CST [7088] ERROR:  operator - already exists
+2023-04-05 18:23:06.546 CST [7088] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 18:25:47.142 CST [7088] ERROR:  cannot drop function vector_in(cstring) because other objects depend on it
+2023-04-05 18:25:47.142 CST [7088] DETAIL:  type vector depends on function vector_in(cstring)
+	function vector_out(vector) depends on type vector
+	function vector_size(vector) depends on type vector
+	function vector_distance(vector,vector) depends on type vector
+	function vector_add(vector,vector) depends on type vector
+	function vector_sub(vector,vector) depends on type vector
+	operator <#>(NONE,vector) depends on type vector
+	operator <->(vector,vector) depends on type vector
+	operator +(vector,vector) depends on type vector
+	operator -(vector,vector) depends on type vector
+	column v of table test depends on type vector
+2023-04-05 18:25:47.142 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.142 CST [7088] STATEMENT:  DROP FUNCTION vector_in(cstring);
+2023-04-05 18:25:47.142 CST [7088] ERROR:  cannot drop function vector_out(vector) because other objects depend on it
+2023-04-05 18:25:47.142 CST [7088] DETAIL:  type vector depends on function vector_out(vector)
+	function vector_in(cstring) depends on type vector
+	function vector_size(vector) depends on type vector
+	function vector_distance(vector,vector) depends on type vector
+	function vector_add(vector,vector) depends on type vector
+	function vector_sub(vector,vector) depends on type vector
+	operator <#>(NONE,vector) depends on type vector
+	operator <->(vector,vector) depends on type vector
+	operator +(vector,vector) depends on type vector
+	operator -(vector,vector) depends on type vector
+	column v of table test depends on type vector
+2023-04-05 18:25:47.142 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.142 CST [7088] STATEMENT:  DROP FUNCTION vector_out(vector);
+2023-04-05 18:25:47.142 CST [7088] ERROR:  cannot drop function vector_size(vector) because other objects depend on it
+2023-04-05 18:25:47.142 CST [7088] DETAIL:  operator <#>(NONE,vector) depends on function vector_size(vector)
+2023-04-05 18:25:47.142 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.142 CST [7088] STATEMENT:  DROP FUNCTION vector_size(vector);
+2023-04-05 18:25:47.142 CST [7088] ERROR:  cannot drop function vector_distance(vector,vector) because other objects depend on it
+2023-04-05 18:25:47.142 CST [7088] DETAIL:  operator <->(vector,vector) depends on function vector_distance(vector,vector)
+2023-04-05 18:25:47.142 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.142 CST [7088] STATEMENT:  DROP FUNCTION vector_distance(vector, vector);
+2023-04-05 18:25:47.142 CST [7088] ERROR:  cannot drop function vector_add(vector,vector) because other objects depend on it
+2023-04-05 18:25:47.142 CST [7088] DETAIL:  operator +(vector,vector) depends on function vector_add(vector,vector)
+2023-04-05 18:25:47.142 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.142 CST [7088] STATEMENT:  DROP FUNCTION vector_add(vector, vector);
+2023-04-05 18:25:47.143 CST [7088] ERROR:  cannot drop function vector_sub(vector,vector) because other objects depend on it
+2023-04-05 18:25:47.143 CST [7088] DETAIL:  operator -(vector,vector) depends on function vector_sub(vector,vector)
+2023-04-05 18:25:47.143 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP FUNCTION vector_sub(vector, vector);
+2023-04-05 18:25:47.143 CST [7088] ERROR:  cannot drop type vector because other objects depend on it
+2023-04-05 18:25:47.143 CST [7088] DETAIL:  function vector_in(cstring) depends on type vector
+	function vector_out(vector) depends on type vector
+	function vector_size(vector) depends on type vector
+	function vector_distance(vector,vector) depends on type vector
+	function vector_add(vector,vector) depends on type vector
+	function vector_sub(vector,vector) depends on type vector
+	operator <#>(NONE,vector) depends on type vector
+	operator <->(vector,vector) depends on type vector
+	operator +(vector,vector) depends on type vector
+	operator -(vector,vector) depends on type vector
+	column v of table test depends on type vector
+2023-04-05 18:25:47.143 CST [7088] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP TYPE vector;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  syntax error at or near ";" at character 18
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP OPERATOR <#>;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  syntax error at or near ";" at character 18
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP OPERATOR <->;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  syntax error at or near ";" at character 16
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP OPERATOR +;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  syntax error at or near ";" at character 16
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  DROP OPERATOR -;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.143 CST [7088] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 18:25:47.143 CST [7088] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.144 CST [7088] ERROR:  type "vector" already exists
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 18:25:47.144 CST [7088] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.144 CST [7088] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.144 CST [7088] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.144 CST [7088] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 18:25:47.144 CST [7088] ERROR:  operator <#> already exists
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 18:25:47.144 CST [7088] ERROR:  operator <-> already exists
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 18:25:47.144 CST [7088] ERROR:  operator + already exists
+2023-04-05 18:25:47.144 CST [7088] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 18:25:47.145 CST [7088] ERROR:  operator - already exists
+2023-04-05 18:25:47.145 CST [7088] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 18:26:36.804 CST [8360] ERROR:  syntax error at or near "testVector" at character 17
+2023-04-05 18:26:36.804 CST [8360] STATEMENT:  drop table test testVector;
+2023-04-05 18:26:51.646 CST [8360] ERROR:  table "testvector" does not exist
+2023-04-05 18:26:51.646 CST [8360] STATEMENT:  drop table testVector;
+2023-04-05 18:27:12.570 CST [8360] ERROR:  syntax error at or near "ld" at character 1
+2023-04-05 18:27:12.570 CST [8360] STATEMENT:  ld
+	drop table testVector;
+2023-04-05 18:27:16.315 CST [8360] ERROR:  table "testvector" does not exist
+2023-04-05 18:27:16.315 CST [8360] STATEMENT:  drop table testVector;
+2023-04-05 18:27:20.977 CST [8360] ERROR:  table "test" does not exist
+2023-04-05 18:27:20.977 CST [8360] STATEMENT:  drop table test;
+2023-04-05 18:29:01.749 CST [8774] ERROR:  syntax error at or near "databases" at character 6
+2023-04-05 18:29:01.749 CST [8774] STATEMENT:  drop databases test;
+2023-04-05 18:29:09.486 CST [8774] ERROR:  cannot drop the currently open database
+2023-04-05 18:29:09.486 CST [8774] STATEMENT:  drop database test;
+2023-04-05 18:29:42.335 CST [9044] FATAL:  role "database" does not exist
+2023-04-05 18:30:26.571 CST [9149] FATAL:  database "sercoi" does not exist
+2023-04-05 18:30:42.766 CST [9156] ERROR:  database "testvector" does not exist
+2023-04-05 18:30:42.766 CST [9156] STATEMENT:  drop database testVector;
+2023-04-05 18:31:00.864 CST [9156] ERROR:  database "testvector" does not exist
+2023-04-05 18:31:00.864 CST [9156] STATEMENT:  drop database testVector;
+2023-04-05 18:31:16.991 CST [9156] ERROR:  database "testvector" does not exist
+2023-04-05 18:31:16.991 CST [9156] STATEMENT:  drop database testvector;
+2023-04-05 18:32:27.680 CST [9631] FATAL:  database "sercoi" does not exist
+2023-04-05 18:32:50.424 CST [9641] ERROR:  database "testvector" does not exist
+2023-04-05 18:32:50.424 CST [9641] STATEMENT:  drop database testVector
+	;
+2023-04-05 18:33:13.853 CST [9641] ERROR:  syntax error at or near "dropdb" at character 1
+2023-04-05 18:33:13.853 CST [9641] STATEMENT:  dropdb testVector
+	;
+2023-04-05 18:35:12.426 CST [10076] ERROR:  syntax error at or near "value" at character 18
+2023-04-05 18:35:12.426 CST [10076] STATEMENT:  insert into test value('{1.2,2.3,3.4}');
+2023-04-05 18:35:27.348 CST [10076] ERROR:  unrecognized configuration parameter "test"
+2023-04-05 18:35:27.348 CST [10076] STATEMENT:  show test;
+2023-04-05 18:35:34.953 CST [10076] ERROR:  syntax error at or near "table" at character 6
+2023-04-05 18:35:34.953 CST [10076] STATEMENT:  show table test;
+2023-04-05 18:35:48.168 CST [7026] LOG:  server process (PID 10076) was terminated by signal 11: Segmentation fault
+2023-04-05 18:35:48.168 CST [7026] DETAIL:  Failed process was running: select * from test;
+2023-04-05 18:35:48.168 CST [7026] LOG:  terminating any other active server processes
+2023-04-05 18:35:48.168 CST [7031] WARNING:  terminating connection because of crash of another server process
+2023-04-05 18:35:48.168 CST [7031] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 18:35:48.168 CST [7031] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 18:35:48.168 CST [10873] FATAL:  the database system is in recovery mode
+2023-04-05 18:35:48.169 CST [7026] LOG:  all server processes terminated; reinitializing
+2023-04-05 18:35:48.178 CST [10874] LOG:  database system was interrupted; last known up at 2023-04-05 18:33:46 CST
+2023-04-05 18:35:48.420 CST [10874] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 18:35:48.424 CST [10874] LOG:  redo starts at 0/1682750
+2023-04-05 18:35:48.424 CST [10874] LOG:  invalid record length at 0/16A5C60: wanted 24, got 0
+2023-04-05 18:35:48.424 CST [10874] LOG:  redo done at 0/16A5C28
+2023-04-05 18:35:48.454 CST [7026] LOG:  database system is ready to accept connections
+2023-04-05 18:36:22.228 CST [7026] LOG:  server process (PID 10987) was terminated by signal 11: Segmentation fault
+2023-04-05 18:36:22.228 CST [7026] DETAIL:  Failed process was running: select * from test;
+2023-04-05 18:36:22.228 CST [7026] LOG:  terminating any other active server processes
+2023-04-05 18:36:22.228 CST [10878] WARNING:  terminating connection because of crash of another server process
+2023-04-05 18:36:22.228 CST [10878] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 18:36:22.228 CST [10878] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 18:36:22.228 CST [11050] FATAL:  the database system is in recovery mode
+2023-04-05 18:36:22.228 CST [7026] LOG:  all server processes terminated; reinitializing
+2023-04-05 18:36:22.237 CST [11051] LOG:  database system was interrupted; last known up at 2023-04-05 18:35:48 CST
+2023-04-05 18:36:22.474 CST [11051] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 18:36:22.477 CST [11051] LOG:  redo starts at 0/16A5CD8
+2023-04-05 18:36:22.477 CST [11051] LOG:  invalid record length at 0/16A5D10: wanted 24, got 0
+2023-04-05 18:36:22.477 CST [11051] LOG:  redo done at 0/16A5CD8
+2023-04-05 18:36:22.495 CST [7026] LOG:  database system is ready to accept connections
+2023-04-05 18:37:42.237 CST [7026] LOG:  received fast shutdown request
+2023-04-05 18:37:42.240 CST [7026] LOG:  aborting any active transactions
+2023-04-05 18:37:42.241 CST [7026] LOG:  background worker "logical replication launcher" (PID 11057) exited with exit code 1
+2023-04-05 18:37:42.241 CST [11052] LOG:  shutting down
+2023-04-05 18:37:42.262 CST [7026] LOG:  database system is shut down
+2023-04-05 18:37:45.388 CST [11329] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 18:37:45.388 CST [11329] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 18:37:45.393 CST [11329] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 18:37:45.409 CST [11330] LOG:  database system was shut down at 2023-04-05 18:37:42 CST
+2023-04-05 18:37:45.412 CST [11329] LOG:  database system is ready to accept connections
+2023-04-05 18:37:49.509 CST [11379] FATAL:  database "sercoi" does not exist
+2023-04-05 18:38:25.121 CST [11386] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 18:38:25.121 CST [11386] STATEMENT:  select v from test;
+2023-04-05 18:42:06.717 CST [11386] ERROR:  trying to store an on-disk heap tuple into wrong type of slot
+2023-04-05 18:42:06.717 CST [11386] STATEMENT:  select v from test;
+2023-04-05 18:44:32.795 CST [11329] LOG:  server process (PID 12324) was terminated by signal 11: Segmentation fault
+2023-04-05 18:44:32.795 CST [11329] DETAIL:  Failed process was running: select * from test;
+2023-04-05 18:44:32.795 CST [11329] LOG:  terminating any other active server processes
+2023-04-05 18:44:32.795 CST [11334] WARNING:  terminating connection because of crash of another server process
+2023-04-05 18:44:32.795 CST [11334] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 18:44:32.795 CST [11334] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 18:44:32.795 CST [12648] FATAL:  the database system is in recovery mode
+2023-04-05 18:44:32.795 CST [11329] LOG:  all server processes terminated; reinitializing
+2023-04-05 18:44:32.805 CST [12649] LOG:  database system was interrupted; last known up at 2023-04-05 18:42:46 CST
+2023-04-05 18:44:33.038 CST [12649] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 18:44:33.041 CST [12649] LOG:  redo starts at 0/16A6020
+2023-04-05 18:44:33.042 CST [12649] LOG:  invalid record length at 0/16B9780: wanted 24, got 0
+2023-04-05 18:44:33.042 CST [12649] LOG:  redo done at 0/16B9748
+2023-04-05 18:44:33.066 CST [11329] LOG:  database system is ready to accept connections
+2023-04-05 18:45:04.685 CST [11329] LOG:  server process (PID 12725) was terminated by signal 11: Segmentation fault
+2023-04-05 18:45:04.685 CST [11329] DETAIL:  Failed process was running: select v from test;
+2023-04-05 18:45:04.685 CST [11329] LOG:  terminating any other active server processes
+2023-04-05 18:45:04.685 CST [12653] WARNING:  terminating connection because of crash of another server process
+2023-04-05 18:45:04.685 CST [12653] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 18:45:04.685 CST [12653] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 18:45:04.685 CST [12845] FATAL:  the database system is in recovery mode
+2023-04-05 18:45:04.686 CST [11329] LOG:  all server processes terminated; reinitializing
+2023-04-05 18:45:04.694 CST [12846] LOG:  database system was interrupted; last known up at 2023-04-05 18:44:33 CST
+2023-04-05 18:45:04.922 CST [12846] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 18:45:04.925 CST [12846] LOG:  redo starts at 0/16B97F8
+2023-04-05 18:45:04.925 CST [12846] LOG:  invalid record length at 0/16B9830: wanted 24, got 0
+2023-04-05 18:45:04.925 CST [12846] LOG:  redo done at 0/16B97F8
+2023-04-05 18:45:04.941 CST [11329] LOG:  database system is ready to accept connections
+2023-04-05 18:45:33.976 CST [12928] ERROR:  syntax error at or near "<#>" at character 1
+2023-04-05 18:45:33.976 CST [12928] STATEMENT:  <#> '{1.1,2.2,3.3}'
+	;
+2023-04-05 18:46:33.300 CST [11329] LOG:  server process (PID 12928) was terminated by signal 11: Segmentation fault
+2023-04-05 18:46:33.300 CST [11329] DETAIL:  Failed process was running: select '{1.1,2.2,3.3}'::vector;
+2023-04-05 18:46:33.301 CST [11329] LOG:  terminating any other active server processes
+2023-04-05 18:46:33.301 CST [12850] WARNING:  terminating connection because of crash of another server process
+2023-04-05 18:46:33.301 CST [12850] DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2023-04-05 18:46:33.301 CST [12850] HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2023-04-05 18:46:33.301 CST [13286] FATAL:  the database system is in recovery mode
+2023-04-05 18:46:33.301 CST [11329] LOG:  all server processes terminated; reinitializing
+2023-04-05 18:46:33.310 CST [13287] LOG:  database system was interrupted; last known up at 2023-04-05 18:45:04 CST
+2023-04-05 18:46:33.545 CST [13287] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-04-05 18:46:33.548 CST [13287] LOG:  redo starts at 0/16B98A8
+2023-04-05 18:46:33.548 CST [13287] LOG:  invalid record length at 0/16B98E0: wanted 24, got 0
+2023-04-05 18:46:33.548 CST [13287] LOG:  redo done at 0/16B98A8
+2023-04-05 18:46:33.566 CST [11329] LOG:  database system is ready to accept connections
+2023-04-05 18:50:10.497 CST [13478] ERROR:  syntax error at or near "create" at character 8
+2023-04-05 18:50:10.497 CST [13478] STATEMENT:  select create table test_vector (id integer primary key, vec vector);
+2023-04-05 18:50:18.523 CST [13478] ERROR:  syntax error at or near ";" at character 13
+2023-04-05 18:50:18.523 CST [13478] STATEMENT:  CREATE TABLE;
+2023-04-05 18:50:42.052 CST [13478] ERROR:  compressed data is corrupted at character 11
+2023-04-05 18:50:42.052 CST [13478] STATEMENT:  select <#>'{1,2}';
+2023-04-05 18:56:38.579 CST [13478] ERROR:  compressed data is corrupted at character 12
+2023-04-05 18:56:38.579 CST [13478] STATEMENT:  select <#> '{1,2}';
+2023-04-05 18:57:07.844 CST [13478] ERROR:  compressed data is corrupted at character 12
+2023-04-05 18:57:07.844 CST [13478] STATEMENT:  select <#> '{1.1,2.2}';
+2023-04-05 18:57:19.143 CST [13478] ERROR:  compressed data is corrupted at character 11
+2023-04-05 18:57:19.143 CST [13478] STATEMENT:  select <#>'{1.1,2.2}';
+2023-04-05 18:57:39.064 CST [13478] ERROR:  compressed data is corrupted at character 12
+2023-04-05 18:57:39.064 CST [13478] STATEMENT:  select <#> '{1.1,2.2}';
+2023-04-05 19:05:25.987 CST [16429] ERROR:  function "vector_in" already exists with same argument types
+2023-04-05 19:05:25.987 CST [16429] STATEMENT:  CREATE FUNCTION vector_in(cstring)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.987 CST [16429] ERROR:  function "vector_out" already exists with same argument types
+2023-04-05 19:05:25.987 CST [16429] STATEMENT:  CREATE FUNCTION vector_out(vector)
+	    RETURNS cstring
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.988 CST [16429] ERROR:  type "vector" already exists
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE TYPE vector (
+	    input = vector_in,
+	    output = vector_out
+	);
+2023-04-05 19:05:25.988 CST [16429] ERROR:  function "vector_size" already exists with same argument types
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE FUNCTION vector_size(vector)
+	    RETURNS int4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.988 CST [16429] ERROR:  function "vector_distance" already exists with same argument types
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE FUNCTION vector_distance(vector, vector)
+	    RETURNS float4
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.988 CST [16429] ERROR:  function "vector_add" already exists with same argument types
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE FUNCTION vector_add(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.988 CST [16429] ERROR:  function "vector_sub" already exists with same argument types
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE FUNCTION vector_sub(vector, vector)
+	    RETURNS vector
+	    AS '/home/sercoi/PGDev/postgresql-12.5/src/tutorial/vector'
+	    LANGUAGE C IMMUTABLE STRICT;
+2023-04-05 19:05:25.988 CST [16429] ERROR:  operator <#> already exists
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE OPERATOR <#> (
+	    rightarg = vector,
+	    procedure = vector_size
+	);
+2023-04-05 19:05:25.988 CST [16429] ERROR:  operator <-> already exists
+2023-04-05 19:05:25.988 CST [16429] STATEMENT:  CREATE OPERATOR <-> (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_distance
+	);
+2023-04-05 19:05:25.989 CST [16429] ERROR:  operator + already exists
+2023-04-05 19:05:25.989 CST [16429] STATEMENT:  CREATE OPERATOR + (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_add,
+	    commutator = +
+	);
+2023-04-05 19:05:25.989 CST [16429] ERROR:  operator - already exists
+2023-04-05 19:05:25.989 CST [16429] STATEMENT:  CREATE OPERATOR - (
+	    leftarg = vector,
+	    rightarg = vector,
+	    procedure = vector_sub,
+	    commutator = -
+	);
+2023-04-05 19:05:39.735 CST [16429] ERROR:  syntax error at or near "/" at character 1
+2023-04-05 19:05:39.735 CST [16429] STATEMENT:  /c postgres
+	;
+2023-04-05 19:05:47.818 CST [16659] FATAL:  database "sercoi" does not exist
+2023-04-05 19:06:36.604 CST [16778] ERROR:  compressed data is corrupted at character 11
+2023-04-05 19:06:36.604 CST [16778] STATEMENT:  select <#>'{1,2}';
+2023-04-05 19:07:11.204 CST [16778] ERROR:  compressed data is corrupted at character 11
+2023-04-05 19:07:11.204 CST [16778] STATEMENT:  select <#>'{1,2,3.0,4.5,5.5,6.5}';
+2023-04-05 19:09:29.956 CST [17330] FATAL:  database "sercoi" does not exist
+2023-04-05 19:10:04.379 CST [17399] ERROR:  compressed data is corrupted at character 11
+2023-04-05 19:10:04.379 CST [17399] STATEMENT:  select <#>'{1,2}';
+2023-04-05 19:14:08.875 CST [17399] ERROR:  compressed data is corrupted at character 11
+2023-04-05 19:14:08.875 CST [17399] STATEMENT:  select <#>'{1.0,2.0}';
+2023-04-05 19:34:34.556 CST [11329] LOG:  received fast shutdown request
+2023-04-05 19:34:34.558 CST [11329] LOG:  aborting any active transactions
+2023-04-05 19:34:34.559 CST [17399] FATAL:  terminating connection due to administrator command
+2023-04-05 19:34:34.559 CST [11329] LOG:  background worker "logical replication launcher" (PID 13298) exited with exit code 1
+2023-04-05 19:34:34.559 CST [13293] LOG:  shutting down
+2023-04-05 19:34:34.579 CST [11329] LOG:  database system is shut down
+2023-04-05 22:02:25.719 CST [21445] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-04-05 22:02:25.720 CST [21445] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-04-05 22:02:25.725 CST [21445] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-04-05 22:02:25.756 CST [21445] LOG:  redirecting log output to logging collector process
+2023-04-05 22:02:25.756 CST [21445] HINT:  Future log output will appear in directory "log".

@@ -1,151 +1,206 @@
+#include "c.h"
 #include "postgres.h"
-#include "fmgr.h"
 #include "common/shortest_dec.h"
-#include "errcodes.h"
-#include <string.h>
+#include "fmgr.h"
+#include "utils/elog.h"
+#include "utils/palloc.h"
+#include <ctype.h>
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 PG_MODULE_MAGIC;
 
 typedef struct Vector
 {
-    float data[FLEXIBLE_ARRAY_MEMBER];
-    int size;
-}Vector;
+    int32 size;
+    float4 data[FLEXIBLE_ARRAY_MEMBER];
+} Vector;
 
 PG_FUNCTION_INFO_V1(vector_in);
 
-Datum
-vector_in(PG_FUNCTION_ARGS)
+Datum vector_in(PG_FUNCTION_ARGS)
 {
-    char *str = PG_GETARG_CSTRING(0);
-    if(str[0]!='{'||str[strlen(str) - 1]!='}'){
+    char* str = PG_GETARG_CSTRING(0);
+    if (str[0] != '{' || str[strlen(str) - 1] != '}') {
         ereport(ERROR,
                 (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
-                errmsg("vector must begin with \'{\' and end with \'}\'")));
+                 errmsg("vector must begin with \'{\' and end with \'}\'")));
     }
-    float data[1024];
-    int size=0;
-    const char s[2]=",";
-    char *token;
+    float4 data[1024];
+    int32 size = 0;
+    const char s[] = "{,}";
+    char* token;
     token = strtok(str, s);
-    if(token == NULL){
+    if (token == NULL) {
         ereport(ERROR,
                 (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
-                errmsg("dimension of vector must be greater than one")));
+                 errmsg("dimension of vector must be greater than one")));
     }
-    while(token != NULL){   
-        data[size++] = strtof(token, NULL); 
-        token = strtok(NULL, s);       
+    while (token != NULL) {
+        // elog(LOG, "token:%s", token);
+        // int spaceAllow = true;
+        // for (int i = 0; i < strlen(token); i++) {
+        //     if (!isdigit(token[i])) {
+        //         if (token[i] == ' ' && !spaceAllow) {
+        //             ereport(ERROR,
+        //                     (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+        //                      errmsg("vector format error: error space")));
+        //         }
+        //         else if (token[i] != ' ' &&
+        //                  (!i && token[i] != '-' && token[i] != '+' ||
+        //                   i && token[i] != '.')) {
+        //             ereport(ERROR,
+        //                     (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
+        //                      errmsg("vector format error")));
+        //         }
+        //     }
+        //     if (isdigit(token[i]) || token[i] == '+' || token[i] == '-') {
+        //         spaceAllow = false;
+        //     }
+        //     if (token[i] == ',') {
+        //         spaceAllow = true;
+        //     }
+        // }
+        data[size++] = strtof(token, NULL);
+        token = strtok(NULL, s);
     }
-    Vector *result = (Vector *)palloc(sizeof(Vector) + size * sizeof(float));
-    result->data = (float *) palloc((size + VARHDRSZ) * sizeof(float));
-    SET_VARSIZE(result->data, size + VARHDRSZ);
-    for(int i = 0; i < size; i++){
-        result->data[i]=data[i];
+    Vector* result = (Vector*)palloc(sizeof(Vector) + size * sizeof(float4));
+    // memcpy(result->data, data, (size) * sizeof(float4));
+    for (int32 i = 0; i < size; i++) {
+        result->data[i] = data[i];
+        // elog(LOG, "resultdata:%f data: %f", result->data[i], data[i]);
     }
     result->size = size;
+    SET_VARSIZE(result, size * sizeof(float4) + VARHDRSZ);
+    int32 sizeTemp = (VARSIZE_ANY(result) - VARHDRSZ) / sizeof(float4);
+    float4* temp = (float4*)VARDATA_ANY(result);
+    // elog(LOG, "resultSize:%d", sizeTemp);
+    // for (int i = 0; i < size; i++) {
+    //     elog(LOG, "data: %f ", result->data[i]);
+    // }
     PG_RETURN_POINTER(result);
 }
 
 PG_FUNCTION_INFO_V1(vector_out);
 
-Datum
-vector_out(PG_FUNCTION_ARGS)
+Datum vector_out(PG_FUNCTION_ARGS)
 {
-    Vector *v = PG_GETARG_POINTER(0);
-    int size=0;
-    char *result = (char *)palloc((v->size * 20 + 2) * sizeof(char));
+    Vector* v = (Vector*)PG_GETARG_POINTER(0);
+    int32 size = 0;
+    int dimension = (VARSIZE_ANY(v) - VARHDRSZ) / sizeof(float4);
+    char* result = (char*)palloc((dimension * 50) * sizeof(char));
     result[size++] = '{';
-    for (int i = 0; i < v->size; i++) {    
-        float x = v->data[i];
-        int len;
-        char *temp = float_to_shortest_decimal_bufn(x, 0, 6, false, &len, NULL, NULL);  
-        memcpy(result->data + size, temp, len);
-        size += len;
-        if(i == v->size - 1 ){
+    // elog(LOG, "dimension:%d", dimension);
+    for (int32 i = 0; i < dimension; i++) {
+        // elog(LOG, "i:%d", i);
+        float4 x = v->data[i];
+        char temp[64];
+        int32 len = float_to_shortest_decimal_bufn(x, temp);
+        // elog(LOG, "len:%d", len);
+        for (int j = 0; j < len; j++) {
+            result[size++] = temp[j];
+            // elog(LOG,
+            //      "result[%d]:%c temp:%c",
+            //      size - 1,
+            //      result[size - 1],
+            //      temp[j]);
+        }
+        if (i == dimension - 1) {
             result[size++] = '}';
             result[size++] = '\0';
         }
         else
             result[size++] = ',';
     }
-    PG_RETURN_POINTER(result);
+    result[size++] = 't';
+    PG_RETURN_CSTRING(result);
 }
 
 PG_FUNCTION_INFO_V1(vector_size);
 
-Datum
-vector_size(PG_FUNCTION_ARGS)
+Datum vector_size(PG_FUNCTION_ARGS)
 {
-    Vector *v = PG_GETARG_POINTER(0);
-    int size = v->size;
-    PG_RETURN_INT(size);
+    Vector* v = (Vector*)PG_GETARG_POINTER(0);
+    int32 size = (VARSIZE_ANY(v) - VARHDRSZ) / sizeof(float4);
+    PG_RETURN_INT32(size);
 }
-
-#define pow(c) ((c)*(c))
 
 PG_FUNCTION_INFO_V1(vector_distance);
 
-Datum
-vector_distance(PG_FUNCTION_ARGS)
+Datum vector_distance(PG_FUNCTION_ARGS)
 {
-    float dis = 0;
-    Vector *left = PG_GETARG_POINTER(0);
-    Vector *right = PG_GETARG_POINTER(1);
-    if(left->size != right->size){
+    float4 dis = 0;
+    Vector* left = (Vector*)PG_GETARG_POINTER(0);
+    Vector* right = (Vector*)PG_GETARG_POINTER(1);
+    int32 leftSize = (VARSIZE_ANY(left) - VARHDRSZ) / sizeof(float4);
+    int32 rightSize = (VARSIZE_ANY(right) - VARHDRSZ) / sizeof(float4);
+    float4* varLeft = (float4*)VARDATA(left);
+    float4* varRight = (float4*)VARDATA(right);
+    if (leftSize != rightSize) {
         ereport(ERROR,
                 (errcode(ERRCODE_INVALID_PARAMETER_VALUE),
-                errmsg("vectors must have same dimension")));
+                 errmsg("vectors must have same dimension")));
     }
-    for(int i = 0; i < left->size; i++){
-        dis += pow(left->data[i]-right->data[i]);
+    // elog(LOG, "left->size %d", leftSize);
+    // elog(LOG, "right->size %d", rightSize);
+    // elog(LOG, "data[VAR]:%f", varLeft[0]);
+    for (int32 i = 0; i < leftSize; i++) {
+        // elog(LOG, "left%f,right%f", varLeft[i], varRight[i]);
+        dis += pow(varLeft[i] - varRight[i], 2);
+        // elog(LOG, "dis:%f", dis);
     }
-    dis = sqrt(dis);
+    dis = (float)sqrt(dis);
+    // elog(LOG, "dis:%f", dis);
     PG_RETURN_FLOAT4(dis);
 }
 
 PG_FUNCTION_INFO_V1(vector_add);
 
-Datum
-vector_add(PG_FUNCTION_ARGS)
+Datum vector_add(PG_FUNCTION_ARGS)
 {
-    Vector *left = PG_GETARG_POINTER(0);
-    Vector *right = PG_GETARG_POINTER(1);
-    if(left->size != right->size){
+    Vector* left = (Vector*)PG_GETARG_POINTER(0);
+    Vector* right = (Vector*)PG_GETARG_POINTER(1);
+    int32 leftSize = (VARSIZE_ANY(left) - VARHDRSZ) / sizeof(float4);
+    int32 rightSize = (VARSIZE_ANY(right) - VARHDRSZ) / sizeof(float4);
+    float4* varLeft = (float4*)VARDATA(left);
+    float4* varRight = (float4*)VARDATA(right);
+    if (leftSize != rightSize) {
         ereport(ERROR,
                 (errcode(ERRCODE_INVALID_PARAMETER_VALUE),
-                errmsg("vectors must have same dimension")));
+                 errmsg("vectors must have same dimension")));
     }
-    Vector *result = (Vector *)palloc(sizeof(Vector));
-    result->data = (float *)palloc(left->size + VARHDRSZ);
-    result->size = left->size;
-    SET_VARSIZE(result->data, left->size + VARHDRSZ);
-    for(int i = 0; i < result->size; i++){
-        result->data[i] = left->data[i] + right->data[i];
+    Vector* result =
+        (Vector*)palloc(sizeof(Vector) + leftSize * sizeof(float4));
+    result->size = leftSize;
+    for (int32 i = 0; i < leftSize; i++) {
+        result->data[i] = varLeft[i] + varRight[i];
     }
+    SET_VARSIZE(result, leftSize * sizeof(float4) + VARHDRSZ);
     PG_RETURN_POINTER(result);
 }
 
 PG_FUNCTION_INFO_V1(vector_sub);
 
-Datum
-vector_sub(PG_FUNCTION_ARGS)
+Datum vector_sub(PG_FUNCTION_ARGS)
 {
-    Vector *left = PG_GETARG_POINTER(0);
-    Vector *right = PG_GETARG_POINTER(1);
-    if(left->size != right->size){
+    Vector* left = (Vector*)PG_GETARG_POINTER(0);
+    Vector* right = (Vector*)PG_GETARG_POINTER(1);
+    int32 leftSize = (VARSIZE_ANY(left) - VARHDRSZ) / sizeof(float4);
+    int32 rightSize = (VARSIZE_ANY(right) - VARHDRSZ) / sizeof(float4);
+    float4* varLeft = (float4*)VARDATA(left);
+    float4* varRight = (float4*)VARDATA(right);
+    if (leftSize != rightSize) {
         ereport(ERROR,
                 (errcode(ERRCODE_INVALID_PARAMETER_VALUE),
-                errmsg("vectors must have same dimension"));)
+                 errmsg("vectors must have same dimension")));
     }
-    Vector *result = (Vector *)palloc(sizeof(Vector));
-    result->data = (float *)palloc(left->size + VARHDRSZ);
-    result->size = left->size;
-    SET_VARSIZE(result->data, left->size + VARHDRSZ);
-    for(int i = 0; i < result->size; i++){
-        result->data[i] = left->data[i] - right->data[i];
+    Vector* result =
+        (Vector*)palloc(sizeof(Vector) + leftSize * sizeof(float4));
+    result->size = leftSize;
+    for (int32 i = 0; i < result->size; i++) {
+        result->data[i] = varLeft[i] - varRight[i];
     }
+    SET_VARSIZE(result, leftSize * sizeof(float4) + VARHDRSZ);
     PG_RETURN_POINTER(result);
 }
-

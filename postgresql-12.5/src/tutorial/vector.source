@@ -1,5 +1,4 @@
 
-
 CREATE FUNCTION vector_in(cstring)
     RETURNS vector
     AS '_OBJWD_/vector'
@@ -10,13 +9,19 @@ CREATE FUNCTION vector_out(vector)
     AS '_OBJWD_/vector'
     LANGUAGE C IMMUTABLE STRICT;
 
+CREATE TYPE vector (
+    input = vector_in,
+    output = vector_out
+);
+
+
 CREATE FUNCTION vector_size(vector)
-    RETURNS INT
+    RETURNS int4
     AS '_OBJWD_/vector'
     LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION vector_distance(vector, vector)
-    RETURNS FLOAT4
+    RETURNS float4
     AS '_OBJWD_/vector'
     LANGUAGE C IMMUTABLE STRICT;
 
@@ -30,15 +35,9 @@ CREATE FUNCTION vector_sub(vector, vector)
     AS '_OBJWD_/vector'
     LANGUAGE C IMMUTABLE STRICT;
 
-CREATE TYPE vector (
-    internallength = 16,
-    input = vector_in,
-    output = vector_out
-);
 
 CREATE OPERATOR <#> (
     rightarg = vector,
-    procedure = vector_size,
     procedure = vector_size
 );
 
