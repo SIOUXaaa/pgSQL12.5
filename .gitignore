@@ -16,3 +16,9 @@ data/global/pg_control
 data/global/pg_internal.init
 data/pg_wal/000000010000000000000001
 data
+data/postmaster.pid
+data/base/12675/pg_internal.init
+data/global/pg_control
+data/global/pg_internal.init
+data/pg_wal/000000010000000000000001
+data/pg_xact/0000
