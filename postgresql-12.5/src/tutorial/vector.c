@@ -30,14 +30,88 @@ Datum vector_in(PG_FUNCTION_ARGS)
     int size = 0;
     const char s[] = "{,}";
     char *token;
-    bool spaceAllow;
-    bool dotAllow;
-    bool addOrSubAllow;
-    bool digitAppearance;
+    bool spaceAllow, dotAllow, addOrSubAllow, digitAppearance, commaAllow,
+        dotAppearance;
     Vector *result;
     if (str[0] != '{' || str[strlen(str) - 1] != '}')
     {
         THROW_ERROR("Vector must begin with \'{\' and end with \'}\'");
+    }
+    spaceAllow = true;
+    dotAllow = false;
+    addOrSubAllow = true;
+    commaAllow = false;
+    digitAppearance = false;
+    dotAppearance = false;
+    for (int i = 1; i < strlen(str)-1; i++)
+    {
+        if (isdigit(str[i]))
+        {
+            dotAllow = true;
+            spaceAllow = false;
+            addOrSubAllow = false;
+            commaAllow = true;
+            digitAppearance = true;
+        }
+        else
+        {
+            if (str[i] == '+' || str[i] == '-')
+            {
+                if (addOrSubAllow)
+                {
+                    addOrSubAllow = false;
+                    spaceAllow = false;
+                }
+                else
+                {
+                    THROW_ERROR("Error in addition or subtraction");
+                }
+            }
+            else if (str[i] == '.')
+            {
+                if (dotAllow && !dotAppearance)
+                {
+                    dotAllow = false;
+                    spaceAllow = false;
+                    digitAppearance = false;
+                    dotAppearance = true;
+                }
+                else
+                {
+                    THROW_ERROR("Error in dot");
+                }
+            }
+            else if (str[i] == ' ')
+            {
+                if (!spaceAllow)
+                {
+                    THROW_ERROR("Error in space");
+                }
+            }
+            else if (str[i] == ',')
+            {
+                if (commaAllow)
+                {
+                    spaceAllow = true;
+                    dotAllow = false;
+                    addOrSubAllow = true;
+                    commaAllow = false;
+                    digitAppearance = false;
+                    dotAppearance = false;                 
+                }
+                else
+                {
+                    THROW_ERROR("Error in commaAllow");
+                }
+            }
+            else{
+                THROW_ERROR("Error in unsupported symbol");
+            }
+        }
+    }
+    if (!digitAppearance)
+    {
+        THROW_ERROR("Error in no number or other");
     }
     token = strtok(str, s);
     if (token == NULL)
@@ -46,59 +120,7 @@ Datum vector_in(PG_FUNCTION_ARGS)
     }
     while (token != NULL)
     {
-        elog(NOTICE, "token: %s", token);
-        spaceAllow = true;
-        dotAllow = false;
-        addOrSubAllow = true;
-        digitAppearance = false;
-        for (int i = 0; i < strlen(token); i++)
-        {
-            if (isdigit(token[i]))
-            {
-                dotAllow = true;
-                spaceAllow = false;
-                addOrSubAllow = false;
-                digitAppearance = true;
-            }
-            else
-            {
-                if (token[i] == '+' || token[i] == '-')
-                {
-                    if (addOrSubAllow)
-                    {
-                        addOrSubAllow = false;
-                        spaceAllow = false;
-                    }
-                    else
-                    {
-                        THROW_ERROR("Error in addition or subtraction");
-                    }
-                }
-                if (token[i] == '.')
-                {
-                    if (dotAllow)
-                    {
-                        dotAllow = false;
-                        spaceAllow = false;
-                    }
-                    else
-                    {
-                        THROW_ERROR("Error in dot");
-                    }
-                }
-                if (token[i] == ' ')
-                {
-                    if (!spaceAllow)
-                    {
-                        THROW_ERROR("Error in space");
-                    }
-                }
-            }
-        }
-        if (!digitAppearance)
-        {
-            THROW_ERROR("Error in no number");
-        }
+
         data[size++] = strtof(token, NULL);
         token = strtok(NULL, s);
     }
