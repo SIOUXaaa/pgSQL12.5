@@ -645,3 +645,53 @@
 2023-04-05 22:02:22.644 CST [8016] LOG:  background worker "logical replication launcher" (PID 15495) exited with exit code 1
 2023-04-05 22:02:22.645 CST [15490] LOG:  shutting down
 2023-04-05 22:02:22.665 CST [8016] LOG:  database system is shut down
+2023-05-14 21:59:13.181 CST [10514] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 21:59:13.182 CST [10514] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 21:59:13.186 CST [10514] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 21:59:13.199 CST [10514] LOG:  redirecting log output to logging collector process
+2023-05-14 21:59:13.199 CST [10514] HINT:  Future log output will appear in directory "log".
+2023-05-14 14:11:12.991 GMT [15243] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:11:12.991 GMT [15243] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:11:23.302 GMT [15309] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:11:23.302 GMT [15309] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:11:32.846 GMT [15371] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:11:32.846 GMT [15371] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:12:00.185 GMT [15470] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:12:00.185 GMT [15470] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:12:56.727 GMT [15582] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:12:56.727 GMT [15582] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:14:59.962 GMT [16171] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:14:59.962 GMT [16171] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:19:08.208 GMT [16939] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:19:08.208 GMT [16939] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 14:20:37.733 GMT [17191] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 752
+2023-05-14 14:20:37.733 GMT [17191] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 22:21:07.177 CST [17341] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 22:21:07.178 CST [17341] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 22:21:07.183 CST [17341] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 22:21:07.195 CST [17341] LOG:  redirecting log output to logging collector process
+2023-05-14 22:21:07.195 CST [17341] HINT:  Future log output will appear in directory "log".
+2023-05-14 14:21:47.242 GMT [17646] LOG:  unrecognized configuration parameter "join_methods" in file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" line 751
+2023-05-14 14:21:47.242 GMT [17646] FATAL:  configuration file "/home/sercoi/PGDev/pghome/../data/postgresql.conf" contains errors
+2023-05-14 22:23:38.873 CST [17930] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 22:23:38.873 CST [17930] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 22:23:38.879 CST [17930] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 22:23:38.889 CST [17930] LOG:  redirecting log output to logging collector process
+2023-05-14 22:23:38.889 CST [17930] HINT:  Future log output will appear in directory "log".
+2023-05-14 22:29:21.983 CST [18899] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 22:29:21.983 CST [18899] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 22:29:21.988 CST [18899] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 22:29:22.002 CST [18899] LOG:  redirecting log output to logging collector process
+2023-05-14 22:29:22.002 CST [18899] HINT:  Future log output will appear in directory "log".
+2023-05-14 22:31:23.356 CST [21193] FATAL:  lock file "postmaster.pid" already exists
+2023-05-14 22:31:23.356 CST [21193] HINT:  Is another postmaster (PID 18899) running in data directory "/home/sercoi/PGDev/pghome/../data"?
+2023-05-14 22:31:34.920 CST [21303] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 22:31:34.920 CST [21303] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 22:31:34.925 CST [21303] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 22:31:34.936 CST [21303] LOG:  redirecting log output to logging collector process
+2023-05-14 22:31:34.936 CST [21303] HINT:  Future log output will appear in directory "log".
+2023-05-14 22:33:33.096 CST [21720] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-14 22:33:33.097 CST [21720] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-14 22:33:33.102 CST [21720] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-14 22:33:33.112 CST [21720] LOG:  redirecting log output to logging collector process
+2023-05-14 22:33:33.112 CST [21720] HINT:  Future log output will appear in directory "log".

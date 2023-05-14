@@ -1684,9 +1684,7 @@ ServerLoop(void)
 			/* Needs to run with blocked signals! */
 			DetermineSleepTime(&timeout);
 
-			PG_SETMASK(&UnBlockSig);
-
-			selres = select(nSockets, &rmask, NULL, NULL, &timeout);
+			PG_SETMASK(&UnBlockSig);			selres = select(nSockets, &rmask, NULL, NULL, &timeout);
 
 			PG_SETMASK(&BlockSig);
 		}

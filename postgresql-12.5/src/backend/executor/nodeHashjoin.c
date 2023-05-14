@@ -197,7 +197,8 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	 * run the hash join state machine
 	 */
 	for (;;)
-	{
+    {
+        elog(NOTICE, "!!!");
 		/*
 		 * It's possible to iterate this loop many times before returning a
 		 * tuple, in some pathological cases such as needing to move much of
@@ -682,7 +683,9 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	hjstate->js.single_match = (node->join.inner_unique ||
 								node->join.jointype == JOIN_SEMI);
 
-	/* set up null tuples for outer joins, if needed */
+    /* set up null tuples for outer joins, if needed */
+    //强制所有node为right
+    node->join.jointype = JOIN_RIGHT;
 	switch (node->join.jointype)
 	{
 		case JOIN_INNER:
