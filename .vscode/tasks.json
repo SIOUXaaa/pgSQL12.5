@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}/postgresql-12.5"
+    },
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "stop pgsql",
+            "command": "/home/sercoi/PGDev/pghome/bin/pg_ctl",
+            "args": [
+                "-D",
+                "/home/sercoi/PGDev/data",
+                "-l",
+                "/home/sercoi/PGDev/postgresql-12.5/logfile",
+                "stop"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "start pgsql",
+            "command": "/home/sercoi/PGDev/pghome/bin/pg_ctl",
+            "args": [
+                "-D",
+                "/home/sercoi/PGDev/data",
+                "-l",
+                "/home/sercoi/PGDev/postgresql-12.5/logfile",
+                "start"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,1 +1,1 @@
-/home/sercoi/PGDev/pghome/bin/postgres "-D" "/home/sercoi/PGDev/pghome/../data"
+/home/sercoi/PGDev/pghome/bin/postgres "-D" "/home/sercoi/PGDev/data"

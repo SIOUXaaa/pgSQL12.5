@@ -181,8 +181,8 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	 */
 	joinqual = node->js.joinqual;
 	otherqual = node->js.ps.qual;
-	hashNode = (HashState *) innerPlanState(node);
-	outerNode = outerPlanState(node);
+    hashNode = (HashState *) innerPlanState(node);
+    outerNode = outerPlanState(node);
 	hashtable = node->hj_HashTable;
 	econtext = node->js.ps.ps_ExprContext;
 	parallel_state = hashNode->parallel_state;
@@ -198,7 +198,6 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	 */
 	for (;;)
     {
-        elog(NOTICE, "!!!");
 		/*
 		 * It's possible to iterate this loop many times before returning a
 		 * tuple, in some pathological cases such as needing to move much of
@@ -214,9 +213,9 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				/*
 				 * First time through: build hash table for inner relation.
 				 */
-				Assert(hashtable == NULL);
+                Assert(hashtable == NULL);
 
-				/*
+                /*
 				 * If the outer relation is completely empty, and it's not
 				 * right/full join, we can quit without building the hash
 				 * table.  However, for an inner join it is only a win to
@@ -640,9 +639,12 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * managed to launch a parallel query.
 	 */
 	hjstate->js.ps.ExecProcNode = ExecHashJoin;
-	hjstate->js.jointype = node->join.jointype;
+    // hjstate->js.jointype = node->join.jointype;
 
-	/*
+    //将初始化的hashJoinState的join类型强制为右外连接
+    hjstate->js.jointype = JOIN_RIGHT;
+
+    /*
 	 * Miscellaneous initialization
 	 *
 	 * create expression context for node
@@ -684,7 +686,7 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 								node->join.jointype == JOIN_SEMI);
 
     /* set up null tuples for outer joins, if needed */
-    //强制所有node为right
+    // //强制所有node为right join
     node->join.jointype = JOIN_RIGHT;
 	switch (node->join.jointype)
 	{
