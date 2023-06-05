@@ -29,6 +29,19 @@
                 "start"
             ],
             "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "restart pgsql",
+            "command": "/home/sercoi/PGDev/pghome/bin/pg_ctl",
+            "args": [
+                "-D",
+                "/home/sercoi/PGDev/data",
+                "-l",
+                "/home/sercoi/PGDev/postgresql-12.5/logfile",
+                "restart"
+            ],
+            "problemMatcher": []
         }
     ]
 }
