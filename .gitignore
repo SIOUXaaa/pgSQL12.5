@@ -2,4 +2,4 @@ data/*
 pghome/*
 sqls/*
 target-debug/*
-
+.vscode/*
