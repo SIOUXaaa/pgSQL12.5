@@ -655,3 +655,5 @@
 2023-06-07 21:41:56.750 CST [22224] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-06-07 21:41:56.761 CST [22224] LOG:  redirecting log output to logging collector process
 2023-06-07 21:41:56.761 CST [22224] HINT:  Future log output will appear in directory "log".
+2023-06-08 01:22:41.250 CST [23831] FATAL:  lock file "postmaster.pid" already exists
+2023-06-08 01:22:41.250 CST [23831] HINT:  Is another postmaster (PID 22224) running in data directory "/home/sercoi/PGDev/data"?
