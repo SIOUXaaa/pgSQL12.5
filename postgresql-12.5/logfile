@@ -645,3 +645,13 @@
 2023-04-05 22:02:22.644 CST [8016] LOG:  background worker "logical replication launcher" (PID 15495) exited with exit code 1
 2023-04-05 22:02:22.645 CST [15490] LOG:  shutting down
 2023-04-05 22:02:22.665 CST [8016] LOG:  database system is shut down
+2023-06-07 21:41:54.495 CST [22192] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-07 21:41:54.496 CST [22192] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-07 21:41:54.501 CST [22192] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-07 21:41:54.512 CST [22192] LOG:  redirecting log output to logging collector process
+2023-06-07 21:41:54.512 CST [22192] HINT:  Future log output will appear in directory "log".
+2023-06-07 21:41:56.744 CST [22224] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-07 21:41:56.744 CST [22224] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-07 21:41:56.750 CST [22224] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-07 21:41:56.761 CST [22224] LOG:  redirecting log output to logging collector process
+2023-06-07 21:41:56.761 CST [22224] HINT:  Future log output will appear in directory "log".
