@@ -1,0 +1,7 @@
+2023-06-08 01:24:53.371 CST,"sercoi","lab2-1",25307,"127.0.0.1:38104",6480bd65.62db,1,"startup",2023-06-08 01:24:53 CST,3/5,0,FATAL,3D000,"database ""lab2-1"" does not exist",,,,,,,,,""
+2023-06-08 01:25:06.125 CST,"sercoi","sercoi",25368,"127.0.0.1:54028",6480bd72.6318,1,"startup",2023-06-08 01:25:06 CST,3/6,0,FATAL,3D000,"database ""sercoi"" does not exist",,,,,,,,,""
+2023-06-08 01:25:12.453 CST,,,22224,,64808924.56d0,3,,2023-06-07 21:41:56 CST,,0,LOG,58P01,"could not open file ""postmaster.pid"": No such file or directory",,,,,,,,,""
+2023-06-08 01:25:12.453 CST,,,22224,,64808924.56d0,4,,2023-06-07 21:41:56 CST,,0,LOG,00000,"performing immediate shutdown because data directory lock file is invalid",,,,,,,,,""
+2023-06-08 01:25:12.453 CST,,,22224,,64808924.56d0,5,,2023-06-07 21:41:56 CST,,0,LOG,00000,"received immediate shutdown request",,,,,,,,,""
+2023-06-08 01:25:12.453 CST,,,22224,,64808924.56d0,6,,2023-06-07 21:41:56 CST,,0,LOG,58P01,"could not open file ""postmaster.pid"": No such file or directory",,,,,,,,,""
+2023-06-08 01:25:12.460 CST,,,22224,,64808924.56d0,7,,2023-06-07 21:41:56 CST,,0,LOG,00000,"database system is shut down",,,,,,,,,""

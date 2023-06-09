@@ -1,0 +1,2 @@
+2023-05-15 16:42:53.019 CST [7588] LOG:  ending log output to stderr
+2023-05-15 16:42:53.019 CST [7588] HINT:  Future log output will go to log destination "csvlog".

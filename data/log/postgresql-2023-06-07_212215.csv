@@ -1,0 +1,7 @@
+2023-06-07 21:22:15.477 CST,,,15533,,64808487.3cad,1,,2023-06-07 21:22:15 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-06-07 21:22:15.481 CST,,,15535,,64808487.3caf,1,,2023-06-07 21:22:15 CST,,0,LOG,00000,"database system was shut down at 2023-06-07 21:22:15 CST",,,,,,,,,""
+2023-06-07 21:22:15.484 CST,,,15533,,64808487.3cad,2,,2023-06-07 21:22:15 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
+2023-06-07 21:28:15.682 CST,,,15533,,64808487.3cad,3,,2023-06-07 21:22:15 CST,,0,LOG,00000,"lock file ""postmaster.pid"" contains wrong PID: 2968 instead of 15533",,,,,,,,,""
+2023-06-07 21:28:15.682 CST,,,15533,,64808487.3cad,4,,2023-06-07 21:22:15 CST,,0,LOG,00000,"performing immediate shutdown because data directory lock file is invalid",,,,,,,,,""
+2023-06-07 21:28:15.682 CST,,,15533,,64808487.3cad,5,,2023-06-07 21:22:15 CST,,0,LOG,00000,"received immediate shutdown request",,,,,,,,,""
+2023-06-07 21:28:15.687 CST,,,15533,,64808487.3cad,6,,2023-06-07 21:22:15 CST,,0,LOG,00000,"database system is shut down",,,,,,,,,""

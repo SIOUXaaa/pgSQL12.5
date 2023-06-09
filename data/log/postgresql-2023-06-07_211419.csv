@@ -1,0 +1,8 @@
+2023-06-07 21:14:19.914 CST,,,10595,,648082ab.2963,1,,2023-06-07 21:14:19 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-06-07 21:14:19.918 CST,,,10597,,648082ab.2965,1,,2023-06-07 21:14:19 CST,,0,LOG,00000,"database system was shut down at 2023-06-07 21:14:19 CST",,,,,,,,,""
+2023-06-07 21:14:19.921 CST,,,10595,,648082ab.2963,2,,2023-06-07 21:14:19 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
+2023-06-07 21:17:32.112 CST,,,10595,,648082ab.2963,3,,2023-06-07 21:14:19 CST,,0,LOG,00000,"received fast shutdown request",,,,,,,,,""
+2023-06-07 21:17:32.118 CST,,,10595,,648082ab.2963,4,,2023-06-07 21:14:19 CST,,0,LOG,00000,"aborting any active transactions",,,,,,,,,""
+2023-06-07 21:17:32.118 CST,,,10595,,648082ab.2963,5,,2023-06-07 21:14:19 CST,,0,LOG,00000,"background worker ""logical replication launcher"" (PID 10603) exited with exit code 1",,,,,,,,,""
+2023-06-07 21:17:32.118 CST,,,10598,,648082ab.2966,1,,2023-06-07 21:14:19 CST,,0,LOG,00000,"shutting down",,,,,,,,,""
+2023-06-07 21:17:32.139 CST,,,10595,,648082ab.2963,6,,2023-06-07 21:14:19 CST,,0,LOG,00000,"database system is shut down",,,,,,,,,""
