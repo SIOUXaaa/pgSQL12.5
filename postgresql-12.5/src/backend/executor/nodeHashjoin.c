@@ -639,7 +639,8 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * managed to launch a parallel query.
 	 */
 	hjstate->js.ps.ExecProcNode = ExecHashJoin;
-	hjstate->js.jointype = node->join.jointype;
+	// hjstate->js.jointype = node->join.jointype;
+	hjstate->js.jointype = JOIN_INNER;
 
 	/*
 	 * Miscellaneous initialization
@@ -682,7 +683,8 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	hjstate->js.single_match = (node->join.inner_unique ||
 								node->join.jointype == JOIN_SEMI);
 
-	/* set up null tuples for outer joins, if needed */
+    /* set up null tuples for outer joins, if needed */
+    node->join.jointype = JOIN_INNER;
 	switch (node->join.jointype)
 	{
 		case JOIN_INNER:

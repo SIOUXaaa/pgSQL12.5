@@ -657,3 +657,45 @@
 2023-06-07 21:41:56.761 CST [22224] HINT:  Future log output will appear in directory "log".
 2023-06-08 01:22:41.250 CST [23831] FATAL:  lock file "postmaster.pid" already exists
 2023-06-08 01:22:41.250 CST [23831] HINT:  Is another postmaster (PID 22224) running in data directory "/home/sercoi/PGDev/data"?
+2023-06-09 16:34:57.663 CST [2047] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 16:34:57.664 CST [2047] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 16:34:57.670 CST [2047] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 16:34:57.682 CST [2047] LOG:  redirecting log output to logging collector process
+2023-06-09 16:34:57.682 CST [2047] HINT:  Future log output will appear in directory "log".
+2023-06-09 21:02:51.356 CST [19885] FATAL:  lock file "postmaster.pid" already exists
+2023-06-09 21:02:51.356 CST [19885] HINT:  Is another postmaster (PID 2047) running in data directory "/home/sercoi/PGDev/data"?
+2023-06-09 22:14:47.433 CST [26851] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:14:47.433 CST [26851] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:14:47.438 CST [26851] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:14:47.564 CST [26851] LOG:  redirecting log output to logging collector process
+2023-06-09 22:14:47.564 CST [26851] HINT:  Future log output will appear in directory "log".
+2023-06-09 22:40:16.610 CST [30387] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:40:16.610 CST [30387] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:40:16.615 CST [30387] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:40:16.632 CST [30387] LOG:  redirecting log output to logging collector process
+2023-06-09 22:40:16.632 CST [30387] HINT:  Future log output will appear in directory "log".
+2023-06-09 22:41:03.375 CST [31626] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:41:03.375 CST [31626] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:41:03.381 CST [31626] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:41:03.392 CST [31626] LOG:  redirecting log output to logging collector process
+2023-06-09 22:41:03.392 CST [31626] HINT:  Future log output will appear in directory "log".
+2023-06-09 22:41:25.866 CST [308] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:41:25.866 CST [308] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:41:25.872 CST [308] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:41:25.883 CST [308] LOG:  redirecting log output to logging collector process
+2023-06-09 22:41:25.883 CST [308] HINT:  Future log output will appear in directory "log".
+2023-06-09 22:41:51.653 CST [1503] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:41:51.654 CST [1503] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:41:51.659 CST [1503] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:41:51.669 CST [1503] LOG:  redirecting log output to logging collector process
+2023-06-09 22:41:51.669 CST [1503] HINT:  Future log output will appear in directory "log".
+2023-06-09 22:41:58.212 CST [2507] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 22:41:58.212 CST [2507] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 22:41:58.217 CST [2507] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 22:41:58.229 CST [2507] LOG:  redirecting log output to logging collector process
+2023-06-09 22:41:58.229 CST [2507] HINT:  Future log output will appear in directory "log".
+2023-06-09 23:06:48.947 CST [5878] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-09 23:06:48.947 CST [5878] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-09 23:06:48.952 CST [5878] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-09 23:06:48.970 CST [5878] LOG:  redirecting log output to logging collector process
+2023-06-09 23:06:48.970 CST [5878] HINT:  Future log output will appear in directory "log".
