@@ -4276,12 +4276,15 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
 
     /*
      * Build the hash node and hash join node.
+     * 构建哈希节点
      */
     inner_hash_plan = make_hash(inner_plan, inner_hashkeys, skewTable,
                                 skewColumn, skewInherit);
-    //对outer 也进行hash
-    outer_hash_plan = make_hash(outer_plan, outer_hashkeys, skewTable,
-                                skewColumn, skewInherit);
+    
+    //对outer进行hash
+    outer_hash_plan =
+        make_hash(NULL, outer_hashkeys, skewTable, skewColumn, skewInherit);
+    outer_hash_plan->plan.righttree = outer_plan;
 
     /*
      * Set Hash node's startup & total costs equal to total cost of input
@@ -4303,6 +4306,7 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
         inner_hash_plan->rows_total          = best_path->inner_rows_total;
     }
 
+    //构建哈希连接节点
     join_plan =
         make_hashjoin(tlist, joinclauses, otherclauses, hashclauses,
                       hashoperators, hashcollations, outer_hashkeys,
