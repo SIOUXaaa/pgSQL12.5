@@ -183,7 +183,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	otherqual = node->js.ps.qual;
 	hashNode = (HashState *) innerPlanState(node);
 	outerNode = outerPlanState(node);
-	hashtable = node->hj_HashTable;
+	hashtable = node->hj_HashTable_inner;
 	econtext = node->js.ps.ps_ExprContext;
 	parallel_state = hashNode->parallel_state;
 
@@ -280,7 +280,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 												node->hj_HashOperators,
 												node->hj_Collations,
 												HJ_FILL_INNER(node));
-				node->hj_HashTable = hashtable;
+				node->hj_HashTable_inner = hashtable;
 
 				/*
 				 * Execute the Hash node, to build the hash table.  If using
@@ -376,12 +376,12 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				 * Find the corresponding bucket for this tuple in the main
 				 * hash table or skew hash table.
 				 */
-				node->hj_CurHashValue = hashvalue;
+				node->hj_CurHashValue_inner = hashvalue;
 				ExecHashGetBucketAndBatch(hashtable, hashvalue,
 										  &node->hj_CurBucketNo, &batchno);
 				node->hj_CurSkewBucketNo = ExecHashGetSkewBucket(hashtable,
 																 hashvalue);
-				node->hj_CurTuple = NULL;
+				node->hj_CurTuple_inner = NULL;
 
 				/*
 				 * The tuple might not belong to the current batch (where
@@ -617,9 +617,10 @@ HashJoinState *
 ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 {
 	HashJoinState *hjstate;
-	Plan	   *outerNode;
-	Hash	   *hashNode;
-	TupleDesc	outerDesc,
+    // Plan	   *outerNode;
+    Hash *hashNodeOuter;
+    Hash *hashNodeInner;
+    TupleDesc	outerDesc,
 				innerDesc;
 	const TupleTableSlotOps *ops;
 
@@ -656,13 +657,14 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * would amount to betting that the hash will be a single batch.  Not
 	 * clear if this would be a win or not.
 	 */
-	outerNode = outerPlan(node);
-	hashNode = (Hash *) innerPlan(node);
+	hashNodeOuter = (Hash *)outerPlan(node);
+    hashNodeInner = (Hash *)innerPlan(node);
 
-	outerPlanState(hjstate) = ExecInitNode(outerNode, estate, eflags);
+    outerPlanState(hjstate) = ExecInitNode((Plan *) hashNodeOuter, estate, eflags);
 	outerDesc = ExecGetResultType(outerPlanState(hjstate));
-	innerPlanState(hjstate) = ExecInitNode((Plan *) hashNode, estate, eflags);
-	innerDesc = ExecGetResultType(innerPlanState(hjstate));
+    innerPlanState(hjstate) =
+        ExecInitNode((Plan *)hashNodeInner, estate, eflags);
+    innerDesc = ExecGetResultType(innerPlanState(hjstate));
 
 	/*
 	 * Initialize result slot, type and projection.
@@ -673,9 +675,10 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	/*
 	 * tuple table initialization
 	 */
-	ops = ExecGetResultSlotOps(outerPlanState(hjstate), NULL);
-	hjstate->hj_OuterTupleSlot = ExecInitExtraTupleSlot(estate, outerDesc,
-														ops);
+    ops = ExecGetResultSlotOps(outerPlanState(hjstate), NULL);
+
+	// hjstate->hj_OuterTupleSlot = ExecInitExtraTupleSlot(estate, outerDesc,
+	// 													ops);
 
 	/*
 	 * detect whether we need only consider the first matching inner tuple
@@ -717,11 +720,14 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * the hash join node uses ExecScanHashBucket() to get at the contents of
 	 * the hash table.  -cim 6/9/91
 	 */
-	{
-		HashState  *hashstate = (HashState *) innerPlanState(hjstate);
-		TupleTableSlot *slot = hashstate->ps.ps_ResultTupleSlot;
+	{//获取
+        HashState *hashstate_inner = (HashState *)innerPlanState(hjstate);
+        HashState *hashstate_outer = (HashState *)outerPlanState(hjstate);
+        TupleTableSlot *slot_inner = hashstate_inner->ps.ps_ResultTupleSlot;
+        TupleTableSlot *slot_outer = hashstate_outer->ps.ps_ResultTupleSlot;
 
-		hjstate->hj_HashTupleSlot = slot;
+        hjstate->hj_HashTupleSlot_inner = slot_inner;
+        hjstate->hj_HashTupleSlot_outer = slot_outer;
 	}
 
 	/*
@@ -737,13 +743,17 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	/*
 	 * initialize hash-specific info
 	 */
-	hjstate->hj_HashTable = NULL;
+	hjstate->hj_HashTable_inner = NULL;
+	hjstate->hj_HashTable_outer = NULL;
 	hjstate->hj_FirstOuterTupleSlot = NULL;
 
-	hjstate->hj_CurHashValue = 0;
-	hjstate->hj_CurBucketNo = 0;
+	hjstate->hj_CurHashValue_inner = 0;
+	hjstate->hj_CurHashValue_outer = 0;
+	hjstate->hj_CurBucketNo_inner = 0;
+	hjstate->hj_CurBucketNo_outer = 0;
 	hjstate->hj_CurSkewBucketNo = INVALID_SKEW_BUCKET_NO;
-	hjstate->hj_CurTuple = NULL;
+	hjstate->hj_CurTuple_inner = NULL;
+	hjstate->hj_CurTuple_outer = NULL;
 
 	hjstate->hj_OuterHashKeys = ExecInitExprList(node->hashkeys,
 												 (PlanState *) hjstate);
