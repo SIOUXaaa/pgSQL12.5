@@ -1946,11 +1946,15 @@ typedef struct HashJoinState
 	List	   *hj_OuterHashKeys;	/* list of ExprState nodes */
 	List	   *hj_HashOperators;	/* list of operator OIDs */
 	List	   *hj_Collations;
-	HashJoinTable hj_HashTable;
-	uint32		hj_CurHashValue;
-	int			hj_CurBucketNo;
-	int			hj_CurSkewBucketNo;
-	HashJoinTuple hj_CurTuple;
+	HashJoinTable hj_HashTable_inner; //内部哈希表
+	HashJoinTable hj_HashTable_outer; //外部哈希表
+	uint32		hj_CurHashValue_inner; //内部当前哈希值
+	uint32		hj_CurHashValue_outer;  //外部当前哈希值
+	int			hj_CurBucketNo_inner; //内部哈希桶编号
+	int			hj_CurBucketNo_outer; //外部哈希桶编号
+	int			hj_CurSkewBucketNo; //不需要skew桶
+	HashJoinTuple hj_CurTuple_inner; //内外哈希连接tuple
+	HashJoinTuple hj_CurTuple_outer;
 	TupleTableSlot *hj_OuterTupleSlot;
 	TupleTableSlot *hj_HashTupleSlot;
 	TupleTableSlot *hj_NullOuterTupleSlot;

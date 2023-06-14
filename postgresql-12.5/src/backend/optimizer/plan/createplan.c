@@ -4283,7 +4283,7 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
     
     //对outer进行hash
     outer_hash_plan =
-        make_hash(NULL, outer_hashkeys, skewTable, skewColumn, skewInherit);
+        make_hash(outer_plan, outer_hashkeys, skewTable, skewColumn, skewInherit);
     outer_hash_plan->plan.righttree = outer_plan;
     outer_hash_plan->plan.targetlist = outer_plan->targetlist;
 
@@ -5303,11 +5303,7 @@ make_hash(Plan *lefttree, List *hashkeys, Oid skewTable, AttrNumber skewColumn,
 {
     Hash *node = makeNode(Hash);
     Plan *plan = &node->plan;
-
-    if(lefttree!=NULL)
-        plan->targetlist = lefttree->targetlist;
-    else
-        plan->targetlist = NULL;
+    plan->targetlist = lefttree->targetlist;
     plan->qual       = NIL;
     plan->lefttree   = lefttree;
     plan->righttree  = NULL;
