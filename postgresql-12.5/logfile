@@ -726,3 +726,40 @@
 2023-06-10 00:28:17.528 CST [19650] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-06-10 00:28:17.539 CST [19650] LOG:  redirecting log output to logging collector process
 2023-06-10 00:28:17.539 CST [19650] HINT:  Future log output will appear in directory "log".
+2023-06-14 19:17:44.201 CST [838] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 19:17:44.202 CST [838] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 19:17:44.208 CST [838] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 19:17:44.221 CST [838] LOG:  redirecting log output to logging collector process
+2023-06-14 19:17:44.221 CST [838] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:13:36.242 CST [5701] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:13:36.242 CST [5701] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:13:36.248 CST [5701] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:13:36.300 CST [5701] LOG:  redirecting log output to logging collector process
+2023-06-14 22:13:36.300 CST [5701] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:35:52.804 CST [8852] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:35:52.804 CST [8852] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:35:52.809 CST [8852] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:35:52.824 CST [8852] LOG:  redirecting log output to logging collector process
+2023-06-14 22:35:52.824 CST [8852] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:37:29.651 CST [9655] FATAL:  lock file "postmaster.pid" already exists
+2023-06-14 22:37:29.651 CST [9655] HINT:  Is another postmaster (PID 8852) running in data directory "/home/sercoi/PGDev/data"?
+2023-06-14 22:43:14.543 CST [11379] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:43:14.544 CST [11379] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:43:14.549 CST [11379] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:43:14.560 CST [11379] LOG:  redirecting log output to logging collector process
+2023-06-14 22:43:14.560 CST [11379] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:50:13.311 CST [17690] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:50:13.311 CST [17690] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:50:13.316 CST [17690] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:50:13.351 CST [17690] LOG:  redirecting log output to logging collector process
+2023-06-14 22:50:13.351 CST [17690] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:57:29.568 CST [19593] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:57:29.568 CST [19593] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:57:29.574 CST [19593] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:57:29.586 CST [19593] LOG:  redirecting log output to logging collector process
+2023-06-14 22:57:29.586 CST [19593] HINT:  Future log output will appear in directory "log".
+2023-06-14 22:59:22.662 CST [21240] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-06-14 22:59:22.662 CST [21240] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-14 22:59:22.668 CST [21240] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-14 22:59:22.679 CST [21240] LOG:  redirecting log output to logging collector process
+2023-06-14 22:59:22.679 CST [21240] HINT:  Future log output will appear in directory "log".

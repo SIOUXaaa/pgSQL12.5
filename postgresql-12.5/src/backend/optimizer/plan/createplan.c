@@ -4285,6 +4285,7 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
     outer_hash_plan =
         make_hash(NULL, outer_hashkeys, skewTable, skewColumn, skewInherit);
     outer_hash_plan->plan.righttree = outer_plan;
+    outer_hash_plan->plan.targetlist = outer_plan->targetlist;
 
     /*
      * Set Hash node's startup & total costs equal to total cost of input
@@ -5303,7 +5304,10 @@ make_hash(Plan *lefttree, List *hashkeys, Oid skewTable, AttrNumber skewColumn,
     Hash *node = makeNode(Hash);
     Plan *plan = &node->plan;
 
-    plan->targetlist = lefttree->targetlist;
+    if(lefttree!=NULL)
+        plan->targetlist = lefttree->targetlist;
+    else
+        plan->targetlist = NULL;
     plan->qual       = NIL;
     plan->lefttree   = lefttree;
     plan->righttree  = NULL;
