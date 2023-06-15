@@ -89,14 +89,15 @@ static void ExecParallelHashCloseBatchAccessors(HashJoinTable hashtable);
  * ----------------------------------------------------------------
  */
 static TupleTableSlot *
-ExecHash(HashState *node)
+ExecHash(HashState *node, int tupleNo)
 {
     // MultiExecPrivateHash((HashState *)pstate);
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
     elog(NOTICE, "execHash start");
     if (node->ps.instrument)
         InstrStartNode(node->ps.instrument);
-    
+
+    HashState *     scanNode;
     PlanState *     outerNode;
     List *          hashkeys;
     HashJoinTable   hashtable;
@@ -104,10 +105,35 @@ ExecHash(HashState *node)
     ExprContext *   econtext;
     uint32          hashvalue;
 
-    outerNode = outerPlanState(node);
+    scanNode = (HashState *)outerPlanState(node);
+    outerNode = outerPlanState(scanNode);
+
     hashtable = node->hashtable;
 
-    
+    hashkeys = node->hashkeys;
+    econtext = node->ps.ps_ExprContext;
+
+    slot = ExecProcNode(outerNode);
+    if (TupIsNull(slot))
+        return NULL;
+
+    if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
+                             hashtable->keepNulls, &hashvalue))
+    {
+        ExecHashTableInsert(hashtable, slot, hashvalue);
+        hashtable->totalTuples += 1;
+    }
+
+    if (hashtable->nbuckets != hashtable->nbuckets_optimal)
+        ExecHashIncreaseNumBuckets(hashtable);
+
+    hashtable->spaceUsed += hashtable->nbuckets * sizeof(HashJoinTuple);
+    if (hashtable->spaceUsed > hashtable->spacePeak)
+        hashtable->spacePeak = hashtable->spaceUsed;
+
+    hashtable->partialTuples = hashtable->totalTuples;
+
+
     if (node->ps.instrument)
         InstrStopNode(node->ps.instrument, node->hashtable->partialTuples);
 
@@ -131,7 +157,8 @@ MultiExecHash(HashState *node)
 	if (node->parallel_state != NULL)
 		MultiExecParallelHash(node);
 	else
-		MultiExecPrivateHash(node);
+        MultiExecPrivateHash(node);
+
 
 	/* must provide our own instrumentation support */
 	if (node->ps.instrument)
@@ -1949,13 +1976,24 @@ ExecHashGetBucketAndBatch(HashJoinTable hashtable,
  * for the latter.
  */
 bool
-ExecScanHashBucket(HashJoinState *hjstate,
-				   ExprContext *econtext)
+ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
 {
-	ExprState  *hjclauses = hjstate->hashclauses;
-	HashJoinTable hashtable = hjstate->hj_HashTable;
-	HashJoinTuple hashTuple = hjstate->hj_CurTuple;
-	uint32		hashvalue = hjstate->hj_CurHashValue;
+    ExprState *hjclauses = hjstate->hashclauses;
+    HashJoinTable hashtable;
+    HashJoinTuple hashTuple;
+    uint32        hashvalue;
+    if (type == 1)
+    {
+        hashtable = hjstate->hj_HashTable;
+        hashTuple = hjstate->hj_CurTuple;
+	    hashvalue = hjstate->hj_CurHashValue;
+    }
+    else if(type == 2){
+        hashtable = hjstate->hj_HashTable_outer;
+        hashTuple = hjstate->hj_CurTuple_outer;
+	    hashvalue = hjstate->hj_CurHashValue_outer;
+    }
+
 
 	/*
 	 * hj_CurTuple is the address of the tuple last returned from the current
@@ -1975,19 +2013,40 @@ ExecScanHashBucket(HashJoinState *hjstate,
 	{
 		if (hashTuple->hashvalue == hashvalue)
 		{
-			TupleTableSlot *inntuple;
+            if (type == 1)
+            {
+                TupleTableSlot *innertuple;
 
-			/* insert hashtable's tuple into exec slot so ExecQual sees it */
-			inntuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
-											 hjstate->hj_HashTupleSlot,
-											 false);	/* do not pfree */
-			econtext->ecxt_innertuple = inntuple;
+                /* insert hashtable's tuple into exec slot so ExecQual sees it */
+                innertuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
+                                                   hjstate->hj_HashTupleSlot,
+                                                   false); /* do not pfree */
+                econtext->ecxt_innertuple = innertuple;
 
-			if (ExecQualAndReset(hjclauses, econtext))
-			{
-				hjstate->hj_CurTuple = hashTuple;
-				return true;
-			}
+                if (ExecQualAndReset(hjclauses, econtext))
+                {
+                    hjstate->hj_CurTuple = hashTuple;
+                    return true;
+                }
+            }
+            else if (type == 2)
+            {
+                TupleTableSlot *outerTuple;
+
+                /* insert hashtable's tuple into exec slot so ExecQual sees it
+                 */
+                outerTuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
+                                                   hjstate->hj_OuterTupleSlot,
+                                                   false); /* do not pfree */
+                econtext->ecxt_outertuple = outerTuple;
+
+                if (ExecQualAndReset(hjclauses, econtext))
+                {
+                    hjstate->hj_CurTuple_outer = hashTuple;
+                    return true;
+                }
+            }
+            
 		}
 
 		hashTuple = hashTuple->next.unshared;

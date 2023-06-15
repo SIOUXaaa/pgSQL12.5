@@ -1960,9 +1960,11 @@ typedef struct HashJoinState
     TupleTableSlot *hj_NullOuterTupleSlot;
     TupleTableSlot *hj_NullInnerTupleSlot;
     TupleTableSlot *hj_FirstOuterTupleSlot;
+    TupleTableSlot *hj_FirstInnerTupleSlot;
     int             hj_JoinState;
     bool            hj_MatchedOuter;
     bool            hj_OuterNotEmpty;
+    bool            hj_InnerNotEmpty;
 } HashJoinState;
 
 /* ----------------------------------------------------------------
