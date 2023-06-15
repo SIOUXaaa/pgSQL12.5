@@ -183,7 +183,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	otherqual = node->js.ps.qual;
 	hashNode = (HashState *) innerPlanState(node);
 	outerNode = outerPlanState(node);
-	hashtable = node->hj_HashTable_inner;
+	hashtable = node->hj_HashTable;
 	econtext = node->js.ps.ps_ExprContext;
 	parallel_state = hashNode->parallel_state;
 
@@ -280,7 +280,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 												node->hj_HashOperators,
 												node->hj_Collations,
 												HJ_FILL_INNER(node));
-				node->hj_HashTable_inner = hashtable;
+				node->hj_HashTable = hashtable;
 
 				/*
 				 * Execute the Hash node, to build the hash table.  If using
@@ -376,12 +376,12 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				 * Find the corresponding bucket for this tuple in the main
 				 * hash table or skew hash table.
 				 */
-				node->hj_CurHashValue_inner = hashvalue;
+				node->hj_CurHashValue = hashvalue;
 				ExecHashGetBucketAndBatch(hashtable, hashvalue,
 										  &node->hj_CurBucketNo, &batchno);
 				node->hj_CurSkewBucketNo = ExecHashGetSkewBucket(hashtable,
 																 hashvalue);
-				node->hj_CurTuple_inner = NULL;
+				node->hj_CurTuple = NULL;
 
 				/*
 				 * The tuple might not belong to the current batch (where
@@ -726,8 +726,8 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
         TupleTableSlot *slot_inner = hashstate_inner->ps.ps_ResultTupleSlot;
         TupleTableSlot *slot_outer = hashstate_outer->ps.ps_ResultTupleSlot;
 
-        hjstate->hj_HashTupleSlot_inner = slot_inner;
-        hjstate->hj_HashTupleSlot_outer = slot_outer;
+        hjstate->hj_HashTupleSlot = slot_inner;
+        hjstate->hj_OuterTupleSlot = slot_outer;
 	}
 
 	/*
@@ -743,16 +743,16 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	/*
 	 * initialize hash-specific info
 	 */
-	hjstate->hj_HashTable_inner = NULL;
+	hjstate->hj_HashTable = NULL;
 	hjstate->hj_HashTable_outer = NULL;
 	hjstate->hj_FirstOuterTupleSlot = NULL;
 
-	hjstate->hj_CurHashValue_inner = 0;
+	hjstate->hj_CurHashValue = 0;
 	hjstate->hj_CurHashValue_outer = 0;
-	hjstate->hj_CurBucketNo_inner = 0;
+	hjstate->hj_CurBucketNo = 0;
 	hjstate->hj_CurBucketNo_outer = 0;
 	hjstate->hj_CurSkewBucketNo = INVALID_SKEW_BUCKET_NO;
-	hjstate->hj_CurTuple_inner = NULL;
+	hjstate->hj_CurTuple = NULL;
 	hjstate->hj_CurTuple_outer = NULL;
 
 	hjstate->hj_OuterHashKeys = ExecInitExprList(node->hashkeys,

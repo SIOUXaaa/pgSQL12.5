@@ -89,11 +89,29 @@ static void ExecParallelHashCloseBatchAccessors(HashJoinTable hashtable);
  * ----------------------------------------------------------------
  */
 static TupleTableSlot *
-ExecHash(PlanState *pstate)
+ExecHash(HashState *node)
 {
-    MultiExecPrivateHash((HashState *)pstate);
-    elog(ERROR, "Hash node does not support ExecProcNode call convention");
-	return NULL;
+    // MultiExecPrivateHash((HashState *)pstate);
+    // elog(ERROR, "Hash node does not support ExecProcNode call convention");
+    elog(NOTICE, "execHash start");
+    if (node->ps.instrument)
+        InstrStartNode(node->ps.instrument);
+    
+    PlanState *     outerNode;
+    List *          hashkeys;
+    HashJoinTable   hashtable;
+    TupleTableSlot *slot;
+    ExprContext *   econtext;
+    uint32          hashvalue;
+
+    outerNode = outerPlanState(node);
+    hashtable = node->hashtable;
+
+    
+    if (node->ps.instrument)
+        InstrStopNode(node->ps.instrument, node->hashtable->partialTuples);
+
+    return NULL;
 }
 
 /* ----------------------------------------------------------------

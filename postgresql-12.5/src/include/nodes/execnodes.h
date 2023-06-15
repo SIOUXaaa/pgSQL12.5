@@ -1846,7 +1846,7 @@ typedef struct JoinState
 	ExprState  *joinqual;		/* JOIN quals (in addition to ps.qual) */
 } JoinState;
 
-/* ----------------
+/* ---------------- 
  *	 NestLoopState information
  *
  *		NeedNewOuter	   true if need new outer tuple on next call
@@ -1946,17 +1946,17 @@ typedef struct HashJoinState
     List *          hj_OuterHashKeys; /* list of ExprState nodes */
     List *          hj_HashOperators; /* list of operator OIDs */
     List *          hj_Collations;
-    HashJoinTable   hj_HashTable_inner; //内外部哈希表
+    HashJoinTable   hj_HashTable; //内外部哈希表
     HashJoinTable   hj_HashTable_outer;
-    uint32          hj_CurHashValue_inner; //内外部当前哈希值
+    uint32          hj_CurHashValue; //内外部当前哈希值
     uint32          hj_CurHashValue_outer;
-    int             hj_CurBucketNo_inner; //内外部哈希桶编号
+    int             hj_CurBucketNo; //内外部哈希桶编号
     int             hj_CurBucketNo_outer;
     int             hj_CurSkewBucketNo; //不需要skew桶
-    HashJoinTuple   hj_CurTuple_inner;  //内外哈希连接tuple
+    HashJoinTuple   hj_CurTuple;  //内外哈希连接tuple
     HashJoinTuple   hj_CurTuple_outer;
-    TupleTableSlot *hj_HashTupleSlot_outer; //内外哈希元组槽
-    TupleTableSlot *hj_HashTupleSlot_inner;
+    TupleTableSlot *hj_OuterTupleSlot; //内外哈希元组槽
+    TupleTableSlot *hj_HashTupleSlot;
     TupleTableSlot *hj_NullOuterTupleSlot;
     TupleTableSlot *hj_NullInnerTupleSlot;
     TupleTableSlot *hj_FirstOuterTupleSlot;
