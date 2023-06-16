@@ -229,7 +229,7 @@ static pg_attribute_always_inline TupleTableSlot *
             continue;
 
         case HJ_NEED_NEW_INNER:
-            elog(NOTICE, "try get inner tuple");
+            // elog(NOTICE, "try get inner tuple");
             if (node->hj_InnerNotEmpty)
                 innerTupleSlot = ExecHashJoinInnerGetTuple(
                     (PlanState *)hashNode_inner, node, &hashvalue_inner);
@@ -240,12 +240,12 @@ static pg_attribute_always_inline TupleTableSlot *
                 else
                     return NULL;
             }
-            elog(NOTICE, "get inner tuple");
+            // elog(NOTICE, "get inner tuple");
             
             if (TupIsNull(innerTupleSlot))
             {
                 //暂不考虑其他类型
-                elog(NOTICE, "inner tuple slot is null");
+                // elog(NOTICE, "inner tuple slot is null");
                 // inner join end
                 node->hj_InnerNotEmpty = false;
                 if (node->hj_OuterNotEmpty){
@@ -278,10 +278,13 @@ static pg_attribute_always_inline TupleTableSlot *
                 node->hj_MatchedOuter = true;
                 // HeapTupleHeaderSetMatch(HJTUPLE_MINTUPLE(node->hj_CurTuple));
 
-                  node->hj_JoinState = HJ_NEED_NEW_INNER;
+                  node->hj_JoinState = HJ_NEED_NEW_OUTER;
 
-                if (otherqual == NULL || ExecQual(otherqual, econtext))
-                    return ExecProject(node->js.ps.ps_ProjInfo);
+                  if (otherqual == NULL || ExecQual(otherqual, econtext))
+                  {
+                      // elog(NOTICE, "project inner");
+                      return ExecProject(node->js.ps.ps_ProjInfo);
+                  }
                 else
                     InstrCountFiltered2(node, 1);
             }
@@ -290,7 +293,7 @@ static pg_attribute_always_inline TupleTableSlot *
             break;
 
         case HJ_NEED_NEW_OUTER:
-            elog(NOTICE, "try get outer tuple");
+            // elog(NOTICE, "try get outer tuple");
             if (node->hj_OuterNotEmpty)
                 outerTupleSlot = ExecHashJoinOuterGetTuple(
                     (PlanState *)hashNode_outer, node, &hashvalue_outer);
@@ -301,12 +304,12 @@ static pg_attribute_always_inline TupleTableSlot *
                 else
                     return NULL;
             }
-            elog(NOTICE, "get outer tuple");
+            // elog(NOTICE, "get outer tuple");
 
             if (TupIsNull(outerTupleSlot))
             {
                 //暂不考虑其他类型
-                elog(NOTICE, "outer tuple slot is null");
+                // elog(NOTICE, "outer tuple slot is null");
                 node->hj_OuterNotEmpty = false;
                 if (node->hj_InnerNotEmpty){
                     node->hj_JoinState = HJ_NEED_NEW_INNER;
@@ -328,7 +331,7 @@ static pg_attribute_always_inline TupleTableSlot *
             continue;
 
         case HJ_SCAN_INNER_BUCKET:
-            elog(NOTICE, "scan inner");
+            // elog(NOTICE, "scan inner");
             if (!ExecScanHashBucket(node, econtext, 1))
             {
                 node->hj_JoinState = HJ_NEED_NEW_INNER;
@@ -339,10 +342,13 @@ static pg_attribute_always_inline TupleTableSlot *
             {
                 node->hj_MatchedOuter = true;
 
-                node->hj_JoinState = HJ_NEED_NEW_OUTER;
+                node->hj_JoinState = HJ_NEED_NEW_INNER;
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
+                {
+                    // elog(NOTICE, "project outer");
                     return ExecProject(node->js.ps.ps_ProjInfo);
+                }
                 else
                     InstrCountFiltered2(node, 1);
             }
@@ -610,7 +616,7 @@ ExecHashJoinInnerGetTuple(PlanState *innerNode, HashJoinState *hjstate,
                                  false, HJ_FILL_OUTER(hjstate), hashvalue))
         {
             hjstate->hj_InnerNotEmpty = true;
-            elog(NOTICE, "get inner tuple return %p", slot);
+            // elog(NOTICE, "get inner tuple return %p", slot);
             return slot;
         }
     }
@@ -653,7 +659,7 @@ ExecHashJoinOuterGetTuple(PlanState *outerNode, HashJoinState *hjstate,
                                  false, HJ_FILL_OUTER(hjstate), hashvalue))
         {
             hjstate->hj_OuterNotEmpty = true;
-            elog(NOTICE, "get outer tuple return %p", slot);
+            // elog(NOTICE, "get outer tuple return %p", slot);
             return slot;
         }
     }

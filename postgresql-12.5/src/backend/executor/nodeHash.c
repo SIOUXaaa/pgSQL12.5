@@ -91,11 +91,8 @@ static void ExecParallelHashCloseBatchAccessors(HashJoinTable hashtable);
 static TupleTableSlot *
 ExecHash(HashState *node)
 {
-    // MultiExecPrivateHash((HashState *)pstate);
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
     // elog(NOTICE, "execHash start");
-    if (node->ps.instrument)
-        InstrStartNode(node->ps.instrument);
 
     HashState *     scanNode;
     PlanState *     outerNode;
@@ -115,37 +112,33 @@ ExecHash(HashState *node)
     hashkeys = node->hashkeys;
     econtext = node->ps.ps_ExprContext;
 
-    elog(NOTICE, "ExecHash ExecProcNode");
+    // elog(NOTICE, "ExecHash ExecProcNode");
     slot = ExecProcNode(outerNode);
     if (TupIsNull(slot))
     {
-        elog(NOTICE,"ExecHash slot is null");
+        // elog(NOTICE,"ExecHash slot is null");
         return NULL;
     }
 
     econtext->ecxt_outertuple = slot;
-    elog(NOTICE, "get hash value");
+    // elog(NOTICE, "get hash value");
     if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
                              hashtable->keepNulls, &hashvalue))
     {
         ExecHashTableInsert(hashtable, slot, hashvalue);
         hashtable->totalTuples += 1;
-        elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
+        // elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
         returnSlot = true;
     }
 
     if (hashtable->nbuckets != hashtable->nbuckets_optimal)
         ExecHashIncreaseNumBuckets(hashtable);
 
-    hashtable->spaceUsed += hashtable->nbuckets * sizeof(HashJoinTuple);
+    hashtable->spaceUsed +=  sizeof(HashJoinTuple);
     if (hashtable->spaceUsed > hashtable->spacePeak)
         hashtable->spacePeak = hashtable->spaceUsed;
 
     hashtable->partialTuples = hashtable->totalTuples;
-
-
-    if (node->ps.instrument)
-        InstrStopNode(node->ps.instrument, node->hashtable->partialTuples);
 
     return returnSlot ? slot : NULL;
 }
@@ -1689,7 +1682,8 @@ ExecHashTableInsert(HashJoinTable hashtable,
 
 		/* Push it onto the front of the bucket's list */
 		hashTuple->next.unshared = hashtable->buckets.unshared[bucketno];
-		hashtable->buckets.unshared[bucketno] = hashTuple;
+        hashtable->buckets.unshared[bucketno] = hashTuple;
+        // elog(NOTICE,"bucketno %d", bucketno);
 
 		/*
 		 * Increase the (optimal) number of buckets if we just exceeded the
@@ -2014,10 +2008,13 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
 	 */
 	if (hashTuple != NULL)
 		hashTuple = hashTuple->next.unshared;
-	else if (hjstate->hj_CurSkewBucketNo != INVALID_SKEW_BUCKET_NO)
-		hashTuple = hashtable->skewBucket[hjstate->hj_CurSkewBucketNo]->tuples;
-	else
-		hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo];
+    else
+    {
+        if(type == 1)
+            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
+        else if (type == 2)
+                hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo];
+    }
 
 	while (hashTuple != NULL)
 	{
@@ -2058,7 +2055,6 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
             }
             
 		}
-
 		hashTuple = hashTuple->next.unshared;
 	}
 
