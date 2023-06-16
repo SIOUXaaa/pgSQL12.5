@@ -1996,12 +1996,12 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
     {
         hashtable = hjstate->hj_HashTable;
         hashTuple = hjstate->hj_CurTuple_outer;
-	    hashvalue = hjstate->hj_CurHashValue;
+        hashvalue = hjstate->hj_CurHashValue_outer;
     }
     else if(type == 2){
         hashtable = hjstate->hj_HashTable_outer;
         hashTuple = hjstate->hj_CurTuple;
-	    hashvalue = hjstate->hj_CurHashValue_outer;
+        hashvalue = hjstate->hj_CurHashValue;
     }
 
 

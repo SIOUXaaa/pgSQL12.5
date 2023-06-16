@@ -256,7 +256,7 @@ static pg_attribute_always_inline TupleTableSlot *
                 else
                     return NULL;
             }
-            econtext->ecxt_outertuple = outerTupleSlot;
+            econtext->ecxt_innertuple = innerTupleSlot;
             node->hj_MatchedOuter     = false;
 
             node->hj_CurHashValue = hashvalue_inner;
@@ -320,7 +320,7 @@ static pg_attribute_always_inline TupleTableSlot *
             econtext->ecxt_outertuple = outerTupleSlot;
             node->hj_MatchedOuter     = false;
 
-            node->hj_CurHashValue = hashvalue_outer;
+            node->hj_CurHashValue_outer = hashvalue_outer;
             ExecHashGetBucketAndBatch(hashtable_outer, hashvalue_outer,
                                       &node->hj_CurBucketNo_outer, &batchno);
             node->hj_CurTuple_outer = NULL;
@@ -338,8 +338,6 @@ static pg_attribute_always_inline TupleTableSlot *
             if (joinqual == NULL || ExecQual(joinqual, econtext))
             {
                 node->hj_MatchedOuter = true;
-                // HeapTupleHeaderSetMatch(HJTUPLE_MINTUPLE(node->hj_CurTuple_outer));
-
 
                 node->hj_JoinState = HJ_NEED_NEW_OUTER;
 
