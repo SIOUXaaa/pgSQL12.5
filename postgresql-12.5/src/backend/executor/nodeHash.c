@@ -89,7 +89,7 @@ static void ExecParallelHashCloseBatchAccessors(HashJoinTable hashtable);
  * ----------------------------------------------------------------
  */
 static TupleTableSlot *
-ExecHash(HashState *node, int tupleNo)
+ExecHash(HashState *node)
 {
     // MultiExecPrivateHash((HashState *)pstate);
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
@@ -104,24 +104,34 @@ ExecHash(HashState *node, int tupleNo)
     TupleTableSlot *slot;
     ExprContext *   econtext;
     uint32          hashvalue;
+    bool            returnSlot;
 
-    scanNode = (HashState *)outerPlanState(node);
-    outerNode = outerPlanState(scanNode);
+    // scanNode = (HashState *)outerPlanState(node);
+    returnSlot = false;
+    outerNode = outerPlanState(node);
 
     hashtable = node->hashtable;
 
     hashkeys = node->hashkeys;
     econtext = node->ps.ps_ExprContext;
 
+    elog(NOTICE, "ExecHash ExecProcNode");
     slot = ExecProcNode(outerNode);
     if (TupIsNull(slot))
+    {
+        elog(NOTICE,"ExecHash slot is null");
         return NULL;
+    }
 
+    econtext->ecxt_outertuple = slot;
+    elog(NOTICE, "get hash value");
     if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
                              hashtable->keepNulls, &hashvalue))
     {
         ExecHashTableInsert(hashtable, slot, hashvalue);
         hashtable->totalTuples += 1;
+        elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
+        returnSlot = true;
     }
 
     if (hashtable->nbuckets != hashtable->nbuckets_optimal)
@@ -137,7 +147,7 @@ ExecHash(HashState *node, int tupleNo)
     if (node->ps.instrument)
         InstrStopNode(node->ps.instrument, node->hashtable->partialTuples);
 
-    return NULL;
+    return returnSlot ? slot : NULL;
 }
 
 /* ----------------------------------------------------------------
@@ -1985,12 +1995,12 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
     if (type == 1)
     {
         hashtable = hjstate->hj_HashTable;
-        hashTuple = hjstate->hj_CurTuple;
+        hashTuple = hjstate->hj_CurTuple_outer;
 	    hashvalue = hjstate->hj_CurHashValue;
     }
     else if(type == 2){
         hashtable = hjstate->hj_HashTable_outer;
-        hashTuple = hjstate->hj_CurTuple_outer;
+        hashTuple = hjstate->hj_CurTuple;
 	    hashvalue = hjstate->hj_CurHashValue_outer;
     }
 

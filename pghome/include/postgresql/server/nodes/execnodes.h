@@ -1944,6 +1944,7 @@ typedef struct HashJoinState
     JoinState       js; /* its first field is NodeTag */
     ExprState *     hashclauses;
     List *          hj_OuterHashKeys; /* list of ExprState nodes */
+    List *          hj_InnerHashKeys; /* list of ExprState nodes */
     List *          hj_HashOperators; /* list of operator OIDs */
     List *          hj_Collations;
     HashJoinTable   hj_HashTable; //内外部哈希表
