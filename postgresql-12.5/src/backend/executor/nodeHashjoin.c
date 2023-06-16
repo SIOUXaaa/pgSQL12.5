@@ -230,25 +230,25 @@ static pg_attribute_always_inline TupleTableSlot *
 
         case HJ_NEED_NEW_INNER:
             elog(NOTICE, "try get inner tuple");
-            // if (node->hj_InnerNotEmpty)
+            if (node->hj_InnerNotEmpty)
                 innerTupleSlot = ExecHashJoinInnerGetTuple(
                     (PlanState *)hashNode_inner, node, &hashvalue_inner);
-            // else
-            // {
-            //     if (!node->hj_OuterNotEmpty)
-            //         node->hj_JoinState = HJ_NEED_NEW_OUTER;
-            //     else
-            //         return NULL;
-            // }
+            else
+            {
+                if (node->hj_OuterNotEmpty)
+                    node->hj_JoinState = HJ_NEED_NEW_OUTER;
+                else
+                    return NULL;
+            }
             elog(NOTICE, "get inner tuple");
             
-            if (TupIsNull(innerTupleSlot) || !node->hj_InnerNotEmpty)
+            if (TupIsNull(innerTupleSlot))
             {
                 //暂不考虑其他类型
                 elog(NOTICE, "inner tuple slot is null");
                 // inner join end
                 node->hj_InnerNotEmpty = false;
-                if (!TupIsNull(outerTupleSlot) && node->hj_OuterNotEmpty){
+                if (node->hj_OuterNotEmpty){
                     node->hj_JoinState = HJ_NEED_NEW_OUTER;
                     continue;
                 }
@@ -278,8 +278,7 @@ static pg_attribute_always_inline TupleTableSlot *
                 node->hj_MatchedOuter = true;
                 // HeapTupleHeaderSetMatch(HJTUPLE_MINTUPLE(node->hj_CurTuple));
 
-                if (node->js.single_match)
-                    node->hj_JoinState = HJ_NEED_NEW_INNER;
+                  node->hj_JoinState = HJ_NEED_NEW_INNER;
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                     return ExecProject(node->js.ps.ps_ProjInfo);
@@ -292,24 +291,24 @@ static pg_attribute_always_inline TupleTableSlot *
 
         case HJ_NEED_NEW_OUTER:
             elog(NOTICE, "try get outer tuple");
-            // if (node->hj_OuterNotEmpty)
+            if (node->hj_OuterNotEmpty)
                 outerTupleSlot = ExecHashJoinOuterGetTuple(
                     (PlanState *)hashNode_outer, node, &hashvalue_outer);
-            // else
-            // {
-            //     if (!node->hj_InnerNotEmpty)
-            //         node->hj_JoinState = HJ_NEED_NEW_INNER;
-            //     else
-            //         return NULL;
-            // }
+            else
+            {
+                if (node->hj_InnerNotEmpty)
+                    node->hj_JoinState = HJ_NEED_NEW_INNER;
+                else
+                    return NULL;
+            }
             elog(NOTICE, "get outer tuple");
 
-            if (TupIsNull(outerTupleSlot) || !node->hj_OuterNotEmpty)
+            if (TupIsNull(outerTupleSlot))
             {
                 //暂不考虑其他类型
                 elog(NOTICE, "outer tuple slot is null");
                 node->hj_OuterNotEmpty = false;
-                if (!TupIsNull(innerTupleSlot) && node->hj_InnerNotEmpty){
+                if (node->hj_InnerNotEmpty){
                     node->hj_JoinState = HJ_NEED_NEW_INNER;
                     continue;
                 }
@@ -329,6 +328,7 @@ static pg_attribute_always_inline TupleTableSlot *
             continue;
 
         case HJ_SCAN_INNER_BUCKET:
+            elog(NOTICE, "scan inner");
             if (!ExecScanHashBucket(node, econtext, 1))
             {
                 node->hj_JoinState = HJ_NEED_NEW_INNER;
@@ -340,8 +340,8 @@ static pg_attribute_always_inline TupleTableSlot *
                 node->hj_MatchedOuter = true;
                 // HeapTupleHeaderSetMatch(HJTUPLE_MINTUPLE(node->hj_CurTuple_outer));
 
-                if (node->js.single_match)
-                    node->hj_JoinState = HJ_NEED_NEW_OUTER;
+
+                node->hj_JoinState = HJ_NEED_NEW_OUTER;
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                     return ExecProject(node->js.ps.ps_ProjInfo);

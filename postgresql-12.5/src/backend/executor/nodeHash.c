@@ -93,7 +93,7 @@ ExecHash(HashState *node)
 {
     // MultiExecPrivateHash((HashState *)pstate);
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
-    elog(NOTICE, "execHash start");
+    // elog(NOTICE, "execHash start");
     if (node->ps.instrument)
         InstrStartNode(node->ps.instrument);
 
