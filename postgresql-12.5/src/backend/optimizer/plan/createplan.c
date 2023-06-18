@@ -4176,7 +4176,7 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
                             (best_path->num_batches > 1) ? CP_SMALL_TLIST : 0);
 
     inner_plan = create_plan_recurse(root, best_path->jpath.innerjoinpath,
-                                     CP_SMALL_TLIST);
+                                     (best_path->num_batches > 1) ? CP_SMALL_TLIST : 0);
 
     /* Sort join qual clauses into best execution order */
     joinclauses = order_qual_clauses(root, best_path->jpath.joinrestrictinfo);
@@ -4284,8 +4284,6 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
     //对outer进行hash
     outer_hash_plan = make_hash(outer_plan, outer_hashkeys, skewTable,
                                 skewColumn, skewInherit);
-    outer_hash_plan->plan.righttree = outer_plan;
-    outer_hash_plan->plan.targetlist = outer_plan->targetlist;
 
     /*
      * Set Hash node's startup & total costs equal to total cost of input

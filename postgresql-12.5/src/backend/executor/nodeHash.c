@@ -89,7 +89,7 @@ static TupleTableSlot *
 ExecHash(HashState *node)
 {
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
-    // elog(NOTICE, "execHash start");
+    elog(NOTICE, "execHash start");
 
     HashState *scanNode;
     PlanState *outerNode;
@@ -538,7 +538,7 @@ ExecHashTableCreate(HashState *state, List *hashOperators, List *hashCollations,
     hashtable->curbatch = 0;
     hashtable->nbatch_original = nbatch;
     hashtable->nbatch_outstart = nbatch;
-    hashtable->growEnabled = true;
+    hashtable->growEnabled = false;
     hashtable->totalTuples = 0;
     hashtable->partialTuples = 0;
     hashtable->skewTuples = 0;
@@ -1961,15 +1961,15 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
     uint32 hashvalue;
     if (type == 1)
     {
-        hashtable = hjstate->hj_HashTable;
+        hashtable = hjstate->hj_HashTable_inner;
         hashTuple = hjstate->hj_CurTuple_outer;
         hashvalue = hjstate->hj_CurHashValue_outer;
     }
     else if (type == 2)
     {
         hashtable = hjstate->hj_HashTable_outer;
-        hashTuple = hjstate->hj_CurTuple;
-        hashvalue = hjstate->hj_CurHashValue;
+        hashTuple = hjstate->hj_CurTuple_inner;
+        hashvalue = hjstate->hj_CurHashValue_inner;
     }
 
     /*
@@ -1987,7 +1987,7 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
             hashTuple =
                 hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
         else if (type == 2)
-            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo];
+            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
     }
 
     while (hashTuple != NULL)
@@ -2001,13 +2001,13 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                 /* insert hashtable's tuple into exec slot so ExecQual sees it
                  */
                 innertuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
-                                                   hjstate->hj_HashTupleSlot,
+                                                   hjstate->hj_HashTupleSlot_inner,
                                                    false); /* do not pfree */
                 econtext->ecxt_innertuple = innertuple;
 
                 if (ExecQualAndReset(hjclauses, econtext))
                 {
-                    hjstate->hj_CurTuple = hashTuple;
+                    hjstate->hj_CurTuple_inner = hashTuple;
                     return true;
                 }
             }

@@ -1928,23 +1928,31 @@ typedef struct HashJoinState
     List *hj_InnerHashKeys; /* list of ExprState nodes */
     List *hj_HashOperators; /* list of operator OIDs */
     List *hj_Collations;
-    HashJoinTable hj_HashTable; //内外部哈希表
-    HashJoinTable hj_HashTable_outer;
-    uint32 hj_CurHashValue; //内外部当前哈希值
+    HashJoinTable hj_HashTable;
+    HashJoinTable hj_HashTable_outer; //内外部哈希表
+    HashJoinTable hj_HashTable_inner;
+    uint32 hj_CurHashValue;
+    uint32 hj_CurHashValue_inner; //内外部当前哈希值
     uint32 hj_CurHashValue_outer;
-    int hj_CurBucketNo; //内外部哈希桶编号
+    int hj_CurBucketNo; 
+    int hj_CurBucketNo_inner; //内外部哈希桶编号
     int hj_CurBucketNo_outer;
     int hj_CurSkewBucketNo;    //不需要skew桶
     HashJoinTuple hj_CurTuple; //内外哈希连接tuple
     HashJoinTuple hj_CurTuple_outer;
+    HashJoinTuple hj_CurTuple_inner;
     TupleTableSlot *hj_OuterTupleSlot; //内外哈希元组槽
+    TupleTableSlot *hj_InnerTupleSlot;
     TupleTableSlot *hj_HashTupleSlot;
+    TupleTableSlot *hj_HashTupleSlot_inner;
+    TupleTableSlot *hj_HashTupleSlot_outer;
     TupleTableSlot *hj_NullOuterTupleSlot;
     TupleTableSlot *hj_NullInnerTupleSlot;
     TupleTableSlot *hj_FirstOuterTupleSlot;
     TupleTableSlot *hj_FirstInnerTupleSlot;
     int hj_JoinState;
     bool hj_MatchedOuter;
+    bool hj_MatchedInner;
     bool hj_OuterNotEmpty;
     bool hj_InnerNotEmpty;
 } HashJoinState;
