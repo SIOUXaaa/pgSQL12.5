@@ -109,7 +109,7 @@ ExecHash(HashState *node)
     econtext = node->ps.ps_ExprContext;
 
     // elog(NOTICE, "ExecHash ExecProcNode");
-    
+
     // elog(NOTICE, "get hash value");
     elog(NOTICE, "ExecHash ExecProcNode");
     slot = ExecProcNode(outerNode);
@@ -120,11 +120,9 @@ ExecHash(HashState *node)
     else
     {
         econtext->ecxt_outertuple = slot;
-        
         if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
-                                hashtable->keepNulls, &hashvalue))
+                                 hashtable->keepNulls, &hashvalue))
         {
-            elog(NOTICE, "hash value exechash %d", hashvalue);
             ExecHashTableInsert(hashtable, slot, hashvalue);
             hashtable->totalTuples += 1;
             elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
@@ -146,7 +144,6 @@ ExecHash(HashState *node)
     hashtable->partialTuples = hashtable->totalTuples;
 
     return returnSlot ? slot : NULL;
-    
 }
 
 /* ----------------------------------------------------------------
@@ -223,7 +220,6 @@ MultiExecPrivateHash(HashState *node)
             break;
         /* We have to compute the hash value */
         econtext->ecxt_outertuple = slot;
-        econtext->ecxt_innertuple =slot;
         if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
                                  hashtable->keepNulls, &hashvalue))
         {
@@ -1990,11 +1986,17 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
      * If the tuple hashed to a skew bucket then scan the skew bucket
      * otherwise scan the standard hashtable bucket.
      */
-    if (type == 1)
-        hashTuple =
-            hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
-    else if (type == 2)
-            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
+    if (hashTuple != NULL)
+        hashTuple = hashTuple->next.unshared;
+    else
+    {
+        if (type == 1)
+            hashTuple =
+                hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
+        else if (type == 2)
+            hashTuple =
+                hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
+    }
 
     while (hashTuple != NULL)
     {
@@ -2006,9 +2008,9 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
 
                 /* insert hashtable's tuple into exec slot so ExecQual sees it
                  */
-                innertuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
-                                                   hjstate->hj_HashTupleSlot_inner,
-                                                   false); /* do not pfree */
+                innertuple = ExecStoreMinimalTuple(
+                    HJTUPLE_MINTUPLE(hashTuple),
+                    hjstate->hj_HashTupleSlot_inner, false); /* do not pfree */
                 econtext->ecxt_innertuple = innertuple;
                 // econtext->ecxt_outertuple = innertuple;
 
@@ -2024,9 +2026,9 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
 
                 /* insert hashtable's tuple into exec slot so ExecQual sees it
                  */
-                outerTuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
-                                                   hjstate->hj_HashTupleSlot_outer,
-                                                   false); /* do not pfree */
+                outerTuple = ExecStoreMinimalTuple(
+                    HJTUPLE_MINTUPLE(hashTuple),
+                    hjstate->hj_HashTupleSlot_outer, false); /* do not pfree */
                 econtext->ecxt_outertuple = outerTuple;
 
                 if (ExecQualAndReset(hjclauses, econtext))

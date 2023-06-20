@@ -270,9 +270,6 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             node->hj_CurHashValue_inner = hashvalue_inner;
             ExecHashGetBucketAndBatch(hashtable_inner, hashvalue_inner,
                                       &node->hj_CurBucketNo_inner, &batchno);
-
-            // elog(NOTICE, "hashvalue inner %ld bucket %d", hashvalue_inner,node->hj_CurBucketNo_inner);
-            
             node->hj_CurTuple_inner = NULL;
             elog(NOTICE, "get inner success");
             node->hj_JoinState = HJ_SCAN_OUTER_BUCKET;
@@ -295,6 +292,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                 {
+                    // econtext->ecxt_innertuple = innerTupleSlot;
                     elog(NOTICE, "project inner");
                     return ExecProject(node->js.ps.ps_ProjInfo);
                 }
@@ -337,14 +335,13 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
                     return NULL;
             }
             else
-                elog(NOTICE, "outer tuple not null");
+                elog(NOTICE, "outer tuple  not null");
             econtext->ecxt_outertuple = outerTupleSlot;
             node->hj_MatchedOuter = false;
 
             node->hj_CurHashValue_outer = hashvalue_outer;
             ExecHashGetBucketAndBatch(hashtable_outer, hashvalue_outer,
                                       &node->hj_CurBucketNo_outer, &batchno);
-            // elog(NOTICE, "hashvalue outer %ld bucket %d",hashvalue_outer, node->hj_CurBucketNo_outer);
             node->hj_CurTuple_outer = NULL;
             elog(NOTICE, "get outer success");
             node->hj_JoinState = HJ_SCAN_INNER_BUCKET;
@@ -367,6 +364,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                 {
+                    // econtext->ecxt_outertuple = outerTupleSlot;
                     elog(NOTICE, "project outer");
                     return ExecProject(node->js.ps.ps_ProjInfo);
                 }
@@ -570,7 +568,6 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
         ExecInitExprList(node->hashkeys, (PlanState *)hjstate);
     hjstate->hj_InnerHashKeys =
         ExecInitExprList(node->hashkeys, (PlanState *)hjstate);
-    
     hjstate->hj_HashOperators = node->hashoperators;
     hjstate->hj_Collations = node->hashcollations;
 
@@ -648,12 +645,11 @@ ExecHashJoinInnerGetTuple(PlanState *innerNode, HashJoinState *hjstate,
         ExprContext *econtext = hjstate->js.ps.ps_ExprContext;
 
         econtext->ecxt_innertuple = slot;
-        econtext->ecxt_outertuple = slot;
         if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_InnerHashKeys,
                                  false, HJ_FILL_INNER(hjstate), hashvalue))
         {
             hjstate->hj_InnerNotEmpty = true;
-            elog(NOTICE, "get inner tuple return %p, hashvalue %d", slot, *hashvalue);
+            elog(NOTICE, "get inner tuple return %p", slot);
             return slot;
         }
         slot = ExecProcNode(innerNode);
@@ -693,13 +689,12 @@ ExecHashJoinOuterGetTuple(PlanState *outerNode, HashJoinState *hjstate,
     {
         ExprContext *econtext = hjstate->js.ps.ps_ExprContext;
 
-        econtext->ecxt_innertuple = slot;
         econtext->ecxt_outertuple = slot;
         if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_OuterHashKeys,
                                  true, HJ_FILL_OUTER(hjstate), hashvalue))
         {
             hjstate->hj_OuterNotEmpty = true;
-            elog(NOTICE, "get outer tuple return %p hashvalue %d", slot, *hashvalue);
+            elog(NOTICE, "get outer tuple return %p", slot);
             return slot;
         }
         slot = ExecProcNode(outerNode);
