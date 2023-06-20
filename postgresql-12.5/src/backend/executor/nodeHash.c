@@ -91,7 +91,6 @@ ExecHash(HashState *node)
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
     elog(NOTICE, "execHash start");
 
-    HashState *scanNode;
     PlanState *outerNode;
     List *hashkeys;
     HashJoinTable hashtable;
@@ -110,22 +109,28 @@ ExecHash(HashState *node)
     econtext = node->ps.ps_ExprContext;
 
     // elog(NOTICE, "ExecHash ExecProcNode");
+    
+    // elog(NOTICE, "get hash value");
+    elog(NOTICE, "ExecHash ExecProcNode");
     slot = ExecProcNode(outerNode);
     if (TupIsNull(slot))
     {
-        // elog(NOTICE,"ExecHash slot is null");
-        return NULL;
+        elog(NOTICE, "ExecHash slot is null");
     }
-
-    econtext->ecxt_outertuple = slot;
-    // elog(NOTICE, "get hash value");
-    if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
-                             hashtable->keepNulls, &hashvalue))
-    {
-        ExecHashTableInsert(hashtable, slot, hashvalue);
-        hashtable->totalTuples += 1;
-        // elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
-        returnSlot = true;
+    else{
+        econtext->ecxt_outertuple = slot;
+        if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
+                                hashtable->keepNulls, &hashvalue))
+        {
+            ExecHashTableInsert(hashtable, slot, hashvalue);
+            hashtable->totalTuples += 1;
+            elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
+            returnSlot = true;
+        }
+        else
+        {
+            elog(NOTICE, "get hash value false");
+        }
     }
 
     if (hashtable->nbuckets != hashtable->nbuckets_optimal)
@@ -138,6 +143,7 @@ ExecHash(HashState *node)
     hashtable->partialTuples = hashtable->totalTuples;
 
     return returnSlot ? slot : NULL;
+    
 }
 
 /* ----------------------------------------------------------------
@@ -154,6 +160,7 @@ MultiExecHash(HashState *node)
     if (node->ps.instrument)
         InstrStartNode(node->ps.instrument);
 
+    // ExecHash(node);
     if (node->parallel_state != NULL)
         MultiExecParallelHash(node);
     else
@@ -1962,13 +1969,13 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
     if (type == 1)
     {
         hashtable = hjstate->hj_HashTable_inner;
-        hashTuple = hjstate->hj_CurTuple_outer;
+        hashTuple = hjstate->hj_CurTuple_inner;
         hashvalue = hjstate->hj_CurHashValue_outer;
     }
     else if (type == 2)
     {
         hashtable = hjstate->hj_HashTable_outer;
-        hashTuple = hjstate->hj_CurTuple_inner;
+        hashTuple = hjstate->hj_CurTuple_outer;
         hashvalue = hjstate->hj_CurHashValue_inner;
     }
 
@@ -1985,9 +1992,9 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
     {
         if (type == 1)
             hashTuple =
-                hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
+                hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
         else if (type == 2)
-            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
+            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
     }
 
     while (hashTuple != NULL)
@@ -2004,6 +2011,7 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                                                    hjstate->hj_HashTupleSlot_inner,
                                                    false); /* do not pfree */
                 econtext->ecxt_innertuple = innertuple;
+                // econtext->ecxt_outertuple = innertuple;
 
                 if (ExecQualAndReset(hjclauses, econtext))
                 {
@@ -2018,7 +2026,7 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                 /* insert hashtable's tuple into exec slot so ExecQual sees it
                  */
                 outerTuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
-                                                   hjstate->hj_OuterTupleSlot,
+                                                   hjstate->hj_HashTupleSlot_outer,
                                                    false); /* do not pfree */
                 econtext->ecxt_outertuple = outerTuple;
 

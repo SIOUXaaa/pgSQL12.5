@@ -4270,6 +4270,7 @@ create_hashjoin_plan(PlannerInfo *root, HashPath *best_path)
 
         hashoperators = lappend_oid(hashoperators, hclause->opno);
         hashcollations = lappend_oid(hashcollations, hclause->inputcollid);
+
         outer_hashkeys = lappend(outer_hashkeys, linitial(hclause->args));
         inner_hashkeys = lappend(inner_hashkeys, lsecond(hclause->args));
     }

@@ -165,6 +165,7 @@ static void ExecParallelHashJoinPartitionOuter(HashJoinState *node);
 static pg_attribute_always_inline TupleTableSlot *
 ExecHashJoinImpl(PlanState *pstate, bool parallel)
 {
+    elog(NOTICE, "impl start");
     HashJoinState *node = castNode(HashJoinState, pstate);
     HashState *hashNode_outer;
     HashState *hashNode_inner;
@@ -224,18 +225,23 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             hashNode_inner->hashtable = hashtable_inner;
             hashNode_outer->hashtable = hashtable_outer;
 
-            node->hj_JoinState = HJ_NEED_NEW_INNER;
+            // (void)MultiExecHash(hashNode_inner);
+            // (void)MultiExecHash(hashNode_outer);
+
+            node->hj_JoinState = HJ_NEED_NEW_OUTER;
             continue;
 
         case HJ_NEED_NEW_INNER:
-            // elog(NOTICE, "try get inner tuple");
+            elog(NOTICE, "try get inner tuple");
             if (node->hj_InnerNotEmpty)
                 innerTupleSlot = ExecHashJoinInnerGetTuple(
                     (PlanState *)hashNode_inner, node, &hashvalue_inner);
             else
             {
-                if (node->hj_OuterNotEmpty)
+                if (node->hj_OuterNotEmpty){
                     node->hj_JoinState = HJ_NEED_NEW_OUTER;
+                    continue;
+                }
                 else
                     return NULL;
             }
@@ -256,6 +262,8 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
                 else
                     return NULL;
             }
+            else
+                elog(NOTICE, "inner tuple not null");
             econtext->ecxt_innertuple = innerTupleSlot;
             node->hj_MatchedInner = false;
 
@@ -263,6 +271,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             ExecHashGetBucketAndBatch(hashtable_inner, hashvalue_inner,
                                       &node->hj_CurBucketNo_inner, &batchno);
             node->hj_CurTuple_inner = NULL;
+            elog(NOTICE, "get inner success");
             node->hj_JoinState = HJ_SCAN_OUTER_BUCKET;
             continue;
 
@@ -294,14 +303,16 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             break;
 
         case HJ_NEED_NEW_OUTER:
-            // elog(NOTICE, "try get outer tuple");
+            elog(NOTICE, "try get outer tuple");
             if (node->hj_OuterNotEmpty)
                 outerTupleSlot = ExecHashJoinOuterGetTuple(
                     (PlanState *)hashNode_outer, node, &hashvalue_outer);
             else
             {
-                if (node->hj_InnerNotEmpty)
+                if (node->hj_InnerNotEmpty){
                     node->hj_JoinState = HJ_NEED_NEW_INNER;
+                    continue;
+                }
                 else
                     return NULL;
             }
@@ -322,6 +333,8 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
                 else
                     return NULL;
             }
+            else
+                elog(NOTICE, "outer tuple  not null");
             econtext->ecxt_outertuple = outerTupleSlot;
             node->hj_MatchedOuter = false;
 
@@ -329,6 +342,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             ExecHashGetBucketAndBatch(hashtable_outer, hashvalue_outer,
                                       &node->hj_CurBucketNo_outer, &batchno);
             node->hj_CurTuple_outer = NULL;
+            elog(NOTICE, "get outer success");
             node->hj_JoinState = HJ_SCAN_INNER_BUCKET;
             continue;
 
@@ -613,6 +627,7 @@ static TupleTableSlot *
 ExecHashJoinInnerGetTuple(PlanState *innerNode, HashJoinState *hjstate,
                           uint32 *hashvalue)
 {
+    elog(NOTICE, "get inner tuple");
     HashJoinTable hashtable = hjstate->hj_HashTable_inner;
     TupleTableSlot *slot;
 
@@ -622,12 +637,13 @@ ExecHashJoinInnerGetTuple(PlanState *innerNode, HashJoinState *hjstate,
     else
         slot = ExecProcNode(innerNode);
 
+    elog(NOTICE, "before inner get tuple!!!");
     while (!TupIsNull(slot))
     {
         ExprContext *econtext = hjstate->js.ps.ps_ExprContext;
 
-        econtext->ecxt_outertuple = slot;
-        if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_OuterHashKeys,
+        econtext->ecxt_innertuple = slot;
+        if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_InnerHashKeys,
                                  false, HJ_FILL_INNER(hjstate), hashvalue))
         {
             hjstate->hj_InnerNotEmpty = true;
@@ -656,6 +672,7 @@ static TupleTableSlot *
 ExecHashJoinOuterGetTuple(PlanState *outerNode, HashJoinState *hjstate,
                           uint32 *hashvalue)
 {
+    elog(NOTICE, "get outer tuple");
     HashJoinTable hashtable = hjstate->hj_HashTable_outer;
     TupleTableSlot *slot;
 
@@ -665,13 +682,14 @@ ExecHashJoinOuterGetTuple(PlanState *outerNode, HashJoinState *hjstate,
     else
         slot = ExecProcNode(outerNode);
 
+    elog(NOTICE,"outer get tuple!!!");
     while (!TupIsNull(slot))
     {
         ExprContext *econtext = hjstate->js.ps.ps_ExprContext;
 
         econtext->ecxt_outertuple = slot;
-        if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_InnerHashKeys,
-                                 false, HJ_FILL_OUTER(hjstate), hashvalue))
+        if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_OuterHashKeys,
+                                 true, HJ_FILL_OUTER(hjstate), hashvalue))
         {
             hjstate->hj_OuterNotEmpty = true;
             elog(NOTICE, "get outer tuple return %p", slot);
