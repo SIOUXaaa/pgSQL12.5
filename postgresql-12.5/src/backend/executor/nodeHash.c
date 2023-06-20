@@ -117,11 +117,14 @@ ExecHash(HashState *node)
     {
         elog(NOTICE, "ExecHash slot is null");
     }
-    else{
+    else
+    {
         econtext->ecxt_outertuple = slot;
+        
         if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
                                 hashtable->keepNulls, &hashvalue))
         {
+            elog(NOTICE, "hash value exechash %d", hashvalue);
             ExecHashTableInsert(hashtable, slot, hashvalue);
             hashtable->totalTuples += 1;
             elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
@@ -220,6 +223,7 @@ MultiExecPrivateHash(HashState *node)
             break;
         /* We have to compute the hash value */
         econtext->ecxt_outertuple = slot;
+        econtext->ecxt_innertuple =slot;
         if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
                                  hashtable->keepNulls, &hashvalue))
         {
@@ -1986,16 +1990,11 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
      * If the tuple hashed to a skew bucket then scan the skew bucket
      * otherwise scan the standard hashtable bucket.
      */
-    if (hashTuple != NULL)
-        hashTuple = hashTuple->next.unshared;
-    else
-    {
-        if (type == 1)
-            hashTuple =
-                hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
-        else if (type == 2)
-            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
-    }
+    if (type == 1)
+        hashTuple =
+            hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];
+    else if (type == 2)
+            hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];
 
     while (hashTuple != NULL)
     {
