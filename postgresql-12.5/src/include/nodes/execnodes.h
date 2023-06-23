@@ -2277,6 +2277,8 @@ typedef struct HashState
     PlanState ps;            /* its first field is NodeTag */
     HashJoinTable hashtable; /* hash table for the hashjoin */
     List *hashkeys;          /* list of ExprState nodes */
+    List *hashkeys_inner;
+    List *hashkeys_outer;
 
     SharedHashInfo *shared_info;      /* one entry per worker */
     HashInstrumentation *hinstrument; /* this worker's entry */
