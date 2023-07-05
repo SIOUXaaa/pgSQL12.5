@@ -89,7 +89,7 @@ static TupleTableSlot *
 ExecHash(PlanState *pstate)
 {
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
-    elog(NOTICE, "execHash start");
+    //elog(NOTICE, "execHash start");
 
     HashState *node=(HashState *)pstate;
     PlanState *outerNode;
@@ -98,9 +98,7 @@ ExecHash(PlanState *pstate)
     TupleTableSlot *slot;
     ExprContext *econtext;
     uint32 hashvalue;
-    bool returnSlot;
 
-    returnSlot = false;
     outerNode = outerPlanState(pstate);
 
     hashtable = node->hashtable;
@@ -108,11 +106,12 @@ ExecHash(PlanState *pstate)
     hashkeys = node->hashkeys;
     econtext = node->ps.ps_ExprContext;
 
-    elog(NOTICE, "ExecHash ExecProcNode");
+    //elog(NOTICE, "ExecHash ExecProcNode");
 
     slot = ExecProcNode(outerNode);
     if (TupIsNull(slot))
     {
+        //elog(NOTICE, "slot is null");
         return NULL;
     }
 
@@ -124,14 +123,12 @@ ExecHash(PlanState *pstate)
         hashtable->totalTuples += 1;
         node->curInsertHashValue = hashvalue;
         node->insertTupleValueEqulNull = false;
-        elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
-
-        returnSlot = true;
+        // elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
     }
     else
     {
         node->insertTupleValueEqulNull = true;
-        //elog(NOTICE, "get hash value false");
+        // elog(NOTICE, "tuple value is null but tuple not null\n");
     }
     
 
@@ -144,7 +141,7 @@ ExecHash(PlanState *pstate)
 
     hashtable->partialTuples = hashtable->totalTuples;
 
-    return returnSlot ? slot : NULL;
+    return slot;
 }
 
 /* ----------------------------------------------------------------
@@ -2010,11 +2007,11 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext)
     else if (hjstate->scanBucket)
     { //扫Inner table
         hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];//拿inner tuple的bucketNo
-        elog(NOTICE, "scan inner bucket %d", hjstate->hj_CurBucketNo_outer);
+        // elog(NOTICE, "scan inner bucket %d", hjstate->hj_CurBucketNo_outer);
     }
     else{//扫outer table
         hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];//拿outer bucketNo
-        elog(NOTICE, "scan outer bucket %d", hjstate->hj_CurBucketNo_inner);
+        // elog(NOTICE, "scan outer bucket %d", hjstate->hj_CurBucketNo_inner);
     }
 
     while (hashTuple != NULL)

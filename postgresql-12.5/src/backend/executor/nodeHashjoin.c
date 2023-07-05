@@ -165,7 +165,7 @@ static void ExecParallelHashJoinPartitionOuter(HashJoinState *node);
 static pg_attribute_always_inline TupleTableSlot *
 ExecHashJoinImpl(PlanState *pstate, bool parallel)
 {
-    elog(NOTICE, "\nimpl start");
+    // elog(NOTICE, "\nimpl start");
     HashJoinState *node = castNode(HashJoinState, pstate);
     PlanState *outerNode;
     PlanState *innerNode;
@@ -239,7 +239,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             break;
 
         case HJ_NEED_NEW_INNER:
-            elog(NOTICE, "try get inner tuple");
+            //elog(NOTICE, "try get inner tuple");
 
             if (!node->hj_InnerNotEmpty)
             {
@@ -257,11 +257,11 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
             innerTupleSlot = ExecProcNode((PlanState *)innerHashNode);
 
-            elog(NOTICE, "get inner tuple");
+            //elog(NOTICE, "get inner tuple");
 
             if (TupIsNull(innerTupleSlot))
             {
-                elog(NOTICE, "inner tuple slot is null\n");
+                //elog(NOTICE, "inner tuple slot is null\n");
                 // inner join end
                 node->hj_InnerNotEmpty = false;
                 if (node->hj_OuterNotEmpty)
@@ -309,7 +309,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
             break;
 
         case HJ_NEED_NEW_OUTER:
-            elog(NOTICE, "try get outer tuple");
+            //elog(NOTICE, "try get outer tuple");
 
             if (!node->hj_OuterNotEmpty)
             {
@@ -331,7 +331,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
             if (TupIsNull(outerTupleSlot))
             {
-                elog(NOTICE, "outer tuple slot is null\n");
+                //elog(NOTICE, "outer tuple slot is null\n");
                 // inner join end
                 node->hj_OuterNotEmpty = false;
                 if (node->hj_InnerNotEmpty)
@@ -379,11 +379,11 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
         case HJ_SCAN_OUTER_BUCKET:
             node->scanBucket = false;
-            elog(NOTICE,"scan outer");
+            //elog(NOTICE,"scan outer");
             if (!ExecScanHashBucket(node, econtext))
             {
                 node->hj_JoinState = HJ_NEED_NEW_OUTER;
-                elog(NOTICE,"not found outer");
+                //elog(NOTICE,"not found outer");
                 continue;
             }
 
@@ -399,7 +399,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                 {
-                    elog(NOTICE, "project outer\n");
+                    //elog(NOTICE, "project outer\n");
                     return ExecProject(node->js.ps.ps_ProjInfo);
                 }
                 else
@@ -411,11 +411,11 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
         case HJ_SCAN_INNER_BUCKET:
             node->scanBucket = true;
-            elog(NOTICE, "scan inner");
+            //elog(NOTICE, "scan inner");
             if (!ExecScanHashBucket(node, econtext))
             {
                 node->hj_JoinState = HJ_NEED_NEW_INNER;
-                elog(NOTICE, "not found inner");
+                //elog(NOTICE, "not found inner");
                 continue;
             }
 
@@ -430,7 +430,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 
                 if (otherqual == NULL || ExecQual(otherqual, econtext))
                 {
-                    elog(NOTICE, "project inner\n");
+                    //elog(NOTICE, "project inner\n");
                     return ExecProject(node->js.ps.ps_ProjInfo);
                 }
                 else
