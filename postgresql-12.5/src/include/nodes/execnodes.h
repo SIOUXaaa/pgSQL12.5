@@ -1956,7 +1956,10 @@ typedef struct HashJoinState
     bool hj_OuterNotEmpty;
     bool hj_InnerNotEmpty;
 
+    bool firstFill;
     bool scanBucket;
+    bool fillInnerTableFinished;
+    bool fillOuterTableFinished;
 } HashJoinState;
 
 /* ----------------------------------------------------------------
