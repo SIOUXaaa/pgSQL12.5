@@ -1597,7 +1597,7 @@ create_unique_plan(PlannerInfo *root, UniquePath *best_path, int flags)
     return plan;
 }
 
-/*
+/*create_hashjoin_plan
  * create_gather_plan
  *
  *	  Create a Gather plan for 'best_path' and (recursively) plans

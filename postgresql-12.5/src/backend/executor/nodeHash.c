@@ -86,11 +86,12 @@ static void ExecParallelHashCloseBatchAccessors(HashJoinTable hashtable);
  * ----------------------------------------------------------------
  */
 static TupleTableSlot *
-ExecHash(HashState *node)
+ExecHash(PlanState *pstate)
 {
     // elog(ERROR, "Hash node does not support ExecProcNode call convention");
     elog(NOTICE, "execHash start");
 
+    HashState *node=(HashState *)pstate;
     PlanState *outerNode;
     List *hashkeys;
     HashJoinTable hashtable;
@@ -99,40 +100,40 @@ ExecHash(HashState *node)
     uint32 hashvalue;
     bool returnSlot;
 
-    // scanNode = (HashState *)outerPlanState(node);
     returnSlot = false;
-    outerNode = outerPlanState(node);
+    outerNode = outerPlanState(pstate);
 
     hashtable = node->hashtable;
 
     hashkeys = node->hashkeys;
     econtext = node->ps.ps_ExprContext;
 
-    // elog(NOTICE, "ExecHash ExecProcNode");
-
-    // elog(NOTICE, "get hash value");
     elog(NOTICE, "ExecHash ExecProcNode");
+
     slot = ExecProcNode(outerNode);
     if (TupIsNull(slot))
     {
-        elog(NOTICE, "ExecHash slot is null");
+        return NULL;
+    }
+
+    econtext->ecxt_outertuple = slot;
+    if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
+                                 hashtable->keepNulls, &hashvalue))
+    {
+        ExecHashTableInsert(hashtable, slot, hashvalue);
+        hashtable->totalTuples += 1;
+        node->curInsertHashValue = hashvalue;
+        node->insertTupleValueEqulNull = false;
+        elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
+
+        returnSlot = true;
     }
     else
     {
-        econtext->ecxt_outertuple = slot;
-        if (ExecHashGetHashValue(hashtable, econtext, hashkeys, false,
-                                 hashtable->keepNulls, &hashvalue))
-        {
-            ExecHashTableInsert(hashtable, slot, hashvalue);
-            hashtable->totalTuples += 1;
-            elog(NOTICE, "insert into hashtable %f", hashtable->totalTuples);
-            returnSlot = true;
-        }
-        else
-        {
-            elog(NOTICE, "get hash value false");
-        }
+        node->insertTupleValueEqulNull = true;
+        //elog(NOTICE, "get hash value false");
     }
+    
 
     if (hashtable->nbuckets != hashtable->nbuckets_optimal)
         ExecHashIncreaseNumBuckets(hashtable);
@@ -446,23 +447,23 @@ ExecInitHash(Hash *node, EState *estate, int eflags)
     hashstate->hashkeys =
         ExecInitExprList(node->hashkeys, (PlanState *)hashstate);
     
-    List *result_inner = NIL;
-    List *result_outer = NIL;
-    ListCell *lc;
-    foreach (lc, node->hashkeys)
-    {
-        Expr *e = lfirst(lc);
-        result_outer= lappend(result_outer, ExecInitExpr(e, (PlanState *)hashstate));
-    }
+    // List *result_inner = NIL;
+    // List *result_outer = NIL;
+    // ListCell *lc;
+    // foreach (lc, node->hashkeys)
+    // {
+    //     Expr *e = lfirst(lc);
+    //     result_outer= lappend(result_outer, ExecInitExpr(e, (PlanState *)hashstate));
+    // }
 
-    for (ListCell *lc = list_tail(node->hashkeys); lc != NULL; lc = lnext(lc))
-    {
-        Expr *e = lfirst(lc);
-        result_inner = lappend(result_inner, ExecInitExpr(e, (PlanState *)hashstate));
-    }
+    // for (ListCell *lc = list_tail(node->hashkeys); lc != NULL; lc = lnext(lc))
+    // {
+    //     Expr *e = lfirst(lc);
+    //     result_inner = lappend(result_inner, ExecInitExpr(e, (PlanState *)hashstate));
+    // }
 
-    hashstate->hashkeys_inner = result_inner;
-    hashstate->hashkeys_outer = result_outer;
+    // hashstate->hashkeys_inner = result_inner;
+    // hashstate->hashkeys_outer = result_outer;
 
     return hashstate;
 }
@@ -1980,23 +1981,21 @@ ExecHashGetBucketAndBatch(HashJoinTable hashtable, uint32 hashvalue,
  * for the latter.
  */
 bool
-ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
+ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext)
 {
     ExprState *hjclauses = hjstate->hashclauses;
-    HashJoinTable hashtable;
-    HashJoinTuple hashTuple;
-    uint32 hashvalue;
-    if (type == 1)
+    HashJoinTable hashtable = hjstate->hj_HashTable;
+    HashJoinTuple hashTuple = hjstate->hj_CurTuple;
+    uint32 hashvalue = hjstate->hj_CurHashValue;
+    if (hjstate->scanBucket)
     {
         hashtable = hjstate->hj_HashTable_inner;
         hashTuple = hjstate->hj_CurTuple_inner;
-        hashvalue = hjstate->hj_CurHashValue_outer;
     }
-    else if (type == 2)
+    else
     {
         hashtable = hjstate->hj_HashTable_outer;
         hashTuple = hjstate->hj_CurTuple_outer;
-        hashvalue = hjstate->hj_CurHashValue_inner;
     }
 
     /*
@@ -2006,22 +2005,25 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
      * If the tuple hashed to a skew bucket then scan the skew bucket
      * otherwise scan the standard hashtable bucket.
      */
-    // if (hashTuple != NULL)
-    //     hashTuple = hashTuple->next.unshared;
-    if (type == 1){//扫Inner table
-        hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];//拿inner tuple的bucketNo
-        elog(NOTICE, "scan bucket %d", hjstate->hj_CurBucketNo_outer);
+    if (hashTuple != NULL)
+        hashTuple = hashTuple->next.unshared;
+    else if (hjstate->scanBucket)
+    { //扫Inner table
+        hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];//拿inner tuple的bucketNo
+        elog(NOTICE, "scan inner bucket %d", hjstate->hj_CurBucketNo_outer);
     }
     else{//扫outer table
-        hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_outer];//拿outer bucketNo
-        elog(NOTICE, "scan bucket %d", hjstate->hj_CurBucketNo_inner);
+        hashTuple = hashtable->buckets.unshared[hjstate->hj_CurBucketNo_inner];//拿outer bucketNo
+        elog(NOTICE, "scan outer bucket %d", hjstate->hj_CurBucketNo_inner);
     }
 
     while (hashTuple != NULL)
     {
+        //elog(NOTICE, "not find tuple, next");
         if (hashTuple->hashvalue == hashvalue)
         {
-            if (type == 1)
+            //elog(NOTICE,"find tuple");
+            if (hjstate->scanBucket)
             {
                 TupleTableSlot *innertuple;
 
@@ -2030,7 +2032,6 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                 innertuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
                                                     hjstate->hj_HashTupleSlot_inner, false); /* do not pfree */
                 econtext->ecxt_innertuple = innertuple;
-                // econtext->ecxt_outertuple = innertuple;
 
                 if (ExecQualAndReset(hjclauses, econtext))
                 {
@@ -2038,7 +2039,7 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                     return true;
                 }
             }
-            else if (type == 2)
+            else
             {
                 TupleTableSlot *outerTuple;
 
@@ -2046,9 +2047,9 @@ ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext, int type)
                  */
                 outerTuple = ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
                                                     hjstate->hj_HashTupleSlot_outer, false); /* do not pfree */
-                econtext->ecxt_innertuple = outerTuple;
+                // econtext->ecxt_innertuple = outerTuple;
                 // TupleTableSlot *temp = econtext->ecxt_outertuple;
-                // econtext->ecxt_outertuple = outerTuple;
+                econtext->ecxt_outertuple = outerTuple;
 
                 if (ExecQualAndReset(hjclauses, econtext))
                 {

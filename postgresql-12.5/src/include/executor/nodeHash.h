@@ -45,8 +45,7 @@ extern bool ExecHashGetHashValue(HashJoinTable hashtable, ExprContext *econtext,
                                  bool keep_nulls, uint32 *hashvalue);
 extern void ExecHashGetBucketAndBatch(HashJoinTable hashtable, uint32 hashvalue,
                                       int *bucketno, int *batchno);
-extern bool ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext,
-                               int type);
+extern bool ExecScanHashBucket(HashJoinState *hjstate, ExprContext *econtext);
 extern bool ExecParallelScanHashBucket(HashJoinState *hjstate,
                                        ExprContext *econtext);
 extern void ExecPrepHashTableForUnmatched(HashJoinState *hjstate);

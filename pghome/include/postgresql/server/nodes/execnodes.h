@@ -1955,6 +1955,8 @@ typedef struct HashJoinState
     bool hj_MatchedInner;
     bool hj_OuterNotEmpty;
     bool hj_InnerNotEmpty;
+
+    bool scanBucket;
 } HashJoinState;
 
 /* ----------------------------------------------------------------
@@ -2279,6 +2281,9 @@ typedef struct HashState
     List *hashkeys;          /* list of ExprState nodes */
     List *hashkeys_inner;
     List *hashkeys_outer;
+
+    uint32 curInsertHashValue;
+    bool insertTupleValueEqulNull;
 
     SharedHashInfo *shared_info;      /* one entry per worker */
     HashInstrumentation *hinstrument; /* this worker's entry */
