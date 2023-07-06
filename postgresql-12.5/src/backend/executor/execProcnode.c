@@ -116,7 +116,6 @@
 #include "nodes/nodeFuncs.h"
 #include "miscadmin.h"
 
-
 static TupleTableSlot *ExecProcNodeFirst(PlanState *node);
 static TupleTableSlot *ExecProcNodeInstr(PlanState *node);
 
@@ -297,13 +296,14 @@ ExecInitNode(Plan *node, EState *estate, int eflags)
 			break;
 
 		case T_HashJoin:
-			result = (PlanState *) ExecInitHashJoin((HashJoin *) node,
-													estate, eflags);
-			break;
+			if(((HashJoin*)node)->isSymHashJoin){ //根据isSymHashJoin判断执行哪个函数
+				//在此处添加你的实现
+			}else{
+				result = (PlanState *) ExecInitHashJoin((HashJoin *) node,
+														estate, eflags);
+				break;
+			}
 
-			/*
-			 * materialization nodes
-			 */
 		case T_Material:
 			result = (PlanState *) ExecInitMaterial((Material *) node,
 													estate, eflags);

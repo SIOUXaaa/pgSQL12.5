@@ -1122,8 +1122,13 @@ ExplainNode(PlanState *planstate, List *ancestors,
 			sname = "Merge Join";
 			break;
 		case T_HashJoin:
-			pname = "Hash";		/* "Join" gets added by jointype switch */
-			sname = "Hash Join";
+			if(((HashJoinState*)planstate)->isSymHashJoin){ /*SymHashJoin Output*/
+				pname = "Sym Hash";
+				sname = "Sym Hash Join";
+			}else{
+				pname = "Hash";		/* "Join" gets added by jointype switch */
+				sname = "Hash Join";
+			}
 			break;
 		case T_SeqScan:
 			pname = sname = "Seq Scan";

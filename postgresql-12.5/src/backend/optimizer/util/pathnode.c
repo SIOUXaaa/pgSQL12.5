@@ -2564,6 +2564,31 @@ create_hashjoin_path(PlannerInfo *root,
 	return pathnode;
 }
 
+HashPath *
+create_symhashjoin_path(PlannerInfo *root, 
+					 RelOptInfo *joinrel,
+					 JoinType jointype,
+					 JoinCostWorkspace *workspace,
+					 JoinPathExtraData *extra,
+					 Path *outer_path,
+					 Path *inner_path,
+					 bool parallel_hash,
+					 List *restrict_clauses,
+					 Relids required_outer,
+					 List *hashclauses)
+{
+	//创建symhashjoin路径，仿照create_hashjoin_path实现
+	HashPath   *pathnode = makeNode(HashPath);
+
+	pathnode->jpath.path.pathtype = T_SymHashJoin;
+	//在这里添加你的实现
+	//可以参照create_hashjoin_path
+	//需要调用final_cost_hashjoin函数
+	//注意：创造的node类型为T_SymHashJoin
+
+}
+
+
 /*
  * create_projection_path
  *	  Creates a pathnode that represents performing a projection.

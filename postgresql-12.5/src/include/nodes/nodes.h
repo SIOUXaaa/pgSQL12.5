@@ -72,6 +72,7 @@ typedef enum NodeTag
 	T_NestLoop,
 	T_MergeJoin,
 	T_HashJoin,
+	T_SymHashJoin,
 	T_Material,
 	T_Sort,
 	T_Group,
