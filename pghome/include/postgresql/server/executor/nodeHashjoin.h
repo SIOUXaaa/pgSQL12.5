@@ -19,6 +19,7 @@
 #include "storage/buffile.h"
 
 extern HashJoinState *ExecInitHashJoin(HashJoin *node, EState *estate, int eflags);
+extern HashJoinState *ExecInitSymHashJoin(HashJoin *node, EState *estate, int eflags);
 extern void ExecEndHashJoin(HashJoinState *node);
 extern void ExecReScanHashJoin(HashJoinState *node);
 extern void ExecShutdownHashJoin(HashJoinState *node);

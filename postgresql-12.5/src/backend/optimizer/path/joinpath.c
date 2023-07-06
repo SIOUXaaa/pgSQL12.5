@@ -782,7 +782,8 @@ try_hashjoin_path(PlannerInfo *root, //将新的路径加入到joinrel中，之�
     if (add_path_precheck(joinrel, workspace.startup_cost, workspace.total_cost,
                           NIL, required_outer))
     {
-        add_path(joinrel, (Path *)create_symhashjoin_path(
+        add_path(joinrel, (Path *)
+                 create_symhashjoin_path(
                               root, joinrel, jointype, &workspace, extra,
                               outer_path, inner_path, false,
                               extra->restrictlist, required_outer, hashclauses));

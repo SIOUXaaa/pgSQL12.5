@@ -745,6 +745,7 @@ typedef struct HashJoin
 	 * perform lookups in the hashtable over the inner plan.
 	 */
 	List	   *hashkeys;
+	bool       isSymHashJoin; /*用于判定是否为Symhashjoin*/
 } HashJoin;
 
 /* ----------------

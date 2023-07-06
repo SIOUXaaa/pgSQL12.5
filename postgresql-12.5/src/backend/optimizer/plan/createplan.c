@@ -4509,6 +4509,7 @@ create_symhashjoin_plan(PlannerInfo *root,
                       (Plan *)outer_hash_plan, (Plan *)inner_hash_plan,
                       best_path->jpath.jointype, best_path->jpath.inner_unique, false);
 
+    join_plan->isSymHashJoin = true;
     copy_generic_path_info(&join_plan->join.plan, &best_path->jpath.path);
 
     return join_plan;
