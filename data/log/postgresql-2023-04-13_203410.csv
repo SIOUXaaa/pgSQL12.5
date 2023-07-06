@@ -1,0 +1,8 @@
+2023-04-13 20:34:10.083 CST,,,2968,,6437f6c2.b98,1,,2023-04-13 20:34:10 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-04-13 20:34:10.090 CST,,,2970,,6437f6c2.b9a,1,,2023-04-13 20:34:10 CST,,0,LOG,00000,"database system was interrupted; last known up at 2023-04-06 23:08:13 CST",,,,,,,,,""
+2023-04-13 20:34:10.357 CST,,,2970,,6437f6c2.b9a,2,,2023-04-13 20:34:10 CST,,0,LOG,00000,"database system was not properly shut down; automatic recovery in progress",,,,,,,,,""
+2023-04-13 20:34:10.361 CST,,,2970,,6437f6c2.b9a,3,,2023-04-13 20:34:10 CST,,0,LOG,00000,"redo starts at 0/17FDEE0",,,,,,,,,""
+2023-04-13 20:34:10.361 CST,,,2970,,6437f6c2.b9a,4,,2023-04-13 20:34:10 CST,,0,LOG,00000,"invalid record length at 0/17FDFC8: wanted 24, got 0",,,,,,,,,""
+2023-04-13 20:34:10.361 CST,,,2970,,6437f6c2.b9a,5,,2023-04-13 20:34:10 CST,,0,LOG,00000,"redo done at 0/17FDF90",,,,,,,,,""
+2023-04-13 20:34:10.381 CST,,,2968,,6437f6c2.b98,2,,2023-04-13 20:34:10 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
+2023-04-13 21:12:57.927 CST,"sercoi","sercoi",9063,"127.0.0.1:58862",6437ffd9.2367,1,"startup",2023-04-13 21:12:57 CST,3/56,0,FATAL,3D000,"database ""sercoi"" does not exist",,,,,,,,,""

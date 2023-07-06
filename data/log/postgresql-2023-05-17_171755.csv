@@ -1,0 +1,4 @@
+2023-05-17 17:17:55.376 CST,,,19021,,64649bc3.4a4d,1,,2023-05-17 17:17:55 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-05-17 17:17:55.380 CST,,,19023,,64649bc3.4a4f,1,,2023-05-17 17:17:55 CST,,0,LOG,00000,"database system was shut down at 2023-05-17 17:17:53 CST",,,,,,,,,""
+2023-05-17 17:17:55.384 CST,,,19021,,64649bc3.4a4d,2,,2023-05-17 17:17:55 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
+2023-05-17 17:18:00.208 CST,"sercoi","sercoi",19071,"127.0.0.1:46498",64649bc8.4a7f,1,"startup",2023-05-17 17:18:00 CST,3/1,0,FATAL,3D000,"database ""sercoi"" does not exist",,,,,,,,,""

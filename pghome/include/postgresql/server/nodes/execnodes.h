@@ -1827,7 +1827,7 @@ typedef struct JoinState
     ExprState *joinqual; /* JOIN quals (in addition to ps.qual) */
 } JoinState;
 
-/* ----------------
+/* ---------------- 
  *	 NestLoopState information
  *
  *		NeedNewOuter	   true if need new outer tuple on next call

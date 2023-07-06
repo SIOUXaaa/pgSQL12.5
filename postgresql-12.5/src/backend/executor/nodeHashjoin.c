@@ -163,7 +163,7 @@ static void ExecParallelHashJoinPartitionOuter(HashJoinState *node);
  * ----------------------------------------------------------------
  */
 static pg_attribute_always_inline TupleTableSlot *
-ExecHashJoinImpl(PlanState *pstate, bool parallel)
+                                  ExecHashJoinImpl(PlanState *pstate, bool parallel)
 {
     // elog(NOTICE, "\nimpl start");
     HashJoinState *node = castNode(HashJoinState, pstate);
@@ -732,6 +732,37 @@ ExecHashJoinInnerGetTuple(HashState *innerNode, HashJoinState *hjstate,
     return NULL;
 }
 
+static TupleTableSlot *
+ExecHashJoinInnerGetTuple(PlanState *innerNode, HashJoinState *hjstate,
+                          uint32 *hashvalue)
+{
+    HashJoinTable   hashtable = hjstate->hj_HashTable;
+    TupleTableSlot *slot;
+
+    slot = hjstate->hj_FirstInnerTupleSlot;
+    if (!TupIsNull(slot))
+        hjstate->hj_FirstInnerTupleSlot = NULL;
+    else
+        slot = ExecProcNode(innerNode);
+
+    if (!TupIsNull(slot))
+    {
+        ExprContext *econtext = hjstate->js.ps.ps_ExprContext;
+
+        econtext->ecxt_outertuple = slot;
+        if (ExecHashGetHashValue(hashtable, econtext, hjstate->hj_InnerHashKeys,
+                                 false, HJ_FILL_OUTER(hjstate), hashvalue))
+        {
+            hjstate->hj_InnerNotEmpty = true;
+            // elog(NOTICE, "get inner tuple return %p", slot);
+            return slot;
+        }
+    }
+
+    return NULL;
+}
+
+
 /*
  * ExecHashJoinOuterGetTuple
  *
@@ -776,7 +807,7 @@ ExecHashJoinOuterGetTuple(HashState *outerNode, HashJoinState *hjstate,
 
     return NULL;
 }
-
+    
 /*
  * ExecHashJoinOuterGetTuple variant for the parallel case.
  */
@@ -1123,6 +1154,7 @@ ExecHashJoinSaveTuple(MinimalTuple tuple, uint32 hashvalue, BufFile **fileptr)
     BufFileWrite(file, (void *)&hashvalue, sizeof(uint32));
     BufFileWrite(file, (void *)tuple, tuple->t_len);
 }
+
 
 /*
  * ExecHashJoinGetSavedTuple

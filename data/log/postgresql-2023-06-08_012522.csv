@@ -1,0 +1,6 @@
+2023-06-08 01:25:22.930 CST,,,25517,,6480bd82.63ad,1,,2023-06-08 01:25:22 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-06-08 01:25:22.934 CST,,,25519,,6480bd82.63af,1,,2023-06-08 01:25:22 CST,,0,LOG,00000,"database system was shut down at 2023-06-04 20:58:24 CST",,,,,,,,,""
+2023-06-08 01:25:22.940 CST,,,25517,,6480bd82.63ad,2,,2023-06-08 01:25:22 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
+2023-06-08 01:25:28.964 CST,"sercoi","template",25560,"127.0.0.1:59530",6480bd88.63d8,1,"startup",2023-06-08 01:25:28 CST,3/1,0,FATAL,3D000,"database ""template"" does not exist",,,,,,,,,""
+2023-06-08 01:25:31.599 CST,"sercoi","sercoi",25586,"127.0.0.1:59546",6480bd8b.63f2,1,"startup",2023-06-08 01:25:31 CST,3/2,0,FATAL,3D000,"database ""sercoi"" does not exist",,,,,,,,,""
+2023-06-08 01:25:31.747 CST,"sercoi","sercoi",25596,"127.0.0.1:59550",6480bd8b.63fc,1,"startup",2023-06-08 01:25:31 CST,3/5,0,FATAL,3D000,"database ""sercoi"" does not exist",,,,,,,,,""

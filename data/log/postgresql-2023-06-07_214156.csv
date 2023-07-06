@@ -1,0 +1,3 @@
+2023-06-07 21:41:56.761 CST,,,22224,,64808924.56d0,1,,2023-06-07 21:41:56 CST,,0,LOG,00000,"ending log output to stderr",,"Future log output will go to log destination ""csvlog"".",,,,,,,""
+2023-06-07 21:41:56.764 CST,,,22226,,64808924.56d2,1,,2023-06-07 21:41:56 CST,,0,LOG,00000,"database system was shut down at 2023-06-07 21:41:56 CST",,,,,,,,,""
+2023-06-07 21:41:56.767 CST,,,22224,,64808924.56d0,2,,2023-06-07 21:41:56 CST,,0,LOG,00000,"database system is ready to accept connections",,,,,,,,,""
