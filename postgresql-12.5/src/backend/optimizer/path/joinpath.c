@@ -777,7 +777,20 @@ try_hashjoin_path(PlannerInfo *root, //将新的路径加入到joinrel中，之�
 	//在这里添加你的实现
 	//可以阅读本文件的751行～775行来理解如何创建一个可行路径并加入路径集合中
 	//需要调用create_symhashjoin_path来创建一个symhashjoin路径
-	
+    initial_cost_symhashjoin(root, &workspace, jointype, hashclauses,
+                             outer_path, inner_path, extra, false);
+    if (add_path_precheck(joinrel, workspace.startup_cost, workspace.total_cost,
+                          NIL, required_outer))
+    {
+        add_path(joinrel, (Path *)create_symhashjoin_path(
+                              root, joinrel, jointype, &workspace, extra,
+                              outer_path, inner_path, false,
+                              extra->restrictlist, required_outer, hashclauses));
+    }
+    else
+    {
+        bms_free(required_outer);
+    }
 }
 
 /*

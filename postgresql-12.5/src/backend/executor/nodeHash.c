@@ -2010,13 +2010,80 @@ ExecScanHashBucket(HashJoinState *hjstate,
 	* If the tuple hashed to a skew bucket then scan the skew bucket
 	* otherwise scan the standard hashtable bucket.
 	*/
-	if(hjstate->isSymHashJoin){ 
-		//在这里添加你的实现
-		//实现symHashjoin扫描hash桶的算法
-		//可以参照hashjoin扫描hash桶的算法
-		//需要参考hjstate数据结构
-		//要点在于确定正确的hash表、hash元组和hashvalue
-	}
+	if(hjstate->isSymHashJoin){
+        //在这里添加你的实现
+        //实现symHashjoin扫描hash桶的算法
+        //可以参照hashjoin扫描hash桶的算法
+        //需要参考hjstate数据结构
+        //要点在于确定正确的hash表、hash元组和hashvalue
+
+        if (hjstate->scanBucket)
+        {
+            hashtable = hjstate->hj_HashTable;
+            hashTuple = hjstate->hj_CurTuple;
+        }
+        else
+        {
+            hashtable = hjstate->hj_outerHashTable;
+            hashTuple = hjstate->hj_CurOutTuple;
+        }
+
+        if (hashTuple != NULL)
+            hashTuple = hashTuple->next.unshared;
+        else if (hjstate->scanBucket)
+        { //扫Inner table
+            hashTuple =
+                hashtable->buckets
+                    .unshared[hjstate->hj_CurBucketNo]; //拿inner
+                                                        // tuple的bucketNo
+        }
+        else
+        { //扫outer table
+            hashTuple =
+                hashtable->buckets
+                    .unshared[hjstate->hj_CurBucketNo]; //拿outer bucketNo
+        }
+
+        while (hashTuple != NULL)
+        {
+            if (hashTuple->hashvalue == hashvalue)
+            {
+                if (hjstate->scanBucket)
+                {
+                    TupleTableSlot *innertuple;
+                    innertuple = ExecStoreMinimalTuple(
+                        HJTUPLE_MINTUPLE(hashTuple), hjstate->hj_HashTupleSlot,
+                        false); /* do not pfree */
+                    econtext->ecxt_innertuple = innertuple;
+
+                    if (ExecQualAndReset(hjclauses, econtext))
+                    {
+                        hjstate->hj_CurTuple = hashTuple;
+                        return true;
+                    }
+                }
+                else
+                {
+                    TupleTableSlot *outerTuple;
+
+  
+                    outerTuple =
+                        ExecStoreMinimalTuple(HJTUPLE_MINTUPLE(hashTuple),
+                                              hjstate->hj_OuterTupleSlot,
+                                              false); /* do not pfree */
+                    econtext->ecxt_outertuple = outerTuple;
+
+                    if (ExecQualAndReset(hjclauses, econtext))
+                    {
+                        // econtext->ecxt_outertuple = temp;
+                        hjstate->hj_CurOutTuple = hashTuple;
+                        return true;
+                    }
+                }
+            }
+            hashTuple = hashTuple->next.unshared;
+        }
+    }
 	else{ //如果是hashjoin，应该利用原有的扫描hash桶算法
 		if (hashTuple != NULL)
 			hashTuple = hashTuple->next.unshared;

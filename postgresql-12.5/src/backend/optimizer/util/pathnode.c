@@ -2585,7 +2585,29 @@ create_symhashjoin_path(PlannerInfo *root,
 	//可以参照create_hashjoin_path
 	//需要调用final_cost_hashjoin函数
 	//注意：创造的node类型为T_SymHashJoin
+    pathnode->jpath.path.parent = joinrel;
+    pathnode->jpath.path.pathtarget = joinrel->reltarget;
+    pathnode->jpath.path.param_info = get_joinrel_parampathinfo(
+        root, joinrel, outer_path, inner_path, extra->sjinfo, required_outer,
+        &restrict_clauses);
+    pathnode->jpath.path.parallel_aware =
+        joinrel->consider_parallel && parallel_hash;
+    pathnode->jpath.path.parallel_safe = joinrel->consider_parallel &&
+                                         outer_path->parallel_safe &&
+                                         inner_path->parallel_safe;
+    pathnode->jpath.path.parallel_workers = outer_path->parallel_workers;
 
+    pathnode->jpath.path.pathkeys = NIL;
+    pathnode->jpath.jointype = jointype;
+    pathnode->jpath.inner_unique = extra->inner_unique;
+    pathnode->jpath.outerjoinpath = outer_path;
+    pathnode->jpath.innerjoinpath = inner_path;
+    pathnode->jpath.joinrestrictinfo = restrict_clauses;
+    pathnode->path_hashclauses = hashclauses;
+
+    final_cost_symhashjoin(root, pathnode, workspace, extra);
+
+    return pathnode;
 }
 
 

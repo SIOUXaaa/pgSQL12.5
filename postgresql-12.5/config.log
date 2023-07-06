@@ -894,7 +894,7 @@ configure:11009: $? = 0
 configure:11018: result: yes
 configure:11029: checking for library containing setproctitle
 configure:11060: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lm  >&5
-/usr/bin/ld: /tmp/ccmZ4Uw2.o: in function `main':
+/usr/bin/ld: /tmp/cczAsqv0.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `setproctitle'
 collect2: error: ld returned 1 exit status
 configure:11060: $? = 1
@@ -948,7 +948,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:11060: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lutil  -lm  >&5
-/usr/bin/ld: /tmp/ccJ6T5I1.o: in function `main':
+/usr/bin/ld: /tmp/cc5bAa32.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `setproctitle'
 collect2: error: ld returned 1 exit status
 configure:11060: $? = 1
@@ -1004,7 +1004,7 @@ configure: failed program was:
 configure:11077: result: no
 configure:11085: checking for library containing dlopen
 configure:11116: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lm  >&5
-/usr/bin/ld: /tmp/ccm0kfs8.o: in function `main':
+/usr/bin/ld: /tmp/cciPT9P8.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `dlopen'
 collect2: error: ld returned 1 exit status
 configure:11116: $? = 1
@@ -1066,7 +1066,7 @@ configure:11172: $? = 0
 configure:11189: result: none required
 configure:11197: checking for library containing shl_load
 configure:11228: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -ldl -lm  >&5
-/usr/bin/ld: /tmp/cc6AdpNO.o: in function `main':
+/usr/bin/ld: /tmp/ccYogC5O.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `shl_load'
 collect2: error: ld returned 1 exit status
 configure:11228: $? = 1
@@ -1179,7 +1179,7 @@ configure:11284: $? = 0
 configure:11301: result: none required
 configure:11309: checking for library containing crypt
 configure:11340: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccXwVNhK.o: in function `main':
+/usr/bin/ld: /tmp/ccQhOuLJ.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `crypt'
 collect2: error: ld returned 1 exit status
 configure:11340: $? = 1
@@ -1237,7 +1237,7 @@ configure:11340: $? = 0
 configure:11357: result: -lcrypt
 configure:11365: checking for library containing shm_open
 configure:11396: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccAk2Ivz.o: in function `main':
+/usr/bin/ld: /tmp/ccY6axBz.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:45: undefined reference to `shm_open'
 collect2: error: ld returned 1 exit status
 configure:11396: $? = 1
@@ -5724,7 +5724,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for copyfile
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccN6GYyM.o: in function `main':
+/usr/bin/ld: /tmp/cc6yEOZ0.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:129: undefined reference to `copyfile'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -5872,7 +5872,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for getpeerucred
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccqrYagZ.o: in function `main':
+/usr/bin/ld: /tmp/cc3PSdDd.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:131: undefined reference to `getpeerucred'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6018,7 +6018,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for mbstowcs_l
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccSFduIn.o: in function `main':
+/usr/bin/ld: /tmp/ccgMvSH1.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:132: undefined reference to `mbstowcs_l'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6183,7 +6183,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for pstat
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccLjxcNL.o: in function `main':
+/usr/bin/ld: /tmp/ccObun0X.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:136: undefined reference to `pstat'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6330,7 +6330,7 @@ configure: failed program was:
 configure:15283: result: no
 configure:15283: checking for pthread_is_threaded_np
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccJyxN56.o: in function `main':
+/usr/bin/ld: /tmp/ccYk9hhm.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:136: undefined reference to `pthread_is_threaded_np'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6481,7 +6481,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for setproctitle
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/cc48O4DS.o: in function `main':
+/usr/bin/ld: /tmp/ccA8wjZ6.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:137: undefined reference to `setproctitle'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6629,7 +6629,7 @@ configure: failed program was:
 configure:15283: result: no
 configure:15283: checking for setproctitle_fast
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccM6DWtg.o: in function `main':
+/usr/bin/ld: /tmp/ccxbZeKv.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:137: undefined reference to `setproctitle_fast'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -6813,7 +6813,7 @@ configure:15283: $? = 0
 configure:15283: result: yes
 configure:15283: checking for wcstombs_l
 configure:15283: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccZQ10ny.o: in function `main':
+/usr/bin/ld: /tmp/cct17pZL.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:146: undefined reference to `wcstombs_l'
 collect2: error: ld returned 1 exit status
 configure:15283: $? = 1
@@ -8040,7 +8040,7 @@ configure:15932: $? = 0
 configure:15932: result: yes
 configure:15945: checking for fls
 configure:15945: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccQa3mHc.o: in function `main':
+/usr/bin/ld: /tmp/ccQprLSn.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:167: undefined reference to `fls'
 collect2: error: ld returned 1 exit status
 configure:15945: $? = 1
@@ -8260,7 +8260,7 @@ configure:16062: $? = 0
 configure:16062: result: yes
 configure:16075: checking for strlcat
 configure:16075: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/cc4CbAPh.o: in function `main':
+/usr/bin/ld: /tmp/ccxPCBux.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:176: undefined reference to `strlcat'
 collect2: error: ld returned 1 exit status
 configure:16075: $? = 1
@@ -8447,7 +8447,7 @@ configure: failed program was:
 configure:16075: result: no
 configure:16088: checking for strlcpy
 configure:16088: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccyat0wl.o: in function `main':
+/usr/bin/ld: /tmp/ccrz8DQw.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:176: undefined reference to `strlcpy'
 collect2: error: ld returned 1 exit status
 configure:16088: $? = 1
@@ -8649,7 +8649,7 @@ configure:16163: $? = 0
 configure:16163: result: yes
 configure:16176: checking for getpeereid
 configure:16176: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccY9Uc7s.o: in function `main':
+/usr/bin/ld: /tmp/ccuendq6.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:179: undefined reference to `getpeereid'
 collect2: error: ld returned 1 exit status
 configure:16176: $? = 1
@@ -8865,7 +8865,7 @@ configure:16417: $? = 0
 configure:16425: result: yes
 configure:16433: checking for optreset
 configure:16449: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz  -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/ccJWPzur.o: in function `main':
+/usr/bin/ld: /tmp/cch31RY3.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:153: undefined reference to `optreset'
 collect2: error: ld returned 1 exit status
 configure:16449: $? = 1
@@ -10997,7 +10997,7 @@ configure:18042: checking which CRC-32C implementation to use
 configure:18057: result: SSE 4.2 with runtime check
 configure:18152: checking for library containing sem_init
 configure:18183: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lz -lreadline -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/cc5P4Qsw.o: in function `main':
+/usr/bin/ld: /tmp/ccf7bwfK.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:196: undefined reference to `sem_init'
 collect2: error: ld returned 1 exit status
 configure:18183: $? = 1
@@ -11202,7 +11202,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:18183: gcc -o conftest -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Werror=vla -Wendif-labels -Wmissing-format-attribute -Wformat-security -fno-strict-aliasing -fwrapv -fexcess-precision=standard -Wno-format-truncation -Wno-stringop-truncation -g -O2  -D_GNU_SOURCE    conftest.c -lrt  -lz -lreadline -lrt -lcrypt -ldl -lm  >&5
-/usr/bin/ld: /tmp/cc3CwTbt.o: in function `main':
+/usr/bin/ld: /tmp/cccOM69J.o: in function `main':
 /home/sercoi/PGDev/postgresql-12.5/conftest.c:196: undefined reference to `sem_init'
 collect2: error: ld returned 1 exit status
 configure:18183: $? = 1
@@ -11473,8 +11473,11 @@ on Sercoi-PC
 config.status:1131: creating GNUmakefile
 config.status:1131: creating src/Makefile.global
 config.status:1131: creating src/include/pg_config.h
+config.status:1312: src/include/pg_config.h is unchanged
 config.status:1131: creating src/include/pg_config_ext.h
+config.status:1312: src/include/pg_config_ext.h is unchanged
 config.status:1131: creating src/interfaces/ecpg/include/ecpg_config.h
+config.status:1312: src/interfaces/ecpg/include/ecpg_config.h is unchanged
 config.status:1338: linking src/backend/port/tas/dummy.s to src/backend/port/tas.s
 config.status:1338: linking src/backend/port/posix_sema.c to src/backend/port/pg_sema.c
 config.status:1338: linking src/backend/port/sysv_shmem.c to src/backend/port/pg_shmem.c

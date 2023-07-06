@@ -1018,7 +1018,10 @@ create_join_plan(PlannerInfo *root, JoinPath *best_path)
 			plan = (Plan *) create_hashjoin_plan(root,
 												 (HashPath *) best_path);
 			break;
-		//在此处添加你的实现。你需要在这里调用create_symhashjoin_plan函数来创建一个symhashjoin_plan
+            //在此处添加你的实现。你需要在这里调用create_symhashjoin_plan函数来创建一个symhashjoin_plan
+        case T_SymHashJoin:
+            plan = (Plan *)create_symhashjoin_plan(root, (HashPath *)best_path);
+            break;
 		case T_NestLoop:
 			plan = (Plan *) create_nestloop_plan(root,
 												 (NestPath *) best_path);
@@ -4387,6 +4390,128 @@ create_symhashjoin_plan(PlannerInfo *root,
 	//makeHashjoin函数是修改过的，添加了一个判定参数，用于判定当前生成的plan类型是Hashjoin还是symHashjoin
 	//在此处添加你的实现,可以参照create_hashjoin_plan
 
+    HashJoin *join_plan;
+    Hash *inner_hash_plan;
+    Hash *outer_hash_plan;
+    Plan *outer_plan;
+    Plan *inner_plan;
+    List *tlist = build_path_tlist(root, &best_path->jpath.path);
+    List *joinclauses;
+    List *otherclauses;
+    List *hashclauses;
+    List *hashoperators = NIL;
+    List *hashcollations = NIL;
+    List *inner_hashkeys = NIL;
+    List *outer_hashkeys = NIL;
+    Oid skewTable = InvalidOid;
+    AttrNumber skewColumn = InvalidAttrNumber;
+    bool skewInherit = false;
+    ListCell *lc;
+
+    outer_plan =
+        create_plan_recurse(root, best_path->jpath.outerjoinpath,
+                            (best_path->num_batches > 1) ? CP_SMALL_TLIST : 0);
+
+    inner_plan =
+        create_plan_recurse(root, best_path->jpath.innerjoinpath,
+                            (best_path->num_batches > 1) ? CP_SMALL_TLIST : 0);
+
+
+    joinclauses = order_qual_clauses(root, best_path->jpath.joinrestrictinfo);
+
+    if (IS_OUTER_JOIN(best_path->jpath.jointype))
+    {
+        extract_actual_join_clauses(joinclauses,
+                                    best_path->jpath.path.parent->relids,
+                                    &joinclauses, &otherclauses);
+    }
+    else
+    {
+        joinclauses = extract_actual_clauses(joinclauses, false);
+        otherclauses = NIL;
+    }
+
+    hashclauses = get_actual_clauses(best_path->path_hashclauses);
+    joinclauses = list_difference(joinclauses, hashclauses);
+
+    if (best_path->jpath.path.param_info)
+    {
+        joinclauses =
+            (List *)replace_nestloop_params(root, (Node *)joinclauses);
+        otherclauses =
+            (List *)replace_nestloop_params(root, (Node *)otherclauses);
+    }
+
+    hashclauses =
+        get_switched_clauses(best_path->path_hashclauses,
+                             best_path->jpath.outerjoinpath->parent->relids);
+
+    if (list_length(hashclauses) == 1)
+    {
+        OpExpr *clause = (OpExpr *)linitial(hashclauses);
+        Node *node;
+
+        Assert(is_opclause(clause));
+        node = (Node *)linitial(clause->args);
+        if (IsA(node, RelabelType))
+            node = (Node *)((RelabelType *)node)->arg;
+        if (IsA(node, Var))
+        {
+            Var *var = (Var *)node;
+            RangeTblEntry *rte;
+
+            rte = root->simple_rte_array[var->varno];
+            if (rte->rtekind == RTE_RELATION)
+            {
+                skewTable = rte->relid;
+                skewColumn = var->varattno;
+                skewInherit = rte->inh;
+            }
+        }
+    }
+
+    foreach (lc, hashclauses)
+    {
+        OpExpr *hclause = lfirst_node(OpExpr, lc);
+
+        hashoperators = lappend_oid(hashoperators, hclause->opno);
+        hashcollations = lappend_oid(hashcollations, hclause->inputcollid);
+
+        outer_hashkeys = lappend(outer_hashkeys, linitial(hclause->args));
+        inner_hashkeys = lappend(inner_hashkeys, lsecond(hclause->args));
+    }
+
+    //构建哈希节点
+    inner_hash_plan = make_hash(inner_plan, inner_hashkeys, skewTable,
+                                skewColumn, skewInherit);
+
+    //对outer进行hash
+    outer_hash_plan = make_hash(outer_plan, outer_hashkeys, skewTable,
+                                skewColumn, skewInherit);
+
+
+    copy_plan_costsize(&inner_hash_plan->plan, inner_plan);
+    inner_hash_plan->plan.startup_cost = inner_hash_plan->plan.total_cost;
+    copy_plan_costsize(&outer_hash_plan->plan, outer_plan);
+    outer_hash_plan->plan.startup_cost = outer_hash_plan->plan.total_cost;
+
+
+    if (best_path->jpath.path.parallel_aware)
+    {
+        inner_hash_plan->plan.parallel_aware = true;
+        inner_hash_plan->rows_total = best_path->inner_rows_total;
+    }
+
+    //构建哈希连接节点
+    join_plan =
+        make_hashjoin(tlist, joinclauses, otherclauses, hashclauses,
+                      hashoperators, hashcollations, outer_hashkeys,
+                      (Plan *)outer_hash_plan, (Plan *)inner_hash_plan,
+                      best_path->jpath.jointype, best_path->jpath.inner_unique, false);
+
+    copy_generic_path_info(&join_plan->join.plan, &best_path->jpath.path);
+
+    return join_plan;
 }
 
 static HashJoin *

@@ -783,7 +783,11 @@ ExecEndHashJoin(HashJoinState *node) //为防止内存泄漏，需要将额外�
 
 	//在这里添加你的实现
 	//回收外部hash表
-
+    if (node->hj_outerHashTable)
+    {
+        ExecHashTableDestroy(node->hj_outerHashTable);
+        node->hj_outerHashTable = NULL;
+    }
 	/*
 	 * Free the exprcontext
 	 */

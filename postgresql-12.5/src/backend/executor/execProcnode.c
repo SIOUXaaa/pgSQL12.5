@@ -297,8 +297,11 @@ ExecInitNode(Plan *node, EState *estate, int eflags)
 
 		case T_HashJoin:
 			if(((HashJoin*)node)->isSymHashJoin){ //根据isSymHashJoin判断执行哪个函数
-				//在此处添加你的实现
-			}else{
+                //在此处添加你的实现
+                result = (PlanState *)ExecInitSymHashJoin((HashJoin *)node,
+                                                          estate, eflags);
+                break;
+            }else{
 				result = (PlanState *) ExecInitHashJoin((HashJoin *) node,
 														estate, eflags);
 				break;
