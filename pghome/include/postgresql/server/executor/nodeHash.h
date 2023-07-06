@@ -51,6 +51,8 @@ extern bool ExecParallelScanHashBucket(HashJoinState *hjstate,
 extern void ExecPrepHashTableForUnmatched(HashJoinState *hjstate);
 extern bool ExecScanHashTableForUnmatched(HashJoinState *hjstate,
                                           ExprContext *econtext);
+extern bool ExecScanOutHashTableForUnmatched(HashJoinState *hjstate,
+                                             ExprContext *econtext);
 extern void ExecHashTableReset(HashJoinTable hashtable);
 extern void ExecHashTableResetMatchFlags(HashJoinTable hashtable);
 extern void ExecChooseHashTableSize(double ntuples, int tupwidth, bool useskew,

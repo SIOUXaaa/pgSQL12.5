@@ -687,6 +687,8 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
     hjstate->hj_CurTuple_inner = NULL;
     hjstate->hj_CurTuple_outer = NULL;
 
+    hjstate->firstFill = true;
+
    
     hjstate->hj_OuterHashKeys =
         ExecInitExprList(node->hashkeys, (PlanState *)hjstate);
