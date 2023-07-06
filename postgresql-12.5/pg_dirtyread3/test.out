@@ -1,0 +1,18 @@
+CREATE EXTENSION
+CREATE TABLE
+ALTER TABLE
+INSERT 0 2
+DELETE 1
+ a | b 
+---+---
+ 2 | 2
+(1 row)
+
+ a | b 
+---+---
+ 1 | 1
+ 2 | 2
+(2 rows)
+
+DROP TABLE
+DROP EXTENSION
