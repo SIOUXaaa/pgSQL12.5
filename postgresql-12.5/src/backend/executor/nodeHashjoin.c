@@ -181,8 +181,8 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	 */
 	joinqual = node->js.joinqual;
 	otherqual = node->js.ps.qual;
-	hashNode = (HashState *) innerPlanState(node);
-	outerNode = outerPlanState(node);
+    hashNode = (HashState *) innerPlanState(node);
+    outerNode = outerPlanState(node);
 	hashtable = node->hj_HashTable;
 	econtext = node->js.ps.ps_ExprContext;
 	parallel_state = hashNode->parallel_state;
@@ -197,7 +197,7 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 	 * run the hash join state machine
 	 */
 	for (;;)
-	{
+    {
 		/*
 		 * It's possible to iterate this loop many times before returning a
 		 * tuple, in some pathological cases such as needing to move much of
@@ -213,9 +213,9 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				/*
 				 * First time through: build hash table for inner relation.
 				 */
-				Assert(hashtable == NULL);
+                Assert(hashtable == NULL);
 
-				/*
+                /*
 				 * If the outer relation is completely empty, and it's not
 				 * right/full join, we can quit without building the hash
 				 * table.  However, for an inner join it is only a win to
@@ -338,35 +338,34 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 					continue;
 				}
 				else
-					node->hj_JoinState = HJ_NEED_NEW_OUTER;
+                    // node->hj_JoinState = HJ_NEED_NEW_OUTER;
 
-				/* FALL THRU */
+                    /* FALL THRU */
 
 			case HJ_NEED_NEW_OUTER:
+            /*
+             * We don't have an outer tuple, try to get the next one
+             */
 
-				/*
-				 * We don't have an outer tuple, try to get the next one
-				 */
-				if (parallel)
-					outerTupleSlot =
-						ExecParallelHashJoinOuterGetTuple(outerNode, node,
-														  &hashvalue);
-				else
-					outerTupleSlot =
-						ExecHashJoinOuterGetTuple(outerNode, node, &hashvalue);
+                if (parallel)
+                    outerTupleSlot = ExecParallelHashJoinOuterGetTuple(
+                    outerNode, node, &hashvalue);
+                else
+                    outerTupleSlot =
+                        ExecHashJoinOuterGetTuple(outerNode, node, &hashvalue);
 
-				if (TupIsNull(outerTupleSlot))
-				{
-					/* end of batch, or maybe whole join */
-					if (HJ_FILL_INNER(node))
-					{
-						/* set up to scan for unmatched inner tuples */
-						ExecPrepHashTableForUnmatched(node);
-						node->hj_JoinState = HJ_FILL_INNER_TUPLES;
-					}
-					else
-						node->hj_JoinState = HJ_NEED_NEW_BATCH;
-					continue;
+                if (TupIsNull(outerTupleSlot))
+                {
+                /* end of batch, or maybe whole join */
+                    if (HJ_FILL_INNER(node))
+                    {
+                        /* set up to scan for unmatched inner tuples */
+                        ExecPrepHashTableForUnmatched(node);
+                        node->hj_JoinState = HJ_FILL_INNER_TUPLES;
+                    }
+                    else
+                        node->hj_JoinState = HJ_NEED_NEW_BATCH;
+                    continue;
 				}
 
 				econtext->ecxt_outertuple = outerTupleSlot;
@@ -421,25 +420,31 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				 * Scan the selected hash bucket for matches to current outer
 				 */
 				if (parallel)
-				{
-					if (!ExecParallelScanHashBucket(node, econtext))
-					{
-						/* out of matches; check for possible outer-join fill */
-						node->hj_JoinState = HJ_FILL_OUTER_TUPLE;
-						continue;
-					}
+                {
+                    ExecParallelScanHashBucket(node, econtext);
+                    node->hj_JoinState = HJ_FILL_OUTER_TUPLE;
+                    continue;
+                    // if (!ExecParallelScanHashBucket(node, econtext))
+					// {
+					// 	/* out of matches; check for possible outer-join fill */
+					// 	node->hj_JoinState = HJ_FILL_OUTER_TUPLE;
+					// 	continue;
+					// }
 				}
 				else
-				{
-					if (!ExecScanHashBucket(node, econtext))
+                {
+                    // ExecScanHashBucket(node, econtext);
+                    node->hj_JoinState = HJ_FILL_OUTER_TUPLE;
+                    continue;
+                    if (!ExecScanHashBucket(node, econtext))
 					{
 						/* out of matches; check for possible outer-join fill */
 						node->hj_JoinState = HJ_FILL_OUTER_TUPLE;
 						continue;
 					}
-				}
+                }
 
-				/*
+                /*
 				 * We've got a match, but still need to test non-hashed quals.
 				 * ExecScanHashBucket already set up all the state needed to
 				 * call ExecQual.
@@ -500,7 +505,6 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				break;
 
 			case HJ_FILL_OUTER_TUPLE:
-
 				/*
 				 * The current outer tuple has run out of matches, so check
 				 * whether to emit a dummy outer-join tuple.  Whether we emit
@@ -525,8 +529,9 @@ ExecHashJoinImpl(PlanState *pstate, bool parallel)
 				break;
 
 			case HJ_FILL_INNER_TUPLES:
-
-				/*
+                node->hj_JoinState = HJ_NEED_NEW_BATCH;
+                continue;
+                /*
 				 * We have finished a batch, but we are doing right/full join,
 				 * so any unmatched inner tuples in the hashtable have to be
 				 * emitted before we continue to the next batch.
@@ -639,9 +644,12 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * managed to launch a parallel query.
 	 */
 	hjstate->js.ps.ExecProcNode = ExecHashJoin;
-	hjstate->js.jointype = node->join.jointype;
+    // hjstate->js.jointype = node->join.jointype;
 
-	/*
+    //将初始化的hashJoinState的join类型强制为右外连接
+    hjstate->js.jointype = JOIN_LEFT;
+
+    /*
 	 * Miscellaneous initialization
 	 *
 	 * create expression context for node
@@ -655,8 +663,8 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	 * would amount to betting that the hash will be a single batch.  Not
 	 * clear if this would be a win or not.
 	 */
-	outerNode = outerPlan(node);
-	hashNode = (Hash *) innerPlan(node);
+    outerNode = outerPlan(node);
+    hashNode = (Hash *) innerPlan(node);
 
 	outerPlanState(hjstate) = ExecInitNode(outerNode, estate, eflags);
 	outerDesc = ExecGetResultType(outerPlanState(hjstate));
@@ -682,8 +690,10 @@ ExecInitHashJoin(HashJoin *node, EState *estate, int eflags)
 	hjstate->js.single_match = (node->join.inner_unique ||
 								node->join.jointype == JOIN_SEMI);
 
-	/* set up null tuples for outer joins, if needed */
-	switch (node->join.jointype)
+    /* set up null tuples for outer joins, if needed */
+    // //强制所有node为right join
+    node->join.jointype = JOIN_LEFT;
+    switch (node->join.jointype)
 	{
 		case JOIN_INNER:
 		case JOIN_SEMI:

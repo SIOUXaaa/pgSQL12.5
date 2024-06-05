@@ -81,3 +81,8 @@
 2023-04-06 22:28:12.445 CST [587] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2023-04-06 22:28:12.456 CST [587] LOG:  redirecting log output to logging collector process
 2023-04-06 22:28:12.456 CST [587] HINT:  Future log output will appear in directory "log".
+2023-05-12 21:33:46.818 CST [765] LOG:  starting PostgreSQL 12.5 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+2023-05-12 21:33:46.819 CST [765] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-05-12 21:33:46.824 CST [765] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-05-12 21:33:46.835 CST [765] LOG:  redirecting log output to logging collector process
+2023-05-12 21:33:46.835 CST [765] HINT:  Future log output will appear in directory "log".
